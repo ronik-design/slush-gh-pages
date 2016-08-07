@@ -1,0 +1,9 @@
+site_name: {SLUSH{=name}}
+site_url: {SLUSH{=url}}
+site_description: {SLUSH{=description}}
+author_name: {SLUSH{=authorName}}
+author_email: {SLUSH{=authorEmail}}
+github_author_name: {SLUSH{=githubAuthorName}}
+github_author_url: {SLUSH{=githubAuthorUrl}}
+github_repo_name: {SLUSH{=githubRepoName}}
+github_repo_url: {SLUSH{=githubRepoUrl}}

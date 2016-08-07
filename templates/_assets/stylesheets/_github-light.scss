@@ -1,0 +1,130 @@
+/* stylelint-disable */
+
+/*
+The MIT License (MIT)
+
+Copyright (c) 2016 GitHub, Inc.
+
+Permission is hereby granted, free of charge, to any person obtaining a copy
+of this software and associated documentation files (the "Software"), to deal
+in the Software without restriction, including without limitation the rights
+to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+copies of the Software, and to permit persons to whom the Software is
+furnished to do so, subject to the following conditions:
+
+The above copyright notice and this permission notice shall be included in all
+copies or substantial portions of the Software.
+
+THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+SOFTWARE.
+
+*/
+/* comment */
+.pl-c {
+    color: #969896;
+}
+.pl-c1/* constant, variable.other.constant, support, meta.property-name, support.constant, support.variable, meta.module-reference, markup.raw, meta.diff.header */
+/* string variable */
+,
+.pl-s .pl-v {
+    color: #0086b3;
+}
+.pl-e/* entity */
+/* entity.name */
+,
+.pl-en {
+    color: #795da3;
+}
+.pl-smi/* variable.parameter.function, storage.modifier.package, storage.modifier.import, storage.type.java, variable.other */
+/* string source */
+,
+.pl-s .pl-s1 {
+    color: #333;
+}
+/* entity.name.tag */
+.pl-ent {
+    color: #63a35c;
+}
+/* keyword, storage, storage.type */
+.pl-k {
+    color: #a71d5d;
+}
+.pl-s/* string */
+, .pl-pds/* punctuation.definition.string, string.regexp.character-class */
+, .pl-s .pl-pse .pl-s1/* string punctuation.section.embedded source */
+, .pl-sr/* string.regexp */
+, .pl-sr .pl-cce/* string.regexp constant.character.escape */
+, .pl-sr .pl-sre/* string.regexp source.ruby.embedded */
+/* string.regexp string.regexp.arbitrary-repitition */
+,
+.pl-sr .pl-sra {
+    color: #183691;
+}
+/* variable */
+.pl-v {
+    color: #ed6a43;
+}
+/* invalid.deprecated */
+.pl-id {
+    color: #b52a1d;
+}
+/* invalid.illegal */
+.pl-ii {
+    color: #f8f8f8;
+    background-color: #b52a1d;
+}
+/* string.regexp constant.character.escape */
+.pl-sr .pl-cce {
+    font-weight: bold;
+    color: #63a35c;
+}
+/* markup.list */
+.pl-ml {
+    color: #693a17;
+}
+.pl-mh/* markup.heading */
+, .pl-mh .pl-en/* markup.heading entity.name */
+/* meta.separator */
+,
+.pl-ms {
+    font-weight: bold;
+    color: #1d3e81;
+}
+/* markup.quote */
+.pl-mq {
+    color: #008080;
+}
+/* markup.italic */
+.pl-mi {
+    font-style: italic;
+    color: #333;
+}
+/* markup.bold */
+.pl-mb {
+    font-weight: bold;
+    color: #333;
+}
+/* markup.deleted, meta.diff.header.from-file */
+.pl-md {
+    color: #bd2c00;
+    background-color: #ffecec;
+}
+/* markup.inserted, meta.diff.header.to-file */
+.pl-mi1 {
+    color: #55a532;
+    background-color: #eaffea;
+}
+/* meta.diff.range */
+.pl-mdr {
+    font-weight: bold;
+    color: #795da3;
+}
+/* meta.output */
+.pl-mo {
+    color: #1d3e81;
+}

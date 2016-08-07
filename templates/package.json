@@ -1,0 +1,73 @@
+{
+  "private": true,
+  "name": "{SLUSH{=slug}}",
+  "version": "{SLUSH{=version}}",
+  "description": "{SLUSH{=description}}",
+  "author": "{SLUSH{=author}}",
+  "generator": "slush-gh-pages v{SLUSH{=generatorVersion}}",
+  "license": "UNLICENSED",
+  "homepage": "https://github.com/{SLUSH{=github}}",
+  "repository": {
+    "type": "git",
+    "url": "git://github.com/{SLUSH{=github}}.git"
+  },
+  "bugs": {
+    "url": "https://github.com/{SLUSH{=github}}/issues"
+  },
+  "scripts": {
+    "clean": "rm -f {assets/stylesheets/*,assets/javascripts/*,assets/images/*}",
+    "autoprefixer": "postcss -u autoprefixer -r assets/stylesheets/*",
+    "scss": "node-sass --output-style compressed -o assets/stylesheets _assets/stylesheets",
+    "lint:js": "eslint _assets/javascripts",
+    "lint:css": "stylelint _assets/stylesheets/**/*.scss --syntax scss",
+    "test": "npm run lint:js && npm run lint:css",
+    "imagemin": "imagemin _assets/images/* -o assets/images",
+    "icons": "svgo -f _assets/images/icons && mkdir -p assets/images && svg-sprite-generate -d _assets/images/icons -o assets/images/icons.svg",
+    "serve": "browser-sync start --server _site --files _site --reload-debounce",
+    "build:jekyll": "JEKYLL_ENV=production jekyll build --config _config.yml",
+    "build:css": "npm run scss && npm run autoprefixer",
+    "build:js": "rollup -c --input _assets/javascripts/scripts.js --output assets/javascripts/scripts.js",
+    "build:images": "npm run imagemin && npm run icons",
+    "build:all": "npm run clean && npm run build:css && npm run build:js && npm run build:images && npm run build:jekyll",
+    "build:watch": "npm run clean && npm run build:css && npm run build:js && npm run build:images",
+    "watch:jekyll": "JEKYLL_ENV=dev jekyll build --config _config.yml,_config-dev.yml --watch",
+    "watch:css": "onchange '_assets/stylesheets' -- npm run build:css",
+    "watch:js": "onchange '_assets/javascripts' -- npm run build:js",
+    "watch:images": "onchange '_assets/images' -- npm run build:images",
+    "watch:all": "npm-run-all -p watch:css watch:js watch:images watch:jekyll serve",
+    "postinstall": "npm run build:all",
+    "preversion": "npm test",
+    "version": "NODE_ENV=production npm run build:all && git add -A assets",
+    "postversion": "git push && git push --tags",
+    "start": "npm run build:watch && npm run watch:all"
+  },
+  "devDependencies": {
+    "autoprefixer": "^6.3.6",
+    "babel-cli": "^6.11.4",
+    "babel-plugin-transform-runtime": "^6.12.0",
+    "babel-preset-es2015-rollup": "github:rollup/babel-preset-es2015-rollup",
+    "babel-preset-stage-0": "^6.5.0",
+    "browser-sync": "^2.14.0",
+    "eslint": "^3.2.2",
+    "eslint-config-standard": "^5.3.1",
+    "eslint-plugin-promise": "^2.0.1",
+    "eslint-plugin-standard": "^2.0.0",
+    "imagemin-cli": "^3.0.0",
+    "node-sass": "^3.7.0",
+    "npm-run-all": "^2.1.1",
+    "onchange": "^2.4.0",
+    "postcss-cli": "^2.5.2",
+    "rollup": "^0.34.3",
+    "rollup-plugin-babel": "^2.6.1",
+    "rollup-plugin-commonjs": "^3.3.1",
+    "rollup-plugin-node-resolve": "^2.0.0",
+    "rollup-plugin-uglify": "^1.0.1",
+    "stylelint": "^7.1.0",
+    "stylelint-config-standard": "^12.0.0",
+    "svg-sprite-generator": "0.0.7",
+    "svgo": "^0.6.6"
+  },
+  "dependencies": {
+    "svg4everybody": "^2.1.0"
+  }
+}
