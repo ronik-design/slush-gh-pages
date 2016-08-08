@@ -1,7 +1,8 @@
 ---
-title: slush-gh-pages
+title: {SLUSH{=name}}
 date: '2016-08-05 00:00:00'
 layout: page
+body_class: body--homepage
 ---
 
 ### [Welcome to GitHub Pages.](#welcome-to-github-pages)

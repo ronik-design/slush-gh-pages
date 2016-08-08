@@ -15,7 +15,7 @@ layout: compress
     <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
     <![endif]-->
   </head>
-  <body>
+  <body {% if page.body_class %}class="{{ page.body_class }}"{% endif %}>
     <div class="wrapper">
 
       {% include header.html %}

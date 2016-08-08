@@ -3,6 +3,7 @@
   "rules": {
     "color-hex-length": null,
     "selector-pseudo-element-colon-notation": "single",
-    "no-invalid-double-slash-comments": null
+    "no-invalid-double-slash-comments": null,
+    "function-name-case": null
   }
 }

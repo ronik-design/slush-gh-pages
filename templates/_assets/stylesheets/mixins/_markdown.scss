@@ -1,0 +1,166 @@
+$markdown-padding: 2rem;
+
+@mixin markdown {
+  word-wrap: break-word;
+
+  p {
+    float: none;
+    padding: 0;
+    margin-left: 0;
+    margin-right: 0;
+    margin-top: $markdown-padding;
+    margin-bottom: $markdown-padding;
+  }
+}
+
+@mixin markdown-typography {
+  font-size: $font-base-size;
+  line-height: $line-height-base;
+  font-weight: 300;
+  font-style: normal;
+  font-family: $font-family-mono;
+  color: getColor(text, primary);
+}
+
+@mixin markdown-headers {
+  h1,
+  h2,
+  h3,
+  h4,
+  h5,
+  h6 {
+    float: none;
+    margin: 0;
+    padding: 0;
+  }
+
+  h1 {
+    position: relative;
+    display: inline-block;
+    display: table-cell;
+    padding: $markdown-padding 0 $markdown-padding * 2;
+    overflow: hidden;
+
+    &:after {
+      content: "====================================================================================================";
+      position: absolute;
+      bottom: $markdown-padding;
+      left: 0;
+    }
+
+    & + * {
+      margin-top: 0;
+    }
+  }
+
+  h2,
+  h3,
+  h4,
+  h5,
+  h6 {
+    position: relative;
+    margin-bottom: $markdown-padding;
+
+    &:before {
+      content: "## ";
+      display: inline;
+    }
+  }
+
+  h3:before {
+    content: "### ";
+  }
+
+  h4:before {
+    content: "#### ";
+  }
+
+  h5:before {
+    content: "##### ";
+  }
+
+  h6:before {
+    content: "###### ";
+  }
+}
+
+@mixin markdown-hr {
+  hr {
+    position: relative;
+    height: $markdown-padding;
+    font-size: 0;
+    line-height: 0;
+    overflow: hidden;
+    border: 0;
+    margin-bottom: $markdown-padding;
+
+    &:after {
+      content: "----------------------------------------------------------------------------------------------------";
+      position: absolute;
+      top: 0;
+      left: 0;
+      font-size: $font-base-size;
+      line-height: $line-height-base;
+      width: 100%;
+      word-wrap: break-word;
+    }
+  }
+}
+
+@mixin markdown-blockquote {
+  blockquote {
+    float: none;
+    padding-top: 0;
+    padding-bottom: 0;
+    margin-top: $markdown-padding;
+    margin-bottom: $markdown-padding;
+    position: relative;
+    padding-left: 17px;
+    padding-left: 2ch;
+    overflow: hidden;
+
+    &:after {
+      content: ">\A>\A>\A>\A>\A>\A>\A>\A>\A>\A>\A>\A>\A>\A>\A>\A>\A>\A>\A>\A>\A>\A>\A>\A>\A>\A>\A>\A>\A>\A>\A>\A>\A>\A>\A>\A>\A>\A>\A>\A>\A>\A>\A>\A>\A>\A>\A>\A>\A>\A>\A>\A>\A>\A>\A>\A>\A>\A>\A>\A>\A>\A>\A>\A>\A>\A>\A>\A>\A>\A>\A>\A>\A>\A>\A>\A>\A>\A>\A>\A>\A>\A>\A>\A>\A>\A>\A>\A>\A>\A>\A>\A>\A>\A>\A>\A>\A>\A>\A>";
+      white-space: pre;
+      position: absolute;
+      top: 0;
+      left: 0;
+      font-size: $font-base-size;
+      line-height: $line-height-base;
+    }
+  }
+}
+
+@mixin markdown-list {
+  ul,
+  ol {
+    margin-top: $markdown-padding;
+    margin-bottom: $markdown-padding;
+  }
+
+  li {
+    position: relative;
+    display: block;
+    padding-left: 34px;
+    padding-left: 4ch;
+
+    &:after {
+      position: absolute;
+      top: 0;
+      left: 0;
+    }
+  }
+
+  ul > li:after {
+    content: "*";
+  }
+
+  ol {
+    counter-reset: ol;
+  }
+
+  ol > li:after {
+    content: counter(ol) ".";
+    counter-increment: ol;
+  }
+}
