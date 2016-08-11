@@ -16,18 +16,17 @@
   },
   "scripts": {
     "clean": "rm -f {assets/stylesheets/*,assets/javascripts/*,assets/images/*}",
-    "autoprefixer": "postcss -u autoprefixer -r assets/stylesheets/styles.css",
+    "postcss": "postcss -u autoprefixer -u postcss-custom-media -u postcss-lh -u postcss-media-minmax -u postcss-pe -u postcss-pr -r assets/stylesheets/styles.css",
     "scss": "node-sass --importer node_modules/node-sass-import --output-style compressed -o assets/stylesheets _assets/stylesheets",
     "scss:dev": "node-sass --importer node_modules/node-sass-import --source-map true -o assets/stylesheets _assets/stylesheets",
     "lint:js": "eslint _assets/javascripts",
     "lint:css": "stylelint _assets/stylesheets/**/*.scss --syntax scss",
-    "test": "npm run lint:js && npm run lint:css && npm run build:jekyll",
     "imagemin": "imagemin _assets/images/* -o assets/images",
     "icons": "svgo -f _assets/images/icons && mkdir -p assets/images && svg-sprite-generate -d _assets/images/icons -o assets/images/icons.svg",
     "serve": "browser-sync start --server _site --files _site --reload-debounce",
     "build:jekyll": "JEKYLL_GITHUB_TOKEN=$(cat .githubtoken) JEKYLL_ENV=production bundle exec jekyll build --config _config.yml",
-    "build:css": "npm run scss && npm run autoprefixer",
-    "build:css:dev": "npm run scss:dev && npm run autoprefixer",
+    "build:css": "npm run scss && npm run postcss",
+    "build:css:dev": "npm run scss:dev && npm run postcss",
     "build:js": "NODE_ENV=production rollup --config --input _assets/javascripts/scripts.js --output assets/javascripts/scripts.js",
     "build:js:dev": "NODE_ENV=development rollup --config --sourcemap --input _assets/javascripts/scripts.js --output assets/javascripts/scripts.js",
     "build:images": "npm run imagemin && npm run icons",
@@ -42,6 +41,7 @@
     "preversion": "npm test",
     "version": "NODE_ENV=production npm run build:all && git add -A assets",
     "postversion": "git push && git push --tags",
+    "test": "npm run lint:js && npm run lint:css && npm run build:jekyll",
     "start": "npm run build:watch && npm run watch"
   },
   "devDependencies": {
@@ -61,6 +61,11 @@
     "npm-run-all": "^2.1.1",
     "onchange": "^2.4.0",
     "postcss-cli": "^2.5.2",
+    "postcss-custom-media": "^5.0.1",
+    "postcss-lh": "^1.1.3",
+    "postcss-media-minmax": "^2.1.2",
+    "postcss-pe": "^1.0.0",
+    "postcss-pr": "^1.0.0",
     "rollup": "^0.34.3",
     "rollup-plugin-babel": "^2.6.1",
     "rollup-plugin-commonjs": "^3.3.1",
@@ -72,7 +77,7 @@
     "svgo": "^0.6.6"
   },
   "dependencies": {
-    "concise.css": "^3.4.0",
+    "concise.css": "github:concisecss/concise.css",
     "svg4everybody": "^2.1.0"
   }
 }

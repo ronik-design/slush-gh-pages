@@ -14,15 +14,13 @@ $markdown-padding: 2rem;
 }
 
 @mixin markdown-typography {
-  font-size: $font-base-size;
-  line-height: $line-height-base;
   font-weight: 300;
   font-style: normal;
   font-family: $font-family-mono;
   color: getColor(text, primary);
 }
 
-@mixin markdown-headers {
+@mixin markdown-headings {
   h1,
   h2,
   h3,
@@ -93,13 +91,14 @@ $markdown-padding: 2rem;
     overflow: hidden;
     border: 0;
     margin-bottom: $markdown-padding;
+    background-color: transparent;
 
     &:after {
       content: "----------------------------------------------------------------------------------------------------";
       position: absolute;
       top: 0;
       left: 0;
-      font-size: $font-base-size;
+      font-size: $font-base-size + pr;
       line-height: $line-height-base;
       width: 100%;
       word-wrap: break-word;
@@ -125,7 +124,7 @@ $markdown-padding: 2rem;
       position: absolute;
       top: 0;
       left: 0;
-      font-size: $font-base-size;
+      font-size: $font-base-size + pr;
       line-height: $line-height-base;
     }
   }

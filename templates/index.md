@@ -1,6 +1,6 @@
 ---
 title: {SLUSH{=name}}
-date: '2016-08-05 00:00:00'
+date: {SLUSH{=now}}
 layout: page
 body_class: body--homepage
 ---

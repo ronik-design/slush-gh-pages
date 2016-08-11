@@ -175,6 +175,7 @@ See: https://help.github.com/articles/creating-an-oauth-token-for-command-line-u
     const config = clone(answers);
 
     config.generatorVersion = pkg.version;
+    config.now = moment.tz(new Date(), answers.timezone).format('YYYY-MM-DD HH:mm:ss Z');
     config.year = moment.tz(new Date(), answers.timezone).format('YYYY');
 
     const authorEmail = answers.author.match(/(<(.+)>)/);

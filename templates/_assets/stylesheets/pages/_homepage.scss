@@ -1,5 +1,6 @@
 .body--homepage {
-  .page {
-    @include markdown-typography();
-  }
+  @include markdown();
+  @include markdown-typography();
+  @include markdown-hr();
+  @include markdown-headings();
 }
