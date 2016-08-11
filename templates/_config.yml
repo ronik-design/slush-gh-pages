@@ -9,7 +9,7 @@ collections:
 
 # Handling Reading
 include:      []
-exclude:      ["node_modules", "package.json"]
+exclude:      ["node_modules", "package.json", "rollup.config.js"]
 keep_files:   []
 encoding:     "utf-8"
 markdown_ext: "markdown,mkdown,mkdn,mkd,md"
@@ -36,6 +36,23 @@ defaults: []
 liquid:
   error_mode: lax
 
+# Required for github-metadata
+repository: {SLUSH{=github}}
+
+# Plugins
+gems:
+  - jekyll-mentions
+  - jemoji
+  - jekyll-redirect-from
+  - jekyll-sitemap
+  - jekyll-feed
+  - jekyll-seo-tag
+  - jekyll-paginate
+  - jekyll-gist
+  {SLUSH{ if (githubToken) { }}
+  - jekyll-github-metadata
+  {SLUSH{ } }}
+
 # Markdown Processors
 kramdown:
   auto_ids:       true
@@ -53,7 +70,7 @@ compress_html:
   comments: []
   endings: []
   ignore:
-    envs: ['dev']
+    envs: ['development']
   blanklines: false
   profile: false
   startings: []

@@ -9,8 +9,7 @@
 ```
 git clone {SLUSH{=githubRepoUrl}}
 cd {SLUSH{=githubRepoName}}
-git checkout gh-pages
-[sudo] gem install jekyll
+git checkout -b gh-pages
 npm install
 npm start
 ```

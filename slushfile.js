@@ -3,11 +3,11 @@
 const gulp = require('gulp');
 const path = require('path');
 const fs = require('fs');
-const url = require('url');
 const async = require('async');
 const install = require('gulp-install');
 const conflict = require('gulp-conflict');
 const template = require('gulp-template');
+const rename = require('gulp-rename');
 const jeditor = require('gulp-json-editor');
 const clone = require('lodash.clone');
 const merge = require('lodash.merge');
@@ -146,7 +146,7 @@ gulp.task('default', done => {
     }]
   }, {
     name: 'github',
-    message: 'GitHub repo name? (e.g. foo/bar, https://github.com/foo/bar.git)',
+    message: 'GitHub repo name? (e.g. foo/bar, https://github.com/foo/bar.git) This is required!',
     validate(str) {
       if (str === null) {
         return false;
@@ -156,6 +156,10 @@ gulp.task('default', done => {
     filter(str) {
       return parseGithubRepo(str);
     }
+  }, {
+    name: 'githubToken',
+    message: `GitHub token? (Required for some plugins. Suggest permissions are 'public_repo' and 'gist')
+See: https://help.github.com/articles/creating-an-oauth-token-for-command-line-use`
   }, {
     type: 'confirm',
     name: 'moveon',
@@ -192,6 +196,7 @@ gulp.task('default', done => {
       const src = [
         `**/*.!(${binaryFileExtensions})`,
         '!CNAME',
+        '!_gitignore',
         '!.DS_Store',
         '!**/.DS_Store',
         '!package.json'
@@ -208,12 +213,21 @@ gulp.task('default', done => {
       const src = [
         `**/*.+(${binaryFileExtensions})`,
         '!CNAME',
+        '!_gitignore',
         '!.DS_Store',
         '!**/.DS_Store',
         '!package.json'
       ];
 
       gulp.src(src, {dot: true, cwd: srcDir, base: srcDir})
+        .pipe(conflict(destDir, {logger: console.log}))
+        .pipe(gulp.dest(destDir))
+        .on('end', cb);
+    };
+
+    const installGitignore = function (cb) {
+      gulp.src('_gitignore', {cwd: srcDir, base: srcDir})
+        .pipe(rename('.gitignore'))
         .pipe(conflict(destDir, {logger: console.log}))
         .pipe(gulp.dest(destDir))
         .on('end', cb);
@@ -254,6 +268,7 @@ gulp.task('default', done => {
       installTextFiles,
       installBinaryFiles,
       installCNAME,
+      installGitignore,
       mergePackageAndInstall
     ];
     async.series(tasks, done);
