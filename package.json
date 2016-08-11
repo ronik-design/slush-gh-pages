@@ -1,7 +1,7 @@
 {
   "name": "slush-gh-pages",
-  "version": "0.1.0",
-  "description": "Generator for GitHub Pages Jekyll-based websites.",
+  "version": "1.0.0",
+  "description": "Slush generator for GitHub Pages Jekyll-based websites.",
   "license": "ISC",
   "engines": {
     "node": ">= 4.0.0"
