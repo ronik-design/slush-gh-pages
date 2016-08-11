@@ -187,14 +187,14 @@ See: https://help.github.com/articles/creating-an-oauth-token-for-command-line-u
     config.githubRepoName = githubParts ? githubParts[2] : '';
     config.githubRepoUrl = `https://github.com/${answers.github}`;
 
-    const binaryFileExtensions = 'png|ico|gif|jpg|jpeg|svg|psd|bmp|webp|webm';
+    const binaryFileExtensions = '.png|.ico|.gif|.jpg|.jpeg|.svg|.psd|.bmp|.webp|.webm';
 
     const srcDir = path.join(__dirname, 'templates');
     const destDir = dest();
 
     const installTextFiles = function (cb) {
       const src = [
-        `**/*.!(${binaryFileExtensions})`,
+        `**/*!(${binaryFileExtensions})`,
         '!CNAME',
         '!_gitignore',
         '!.DS_Store',
