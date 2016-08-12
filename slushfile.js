@@ -113,9 +113,6 @@ gulp.task('default', done => {
     name: 'description',
     message: 'Please describe your site.'
   }, {
-    name: 'keywords',
-    message: 'Please enter some site keywords.'
-  }, {
     name: 'timezone',
     message: 'What is the timezone for your site?',
     default: defaults.timezone
@@ -161,6 +158,9 @@ gulp.task('default', done => {
     message: `GitHub token? (Required for some plugins. Suggest permissions are 'public_repo' and 'gist')
 See: https://help.github.com/articles/creating-an-oauth-token-for-command-line-use`
   }, {
+    name: 'twitter',
+    message: 'Twitter username?'
+  }, {
     type: 'confirm',
     name: 'moveon',
     message: 'Continue?'
@@ -179,13 +179,13 @@ See: https://help.github.com/articles/creating-an-oauth-token-for-command-line-u
     config.year = moment.tz(new Date(), answers.timezone).format('YYYY');
 
     const authorEmail = answers.author.match(/(<(.+)>)/);
-    config.authorName = authorEmail ? answers.author.replace(authorEmail[1], '') : answers.author;
-    config.authorEmail = authorEmail ? authorEmail[2] : '';
+    config.authorName = authorEmail ? answers.author.replace(authorEmail[1], '').trim() : answers.author.trim();
+    config.authorEmail = authorEmail ? authorEmail[2].trim() : '';
 
     const githubParts = answers.github.match(/([^\/].+)\/(.+)/);
-    config.githubAuthorName = githubParts ? githubParts[1] : '';
+    config.githubAuthorName = githubParts ? githubParts[1].trim() : '';
     config.githubAuthorUrl = `https://github.com/${config.githubAuthorName}`;
-    config.githubRepoName = githubParts ? githubParts[2] : '';
+    config.githubRepoName = githubParts ? githubParts[2].trim() : '';
     config.githubRepoUrl = `https://github.com/${answers.github}`;
 
     const binaryFileExtensions = '.png|.ico|.gif|.jpg|.jpeg|.svg|.psd|.bmp|.webp|.webm';
@@ -198,6 +198,8 @@ See: https://help.github.com/articles/creating-an-oauth-token-for-command-line-u
         `**/*!(${binaryFileExtensions})`,
         '!CNAME',
         '!_gitignore',
+        '!_eslintrc',
+        '!_stylelintrc',
         '!.DS_Store',
         '!**/.DS_Store',
         '!package.json'
@@ -215,6 +217,8 @@ See: https://help.github.com/articles/creating-an-oauth-token-for-command-line-u
         `**/*.+(${binaryFileExtensions})`,
         '!CNAME',
         '!_gitignore',
+        '!_eslintrc',
+        '!_stylelintrc',
         '!.DS_Store',
         '!**/.DS_Store',
         '!package.json'
@@ -226,9 +230,11 @@ See: https://help.github.com/articles/creating-an-oauth-token-for-command-line-u
         .on('end', cb);
     };
 
-    const installGitignore = function (cb) {
-      gulp.src('_gitignore', {cwd: srcDir, base: srcDir})
-        .pipe(rename('.gitignore'))
+    const installDotfiles = function (cb) {
+      gulp.src(['_gitignore', '_eslintrc', '_stylelintrc'], {cwd: srcDir, base: srcDir})
+        .pipe(rename(path => {
+          path.basename = path.basename.replace('_', '.');
+        }))
         .pipe(conflict(destDir, {logger: console.log}))
         .pipe(gulp.dest(destDir))
         .on('end', cb);
@@ -269,7 +275,7 @@ See: https://help.github.com/articles/creating-an-oauth-token-for-command-line-u
       installTextFiles,
       installBinaryFiles,
       installCNAME,
-      installGitignore,
+      installDotfiles,
       mergePackageAndInstall
     ];
     async.series(tasks, done);

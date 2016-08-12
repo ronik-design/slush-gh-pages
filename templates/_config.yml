@@ -1,3 +1,9 @@
+# Basics
+title: {SLUSH{=name}}
+description: {SLUSH{=description}}
+url: {SLUSH{=url}}
+author: {SLUSH{=authorName}}
+
 # Where things are
 destination:  ./_site
 layouts_dir:  _layouts

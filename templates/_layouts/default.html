@@ -7,7 +7,8 @@ layout: compress
   <head>
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="chrome=1">
-    <title>{% if page.title %}{{ page.title }}{% else %}{{ site.data.settings.site_name }}{% endif %}</title>
+
+    {% seo %}
 
     <link rel="stylesheet" href="/assets/stylesheets/styles.css">
     <meta name="viewport" content="width=device-width">

@@ -1,18 +1,5 @@
 $markdown-padding: 2rem;
 
-@mixin markdown {
-  word-wrap: break-word;
-
-  p {
-    float: none;
-    padding: 0;
-    margin-left: 0;
-    margin-right: 0;
-    margin-top: $markdown-padding;
-    margin-bottom: $markdown-padding;
-  }
-}
-
 @mixin markdown-typography {
   font-weight: 300;
   font-style: normal;
@@ -127,6 +114,19 @@ $markdown-padding: 2rem;
       font-size: $font-base-size + pr;
       line-height: $line-height-base;
     }
+  }
+}
+
+@mixin markdown-paragraph {
+  word-wrap: break-word;
+
+  p {
+    float: none;
+    padding: 0;
+    margin-left: 0;
+    margin-right: 0;
+    margin-top: $markdown-padding;
+    margin-bottom: $markdown-padding;
   }
 }
 

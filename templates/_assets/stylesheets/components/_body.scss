@@ -1,0 +1,4 @@
+body {
+  @include markdown-typography();
+  @include markdown-hr();
+}
