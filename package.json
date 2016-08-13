@@ -14,6 +14,7 @@
     "url": "git+https://github.com/ronik-design/slush-gh-pages.git"
   },
   "keywords": [
+    "slushgenerator",
     "slush",
     "generator",
     "gh-pages",
