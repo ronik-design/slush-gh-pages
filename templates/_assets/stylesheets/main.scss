@@ -5,7 +5,8 @@
 @import "globals";
 
 // Concise library
-@import "concise.css/concise.scss";
+@import "concise.css/concise";
+@import "concise-utils/concise-utils";
 
 // Custom styles
 @import "mixins";

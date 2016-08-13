@@ -77,6 +77,7 @@
     "svgo": "^0.6.6"
   },
   "dependencies": {
+    "concise-utils": "github:concisecss/concise-utils",
     "concise.css": "github:concisecss/concise.css",
     "svg4everybody": "^2.1.0"
   }
