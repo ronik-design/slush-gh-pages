@@ -14,12 +14,16 @@ collections:
     output:   true
 
 # Handling Reading
-include:      []
-exclude:      ["node_modules", "package.json", "rollup.config.js"]
-keep_files:   []
 encoding:     "utf-8"
 markdown_ext: "markdown,mkdown,mkdn,mkd,md"
-
+keep_files:   []
+include:      []
+exclude:
+  - node_modules
+  - package.json
+  - rollup.config.js
+  - postcss.config.js
+  
 # Filtering Content
 show_drafts: null
 limit_posts: 0
