@@ -161,6 +161,20 @@ See: https://help.github.com/articles/creating-an-oauth-token-for-command-line-u
     name: 'twitter',
     message: 'Twitter username?'
   }, {
+    name: 'framework',
+    message: 'Which CSS & JS framework would you like to use?',
+    type: 'list',
+    choices: [{
+      name: 'Concise CSS (a pure CSS framework, no scripts necessary)',
+      value: 'concise'
+    }, {
+      name: 'Bootstrap (Bootstrap v4, jQuery and support scripts)',
+      value: 'bootstrap'
+    }, {
+      name: 'Blank (nothing at all, just a css stub dir, and some script polyfills)',
+      value: 'blank'
+    }]
+  }, {
     type: 'confirm',
     name: 'moveon',
     message: 'Continue?'
@@ -196,6 +210,10 @@ See: https://help.github.com/articles/creating-an-oauth-token-for-command-line-u
     const installTextFiles = function (cb) {
       const src = [
         `**/*!(${binaryFileExtensions})`,
+        '!_assets/stylesheets',
+        '!_assets/stylesheets/**',
+        '!_assets/javascripts',
+        '!_assets/javascripts/**',
         '!CNAME',
         '!_gitignore',
         '!_eslintrc',
@@ -215,6 +233,10 @@ See: https://help.github.com/articles/creating-an-oauth-token-for-command-line-u
     const installBinaryFiles = function (cb) {
       const src = [
         `**/*.+(${binaryFileExtensions})`,
+        '!_assets/stylesheets',
+        '!_assets/stylesheets/**',
+        '!_assets/javascripts',
+        '!_assets/javascripts/**',
         '!CNAME',
         '!_gitignore',
         '!_eslintrc',
@@ -234,6 +256,43 @@ See: https://help.github.com/articles/creating-an-oauth-token-for-command-line-u
       gulp.src(['_gitignore', '_eslintrc', '_stylelintrc'], {cwd: srcDir, base: srcDir})
         .pipe(rename(path => {
           path.basename = path.basename.replace('_', '.');
+        }))
+        .pipe(conflict(destDir, {logger: console.log}))
+        .pipe(gulp.dest(destDir))
+        .on('end', cb);
+    };
+
+    const installStylesheetFiles = function (cb) {
+      const src = [
+        `_assets/stylesheets/${config.framework}/**/*`,
+        '!.DS_Store',
+        '!**/.DS_Store'
+      ];
+
+      gulp.src(src, {dot: true, cwd: srcDir, base: srcDir})
+        .pipe(template(config, TEMPLATE_SETTINGS))
+        .pipe(rename(filepath => {
+          filepath.dirname = filepath.dirname.replace(`/${config.framework}`, '');
+          return;
+        }))
+        .pipe(conflict(destDir, {logger: console.log}))
+        .pipe(gulp.dest(destDir))
+        .on('end', cb);
+    };
+
+    const installJavascriptFiles = function (cb) {
+      const framework = config.framework === 'concise' ? 'blank' : config.framework;
+      const src = [
+        `_assets/javascripts/${framework}/**/*`,
+        '!.DS_Store',
+        '!**/.DS_Store'
+      ];
+
+      gulp.src(src, {dot: true, cwd: srcDir, base: srcDir})
+        .pipe(template(config, TEMPLATE_SETTINGS))
+        .pipe(rename(filepath => {
+          filepath.dirname = filepath.dirname.replace(`/${config.framework}`, '');
+          return;
         }))
         .pipe(conflict(destDir, {logger: console.log}))
         .pipe(gulp.dest(destDir))
@@ -276,6 +335,8 @@ See: https://help.github.com/articles/creating-an-oauth-token-for-command-line-u
       installBinaryFiles,
       installCNAME,
       installDotfiles,
+      installStylesheetFiles,
+      installJavascriptFiles,
       mergePackageAndInstall
     ];
     async.series(tasks, done);

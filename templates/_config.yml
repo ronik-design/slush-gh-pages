@@ -23,7 +23,10 @@ exclude:
   - package.json
   - rollup.config.js
   - postcss.config.js
-  
+  - Gemfile
+  - Gemfile.lock
+  - README.md
+
 # Filtering Content
 show_drafts: null
 limit_posts: 0

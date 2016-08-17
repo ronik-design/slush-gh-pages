@@ -1,10 +1,12 @@
-$markdown-padding: 2rem;
-
 @mixin markdown-typography {
   font-weight: 300;
   font-style: normal;
   font-family: $font-family-mono;
   color: getColor(text, primary);
+
+  strong {
+    font-weight: bold;
+  }
 }
 
 @mixin markdown-headings {
@@ -14,6 +16,7 @@ $markdown-padding: 2rem;
   h4,
   h5,
   h6 {
+    font-family: $font-family-headings;
     float: none;
     margin: 0;
     padding: 0;
@@ -23,13 +26,14 @@ $markdown-padding: 2rem;
     position: relative;
     display: inline-block;
     display: table-cell;
-    padding: $markdown-padding 0 $markdown-padding * 2;
+    padding: $spacing-m 0 $spacing-m * 2.2;
     overflow: hidden;
 
     &:after {
-      content: "====================================================================================================================================================================================================================================================================================";
+      font-family: $font-family-mono;
+      content: "====================================================================================================";
       position: absolute;
-      bottom: $markdown-padding;
+      bottom: $spacing-m;
       left: 0;
     }
 
@@ -44,7 +48,7 @@ $markdown-padding: 2rem;
   h5,
   h6 {
     position: relative;
-    margin-bottom: $markdown-padding;
+    margin-bottom: $spacing-m;
 
     &:before {
       content: "## ";
@@ -72,21 +76,21 @@ $markdown-padding: 2rem;
 @mixin markdown-hr {
   hr {
     position: relative;
-    height: $markdown-padding;
+    height: $spacing-m;
     font-size: 0;
     line-height: 0;
     overflow: hidden;
     border: 0;
-    margin-bottom: $markdown-padding;
+    margin-bottom: $spacing-m;
     background-color: transparent;
 
     &:after {
-      content: "----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------";
+      content: "------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------";
       position: absolute;
       top: 0;
       left: 0;
       font-size: $font-base-size + pr;
-      line-height: $line-height-base;
+      line-height: 1lh;
       width: 100%;
       word-wrap: break-word;
     }
@@ -98,21 +102,21 @@ $markdown-padding: 2rem;
     float: none;
     padding-top: 0;
     padding-bottom: 0;
-    margin-top: $markdown-padding;
-    margin-bottom: $markdown-padding;
+    margin-top: $spacing-m;
+    margin-bottom: $spacing-m;
     position: relative;
     padding-left: 17px;
     padding-left: 2ch;
     overflow: hidden;
 
     &:after {
-      content: ">\A>\A>\A>\A>\A>\A>\A>\A>\A>\A>\A>\A>\A>\A>\A>\A>\A>\A>\A>\A>\A>\A>\A>\A>\A>\A>\A>\A>\A>\A>\A>\A>\A>\A>\A>\A>\A>\A>\A>\A>\A>\A>\A>\A>\A>\A>\A>\A>\A>\A>\A>\A>\A>\A>\A>\A>\A>\A>\A>\A>\A>\A>\A>\A>\A>\A>\A>\A>\A>\A>\A>\A>\A>\A>\A>\A>\A>\A>\A>\A>\A>\A>\A>\A>\A>\A>\A>\A>\A>\A>\A>\A>\A>\A>\A>\A>\A>\A>\A>";
+      content: ">\A>\A>\A>\A>\A>\A>\A>\A>\A>\A>\A>\A>\A>\A>\A>\A>\A>\A>\A>\A>\A>\A>\A>\A>\A>\A>\A>\A>\A>\A>\A>\A>\A>\A>\A>\A>\A>\A>\A>\A>\A>\A>\A>\A>\A>\A>\A>\A>\A>\A>\A>\A>\A>\A>\A>\A>\A>\A>\A>\A>\A>\A>\A>\A>\A>\A>\A>\A>\A>\A>\A>\A>\A>\A>\A>\A>\A>\A>\A>\A>\A>\A>\A>\A>\A>\A>\A>\A>\A>\A>\A>\A>\A>\A>\A>\A>\A>\A>\A>\A>\A>\A>\A>\A>\A>\A>\A>\A>\A>\A>\A>\A>\A>\A>\A>\A>\A>\A>\A>\A>\A>\A>\A>\A>\A>\A>\A>\A>\A>";
       white-space: pre;
       position: absolute;
       top: 0;
       left: 0;
       font-size: $font-base-size + pr;
-      line-height: $line-height-base;
+      line-height: 1lh;
     }
   }
 }
@@ -125,16 +129,16 @@ $markdown-padding: 2rem;
     padding: 0;
     margin-left: 0;
     margin-right: 0;
-    margin-top: $markdown-padding;
-    margin-bottom: $markdown-padding;
+    // margin-top: $spacing-m;
+    margin-bottom: 1lh;
   }
 }
 
 @mixin markdown-list {
   ul,
   ol {
-    margin-top: $markdown-padding;
-    margin-bottom: $markdown-padding;
+    margin-top: $spacing-m;
+    margin-bottom: $spacing-m;
   }
 
   li {
@@ -142,6 +146,10 @@ $markdown-padding: 2rem;
     display: block;
     padding-left: 34px;
     padding-left: 4ch;
+
+    p {
+      margin-bottom: 0.5lh;
+    }
 
     &:after {
       position: absolute;
