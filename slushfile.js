@@ -78,30 +78,35 @@ const parseGithubRepo = function (str) {
 gulp.task('default', done => {
   const prompts = [{
     name: 'name',
-    message: 'What is the PRETTY name of your site?',
+    message: `What is the PRETTY name of your site?
+>`,
     default: defaults.name
   }, {
     name: 'slug',
-    message: 'What is the name SLUG for your site?',
+    message: `What is the name SLUG for your site?
+>`,
     default: defaults.slug,
     validate(slug) {
       return slug === slugify(slug);
     }
   }, {
     name: 'url',
-    message: 'What is the url for your site?',
+    message: `What is the url for your site?
+>`,
     default(answers) {
       return `http://www.${answers.slug}.com`;
     }
   }, {
     name: 'hostname',
-    message: 'What is the hostname for your site? [Leave blank if not using a custom domain]',
+    message: `What is the hostname for your site? [Leave blank if not using a custom domain]
+>`,
     default() {
       return false;
     }
   }, {
     name: 'author',
-    message: 'Who is authoring the site?',
+    message: `Who is authoring the site?
+>`,
     default() {
       let author = defaults.userName;
       if (defaults.authorEmail) {
@@ -111,39 +116,48 @@ gulp.task('default', done => {
     }
   }, {
     name: 'description',
-    message: 'Please describe your site.'
+    message: `Please describe your site.
+>`
   }, {
     name: 'timezone',
-    message: 'What is the timezone for your site?',
+    message: `What is the timezone for your site?
+>`,
     default: defaults.timezone
   }, {
     name: 'version',
-    message: 'What is the version of your site?',
+    message: `What is the version of your site?
+>`,
     default: '0.1.0'
   }, {
     name: 'permalink',
-    message: 'Which permalink pattern would you like to use?',
+    message: `Which permalink pattern would you like to use?
+>`,
     type: 'list',
     choices: [{
       name: 'Date',
-      message: '/:categories/:year/:month/:day/:title.html',
+      message: `/:categories/:year/:month/:day/:title.html
+>`,
       value: 'date'
     }, {
       name: 'Pretty',
-      message: '/:categories/:year/:month/:day/:title/',
+      message: `/:categories/:year/:month/:day/:title/
+>`,
       value: 'pretty'
     }, {
       name: 'Ordinal',
-      message: '/:categories/:year/:y_day/:title.html',
+      message: `/:categories/:year/:y_day/:title.html
+>`,
       value: 'ordinal'
     }, {
       name: 'None',
-      message: '/:categories/:title.html',
+      message: `/:categories/:title.html
+>`,
       value: 'none'
     }]
   }, {
     name: 'github',
-    message: 'GitHub repo name? (e.g. foo/bar, https://github.com/foo/bar.git) This is required!',
+    message: `GitHub repo name? (e.g. foo/bar, https://github.com/foo/bar.git) This is required!
+>`,
     validate(str) {
       if (str === null) {
         return false;
@@ -155,11 +169,12 @@ gulp.task('default', done => {
     }
   }, {
     name: 'githubToken',
-    message: `GitHub token? (Required for some plugins. Suggest permissions are 'public_repo' and 'gist')
-See: https://help.github.com/articles/creating-an-oauth-token-for-command-line-use`
+    message: `GitHub token? (Required for some plugins. Suggested permissions are 'public_repo' and 'gist'. See: https://git.io/v61m7)
+>`
   }, {
     name: 'twitter',
-    message: 'Twitter username?'
+    message: `Twitter username?
+>`
   }, {
     name: 'framework',
     message: 'Which CSS & JS framework would you like to use?',
@@ -215,6 +230,7 @@ See: https://help.github.com/articles/creating-an-oauth-token-for-command-line-u
         '!_assets/javascripts',
         '!_assets/javascripts/**',
         '!CNAME',
+        '!_githubtoken',
         '!_gitignore',
         '!_eslintrc',
         '!_stylelintrc',
@@ -238,6 +254,7 @@ See: https://help.github.com/articles/creating-an-oauth-token-for-command-line-u
         '!_assets/javascripts',
         '!_assets/javascripts/**',
         '!CNAME',
+        '!_githubtoken',
         '!_gitignore',
         '!_eslintrc',
         '!_stylelintrc',
@@ -257,6 +274,20 @@ See: https://help.github.com/articles/creating-an-oauth-token-for-command-line-u
         .pipe(rename(path => {
           path.basename = path.basename.replace('_', '.');
         }))
+        .pipe(conflict(destDir, {logger: console.log}))
+        .pipe(gulp.dest(destDir))
+        .on('end', cb);
+    };
+
+    const installGithubtoken = function (cb) {
+      if (!config.githubtoken) {
+        return cb();
+      }
+      gulp.src(['_githubtoken'], {cwd: srcDir, base: srcDir})
+        .pipe(rename(path => {
+          path.basename = path.basename.replace('_', '.');
+        }))
+        .pipe(template(config, TEMPLATE_SETTINGS))
         .pipe(conflict(destDir, {logger: console.log}))
         .pipe(gulp.dest(destDir))
         .on('end', cb);
@@ -335,6 +366,7 @@ See: https://help.github.com/articles/creating-an-oauth-token-for-command-line-u
       installBinaryFiles,
       installCNAME,
       installDotfiles,
+      installGithubtoken,
       installStylesheetFiles,
       installJavascriptFiles,
       mergePackageAndInstall
