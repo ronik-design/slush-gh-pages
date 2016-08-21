@@ -312,9 +312,12 @@ gulp.task('default', done => {
     };
 
     const installJavascriptFiles = function (cb) {
-      const framework = config.framework === 'concise' ? 'blank' : config.framework;
+      let jsFramework = config.framework;
+      if (jsFramework === 'concise') {
+        jsFramework = 'blank';
+      }
       const src = [
-        `_assets/javascripts/${framework}/**/*`,
+        `_assets/javascripts/${jsFramework}/**/*`,
         '!.DS_Store',
         '!**/.DS_Store'
       ];
@@ -322,7 +325,7 @@ gulp.task('default', done => {
       gulp.src(src, {dot: true, cwd: srcDir, base: srcDir})
         .pipe(template(config, TEMPLATE_SETTINGS))
         .pipe(rename(filepath => {
-          filepath.dirname = filepath.dirname.replace(`/${config.framework}`, '');
+          filepath.dirname = filepath.dirname.replace(`/${jsFramework}`, '');
           return;
         }))
         .pipe(conflict(destDir, {logger: console.log}))
