@@ -1,5 +1,10 @@
 # slush-gh-pages [![npm version](https://badge.fury.io/js/slush-gh-pages.svg)](https://badge.fury.io/js/slush-gh-pages)
-Slush generator for GitHub Pages Jekyll-based websites.
+
+A [Slush](http://slushjs.github.io) generator for GitHub Pages that provides robust tooling for created sophisticated Jekyll-based static websites.
+
+### Goals
+
+The goal of this project is to make it incredibly easy to get up-and-running with a GitHub Pages site that goes beyond the simple templates they offer. This generator has incorporated many of the best practices for building Jekyll-based sites, and adds in a number of helpful, Node.js-based development tools. A key focus is on simplicity, so in general the only commands you'll need to use in your project are `npm start` and `npm version`. `npm start` will launch your local development environment, and watch your JS, SCSS, image and icon assets for changes to automatically recompile them, and `npm version [patch|minor|major]` will increment your version identifier and commit your project to your GitHub repository, effectively deploying the latest version of your site.
 
 ### To use
 
