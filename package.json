@@ -1,7 +1,7 @@
 {
   "name": "slush-gh-pages",
   "version": "1.4.2",
-  "description": "Slush generator for GitHub Pages Jekyll-based websites.",
+  "description": "A Slush generator for GitHub Pages that provides robust tooling for creating sophisticated Jekyll-based static websites.",
   "license": "ISC",
   "engines": {
     "node": ">= 4.0.0"
@@ -19,7 +19,11 @@
     "generator",
     "gh-pages",
     "jekyll",
-    "github"
+    "github",
+    "static site",
+    "ssg",
+    "tooling",
+    "free hosting"
   ],
   "author": "Michael Shick <m@shick.us>",
   "bugs": {
