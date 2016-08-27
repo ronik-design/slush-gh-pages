@@ -52,4 +52,6 @@ In lieu of real documentation, just be prepared to answer the following question
 * Which CSS & JS framework would you like to use?  
   - [Concise.css](http://concisecss.com)
   - [Bootstrap v4](https://getbootstrap.com)
+  - [Bootstrap v3](https://getbootstrap.com)
   - Blank — just some stub files and directories.
+* If you chose Bootstrap v3 you will also have the option to select a [Bootswatch](https://bootswatch.com)
