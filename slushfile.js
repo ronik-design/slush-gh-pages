@@ -2,7 +2,6 @@
 
 const gulp = require('gulp');
 const path = require('path');
-const fs = require('fs');
 const async = require('async');
 const install = require('gulp-install');
 const conflict = require('gulp-conflict');
@@ -20,6 +19,11 @@ const slugify = require('./utils/slugify');
 const getBootswatchThemes = require('./utils/get-bootswatch-themes');
 
 const pkg = require('./package.json');
+
+// TODO: Replace is isTextOrBinary module for better safety
+const BINARY_EXTENSIONS = [
+  '.png', '.ico', '.gif', '.jpg', '.jpeg', '.svg', '.psd', '.bmp', '.webp', '.webm'
+];
 
 const TEMPLATE_SETTINGS = {
   evaluate: /\{SLUSH\{(.+?)\}\}/g,
@@ -81,7 +85,12 @@ gulp.task('default', done => {
     name: 'version',
     message: `What is the version of your site?
 >`,
-    default: '0.1.0'
+    default() {
+      if (defaults.pkg && defaults.pkg.version) {
+        return defaults.pkg.version;
+      }
+      return '0.1.0';
+    }
   }, {
     name: 'permalink',
     message: `Which permalink pattern would you like to use?
@@ -185,7 +194,7 @@ gulp.task('default', done => {
     config.githubRepoName = githubParts ? githubParts[2].trim() : '';
     config.githubRepoUrl = `https://github.com/${answers.github}`;
 
-    const binaryFileExtensions = '.png|.ico|.gif|.jpg|.jpeg|.svg|.psd|.bmp|.webp|.webm';
+    const binaryFileExtensions = BINARY_EXTENSIONS.join('|');
 
     const srcDir = path.join(__dirname, 'templates');
     const destDir = dest();
@@ -314,10 +323,9 @@ gulp.task('default', done => {
     };
 
     const mergePackageAndInstall = function (cb) {
-      const pkgMerge = function (pkg) {
-        if (fs.existsSync(dest('package.json'))) {
-          const existingPkg = require(dest('package.json'));
-          return merge(existingPkg, pkg);
+      const pkgMerge = pkg => {
+        if (defaults.pkg) {
+          return merge(defaults.pkg, pkg);
         }
         return pkg;
       };

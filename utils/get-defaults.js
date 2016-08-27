@@ -1,9 +1,11 @@
 'use strict';
 
+const fs = require('fs');
 const iniparser = require('iniparser');
 const moment = require('moment-timezone');
 const slugify = require('./slugify');
 const format = require('./format');
+const dest = require('./dest');
 
 function getDefaults() {
   const homeDir = process.env.HOME || process.env.HOMEPATH || process.env.USERPROFILE;
@@ -21,8 +23,14 @@ function getDefaults() {
 
   let user = {};
 
-  if (require('fs').existsSync(configFile)) {
+  if (fs.existsSync(configFile)) {
     user = iniparser.parseSync(configFile).user || {};
+  }
+
+  let pkg;
+
+  if (fs.existsSync(dest('package.json'))) {
+    pkg = require(dest('package.json'));
   }
 
   return {
@@ -30,7 +38,8 @@ function getDefaults() {
     slug: slugify(workingDirNoExt),
     userName: format(user.name) || osUserName,
     authorEmail: user.email || '',
-    timezone: moment.tz.guess()
+    timezone: moment.tz.guess(),
+    pkg
   };
 }
 
