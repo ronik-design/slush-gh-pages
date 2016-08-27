@@ -39,6 +39,8 @@ In lieu of real documentation, just be prepared to answer the following question
 * What is the hostname for your site? [Leave blank if not using a custom domain]  
   - This will create or modify your `CNAME` file for a custom domain.
 * Who is authoring the site?
+* Twitter username?
+  - [jekyll-seo-tag](https://github.com/jekyll/jekyll-seo-tag) is installed by default, and can make use of this. 
 * Please describe your site.
 * What is the timezone for your site?
   - This will detect your system TZ as the default.
@@ -47,8 +49,6 @@ In lieu of real documentation, just be prepared to answer the following question
 * GitHub repo name? (e.g. foo/bar, https://github.com/foo/bar.git) This is required!
   - Because some of the GitHub Pages modules will fail without this, and I think they are important for the whole process, please have this ready, even if you haven't added any files to your repo just yet.
 * GitHub token? (Required for some plugins. Suggested permissions are 'public_repo' and 'gist'. See: [Creating an access token for command-line use](https://git.io/v61m7))
-* Twitter username?
-  - [jekyll-seo-tag](https://github.com/jekyll/jekyll-seo-tag) is installed by default, and can make use of this.
 * Which CSS & JS framework would you like to use?  
   - [Concise.css](http://concisecss.com)
   - [Bootstrap v4](https://getbootstrap.com)
