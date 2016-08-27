@@ -4,7 +4,9 @@ A [Slush](http://slushjs.github.io) generator for GitHub Pages that provides rob
 
 ### Goals
 
-The goal of this project is to make it incredibly easy to get up-and-running with a GitHub Pages site that goes beyond the simple templates they offer. This generator has incorporated many of the best practices for building Jekyll-based sites, and adds in a number of helpful, Node.js-based development tools. A key focus is on simplicity, so in general the only commands you'll need to use in your project are `npm start` and `npm version`. `npm start` will launch your local development environment, and watch your JS, SCSS, image and icon assets for changes to automatically recompile them, and `npm version [patch|minor|major]` will increment your version identifier and commit your project to your GitHub repository, effectively deploying the latest version of your site.
+The goal of this project is to make it incredibly easy to get up-and-running with a GitHub Pages site that goes beyond the simple templates they offer. This generator has incorporated many of the best practices for building Jekyll-based sites, and adds in a number of helpful, Node.js-based development tools. 
+
+A key focus is on simplicity, so in general the only commands you'll need to use in your project are `npm start` and `npm version`. `npm start` will launch your local development environment, and watch your JS, SCSS, image and icon assets for changes to automatically recompile them, and `npm version [patch|minor|major]` will increment your version identifier and commit your project to your GitHub repository, effectively deploying the latest version of your site.
 
 ### To use
 
@@ -25,10 +27,30 @@ git checkout -b gh-pages
 slush gh-pages
 ```
 
-> GitHub provides several options for the location of your GitHub Pages source. `gh-pages` has been around the longest. See: [User, Organization, and Project Pages](https://git.io/v6hek)
+> GitHub provides several options for the location of your GitHub Pages source. `gh-pages` has been around the longest. See: [User, Organization, and Project Pages](https://git.io/v6hek)  
 
 > If you attempt to run Jekyll with the configured modules, and no git repo in your current directory you will encounter some anomalies or errors after running `npm start`.
 
+### What you get
+
+* `_assets/javascripts` - build your JS app using ES6, Babel (with [transform-runtime](https://babeljs.io/docs/plugins/transform-runtime/) handling polyfills) , Uglify, Rollup.js and any selected framework libraries. Configure your build in the generated `rollup.config.js`.
+* `_assets/stylesheets` - build your stylesheets using SCSS, PostCSS and any selected frameworks. Configure your PostCSS build in the generated `postcss.config.js`.
+* `_assets/images` - any images here will be automatically optimized via imagemin.
+* `_assets/images/icons` - any `svg` files placed here will automatically be compiled into a svg-sprite.
+* `_layouts/compress.html` - the [Jekyll HTML compressor](http://jch.penibelst.de)
+* `package.json` - build and watch scripts.
+* Gems - all the github supported plugins are enabled, giving you some great features
+  * the [github-pages](https://github.com/github/pages-gem) Ruby gem, replicating the deployed environment locally
+  * jekyll-mentions
+  * jemoji
+  * jekyll-redirect-from
+  * jekyll-sitemap
+  * jekyll-feed
+  * jekyll-seo-tag
+  * jekyll-paginate
+  * jekyll-gist
+  * jekyll-github-metadata
+  
 ### Q&A
 
 In lieu of real documentation, just be prepared to answer the following questions. Sensible defaults are offered where available.
