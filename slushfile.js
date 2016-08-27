@@ -9,12 +9,15 @@ const conflict = require('gulp-conflict');
 const template = require('gulp-template');
 const rename = require('gulp-rename');
 const jeditor = require('gulp-json-editor');
-const clone = require('lodash.clone');
-const merge = require('lodash.merge');
-const slugify = require('uslug');
+const clone = require('lodash/clone');
+const merge = require('lodash/merge');
 const inquirer = require('inquirer');
-const iniparser = require('iniparser');
 const moment = require('moment-timezone');
+const parseGithubRepo = require('./utils/parse-github-repo');
+const getDefaults = require('./utils/get-defaults');
+const dest = require('./utils/dest');
+const slugify = require('./utils/slugify');
+const getBootswatchThemes = require('./utils/get-bootswatch-themes');
 
 const pkg = require('./package.json');
 
@@ -24,56 +27,7 @@ const TEMPLATE_SETTINGS = {
   escape: /\{SLUSH\{-(.+?)\}\}/g
 };
 
-const format = function (string) {
-  if (string) {
-    return string.toLowerCase().replace(/\s/g, '');
-  }
-  return '';
-};
-
-const dest = function (filepath) {
-  return path.resolve(process.cwd(), filepath || './');
-};
-
-const defaults = (function () {
-  const homeDir = process.env.HOME || process.env.HOMEPATH || process.env.USERPROFILE;
-  const workingDirName = process.cwd().split('/').pop().split('\\').pop();
-  const workingDirNoExt = workingDirName.replace(/\.[a-z]{2,3}$/, '');
-
-  let osUserName;
-  if (homeDir && homeDir.split('/').pop()) {
-    osUserName = homeDir.split('/').pop();
-  } else {
-    osUserName = 'root';
-  }
-
-  const configFile = `${homeDir}/.gitconfig`;
-
-  let user = {};
-
-  if (require('fs').existsSync(configFile)) {
-    user = iniparser.parseSync(configFile).user || {};
-  }
-
-  return {
-    name: workingDirName,
-    slug: slugify(workingDirNoExt),
-    userName: format(user.name) || osUserName,
-    authorEmail: user.email || '',
-    timezone: moment.tz.guess()
-  };
-})();
-
-const parseGithubRepo = function (str) {
-  const githubRe = /(?:https?:\/\/github.com)?\/?([^\/.]+\/[^\/]+)(?:\.git)?$/i;
-  const match = str.match(githubRe);
-
-  if (match && match[1]) {
-    return match[1].replace(/\.git$/, '');
-  }
-
-  return null;
-};
+const defaults = getDefaults();
 
 gulp.task('default', done => {
   const prompts = [{
@@ -183,12 +137,26 @@ gulp.task('default', done => {
       name: 'Concise CSS (a pure CSS framework, no scripts necessary)',
       value: 'concise'
     }, {
-      name: 'Bootstrap (Bootstrap v4, jQuery and support scripts)',
-      value: 'bootstrap'
+      name: 'Bootstrap v4 (jQuery and support scripts)',
+      value: 'bootstrap4'
+    }, {
+      name: 'Bootstrap v3 + Bootswatch (jQuery and support scripts)',
+      value: 'bootstrap3'
     }, {
       name: 'Blank (nothing at all, just a css stub dir, and some script polyfills)',
       value: 'blank'
     }]
+  }, {
+    name: 'bootswatch',
+    message: 'Which Bootswatch template would you like?',
+    type: 'list',
+    choices() {
+      const choices = [{
+        name: '- None -',
+        value: 'none'
+      }];
+      return getBootswatchThemes().then(themes => choices.concat(themes));
+    }
   }, {
     type: 'confirm',
     name: 'moveon',

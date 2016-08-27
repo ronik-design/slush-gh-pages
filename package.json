@@ -40,6 +40,7 @@
   },
   "dependencies": {
     "async": "^2.0.0-rc.4",
+    "axios": "^0.13.1",
     "gulp": "^3.9.1",
     "gulp-conflict": "^0.4.0",
     "gulp-ignore": "^2.0.1",
@@ -49,10 +50,8 @@
     "gulp-template": "^4.0.0",
     "iniparser": "^1.0.5",
     "inquirer": "^1.0.2",
-    "lodash.clone": "^4.3.2",
-    "lodash.merge": "^4.3.5",
-    "moment-timezone": "^0.5.4",
-    "uslug": "^1.0.4"
+    "lodash": "^4.15.0",
+    "moment-timezone": "^0.5.4"
   },
   "eslintConfig": {
     "extends": "ronik"
