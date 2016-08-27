@@ -24,3 +24,13 @@ npm start
 git commit -am "message here"
 npm version [patch|minor|major]
 ```
+
+> `npm` required that you have a clean repo (no modified files) before running `npm version`
+
+### Files and directories
+
+* `_assets/javascripts/main.js` - write your JS app using ES6, Babel (with [transform-runtime](https://babeljs.io/docs/plugins/transform-runtime/) handling polyfills), Uglify, Rollup.js and any selected framework libraries. Configure your build in the generated `rollup.config.js`.
+* `_assets/stylesheets/main.scss` - write your stylesheets using SCSS, PostCSS and any selected frameworks. Configure your PostCSS build in the generated `postcss.config.js`.
+* `_assets/images` - any images here will be automatically optimized via imagemin.
+* `_assets/images/icons` - any `svg` files placed here will automatically be compiled into a svg-sprite.
+* `_assets/fonts` - if you chose Bootstrap v3 Glyphicons will be copied here during install, otherwise use as you see fit.
