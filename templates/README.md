@@ -34,3 +34,4 @@ npm version [patch|minor|major]
 * `_assets/images` - any images here will be automatically optimized via imagemin.
 * `_assets/images/icons` - any `svg` files placed here will automatically be compiled into a svg-sprite.
 * `_assets/fonts` - if you chose Bootstrap v3 Glyphicons will be copied here during install, otherwise use as you see fit.
+* `.githubtoken` - this is your API token. It is ignored by default. Don't commit it, unless you really know what you're doing!
