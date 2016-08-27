@@ -75,7 +75,6 @@ kramdown:
   smart_quotes:   lsquo,rsquo,ldquo,rdquo
   input:          GFM
   hard_wrap:      false
-  footnote_nr:    1
 
 # Html Compressor
 compress_html:

@@ -4,6 +4,7 @@
     "color-hex-length": null,
     "selector-pseudo-element-colon-notation": "single",
     "no-invalid-double-slash-comments": null,
-    "function-name-case": null
+    "function-name-case": null,
+    "unit-no-unknown": null
   }
 }

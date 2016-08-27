@@ -3,6 +3,8 @@
 const fs = require('fs');
 const iniparser = require('iniparser');
 const moment = require('moment-timezone');
+const trim = require('lodash/trim');
+const yaml = require('js-yaml');
 const slugify = require('./slugify');
 const format = require('./format');
 const dest = require('./dest');
@@ -22,31 +24,91 @@ function getDefaults() {
   const configFile = `${homeDir}/.gitconfig`;
 
   let user = {};
-
   if (fs.existsSync(configFile)) {
     user = iniparser.parseSync(configFile).user || {};
   }
 
-  let pkg;
+  let userName = format(user.name) || osUserName;
+  let authorEmail = user.email || '';
 
+  let pkg;
   if (fs.existsSync(dest('package.json'))) {
     pkg = require(dest('package.json'));
   }
 
   let githubToken;
-
   if (fs.existsSync(dest('.githubtoken'))) {
-    githubToken = fs.readFileSync(dest('.githubtoken'));
+    githubToken = trim(fs.readFileSync(dest('.githubtoken'), 'utf8'));
+  }
+
+  let hostname;
+  if (fs.existsSync(dest('CNAME'))) {
+    hostname = trim(fs.readFileSync(dest('CNAME'), 'utf8'));
+  }
+
+  let config;
+  if (fs.existsSync(dest('_config.yml'))) {
+    try {
+      config = yaml.safeLoad(fs.readFileSync(dest('_config.yml'), 'utf8'));
+    } catch (e) {}
+  }
+
+  let authors;
+  if (fs.existsSync(dest('_data/authors.yml'))) {
+    try {
+      authors = yaml.safeLoad(fs.readFileSync(dest('_data/authors.yml'), 'utf8'));
+    } catch (e) {}
+  }
+
+  let name = workingDirName;
+  if (config && config.title) {
+    name = config.title;
+  } else if (pkg && pkg.name) {
+    name = pkg.name;
+  }
+
+  let description;
+  if (config && config.description) {
+    description = config.description;
+  } else if (pkg && pkg.description) {
+    description = pkg.description;
+  }
+
+  let url;
+  if (config && config.url) {
+    url = config.url;
+  } else if (pkg && pkg.homepage) {
+    url = pkg.homepage;
+  }
+
+  let author = userName;
+  let twitter;
+
+  if (authorEmail) {
+    author += ` <${authorEmail}>`;
+  }
+  if (config && authors && authors[config.author]) {
+    const siteAuthor = authors[config.author];
+    author = `${config.author} <${siteAuthor.email}>`;
+    twitter = siteAuthor.twitter;
+  } else if (pkg && pkg.author) {
+    author = pkg.author;
   }
 
   return {
-    name: workingDirName,
+    name,
+    description,
+    url,
     slug: slugify(workingDirNoExt),
+    author,
+    twitter,
     userName: format(user.name) || osUserName,
     authorEmail: user.email || '',
     timezone: moment.tz.guess(),
     pkg,
-    githubToken
+    githubToken,
+    hostname,
+    config
   };
 }
 

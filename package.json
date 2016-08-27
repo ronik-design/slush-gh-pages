@@ -50,6 +50,7 @@
     "gulp-template": "^4.0.0",
     "iniparser": "^1.0.5",
     "inquirer": "^1.0.2",
+    "js-yaml": "^3.6.1",
     "lodash": "^4.15.0",
     "moment-timezone": "^0.5.4"
   },

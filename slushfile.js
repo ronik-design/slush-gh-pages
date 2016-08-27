@@ -36,91 +36,87 @@ const defaults = getDefaults();
 gulp.task('default', done => {
   const prompts = [{
     name: 'name',
+    default: defaults.name,
+    validate(str) {
+      if (!str) {
+        return false;
+      }
+      return true;
+    },
     message: `What is the PRETTY name of your site?
->`,
-    default: defaults.name
+>`
   }, {
     name: 'slug',
-    message: `What is the name SLUG for your site?
->`,
-    default: defaults.slug,
+    default(answers) {
+      return slugify(answers.name);
+    },
     validate(slug) {
       return slug === slugify(slug);
-    }
+    },
+    message: `What is the name SLUG for your site?
+>`
   }, {
     name: 'url',
-    message: `What is the url for your site?
->`,
     default(answers) {
+      if (defaults.url) {
+        return defaults.url;
+      }
       return `http://www.${answers.slug}.com`;
-    }
+    },
+    message: `What is the url for your site?
+>`
   }, {
     name: 'hostname',
+    default: defaults.hostname,
     message: `What is the hostname for your site? [Leave blank if not using a custom domain]
->`,
-    default() {
-      return false;
-    }
+>`
   }, {
     name: 'author',
-    message: `Who is authoring the site?
->`,
-    default() {
-      let author = defaults.userName;
-      if (defaults.authorEmail) {
-        author += ` <${defaults.authorEmail}>`;
-      }
-      return author;
-    }
+    default: defaults.author,
+    message: `Who is authoring the site?,
+>`
+  }, {
+    name: 'twitter',
+    default: defaults.twitter,
+    message: `Twitter username?
+>`
   }, {
     name: 'description',
+    default: defaults.description,
     message: `Please describe your site.
 >`
   }, {
     name: 'timezone',
+    default: defaults.config ? defaults.config.timezone : defaults.timezone,
     message: `What is the timezone for your site?
->`,
-    default: defaults.timezone
+>`
   }, {
     name: 'version',
+    default: defaults.pkg ? defaults.pkg.version : '0.1.0',
     message: `What is the version of your site?
->`,
-    default() {
-      if (defaults.pkg && defaults.pkg.version) {
-        return defaults.pkg.version;
-      }
-      return '0.1.0';
-    }
+>`
   }, {
     name: 'permalink',
-    message: `Which permalink pattern would you like to use?
+    default: defaults.config && defaults.config.permalink,
+    message: `Which permalink pattern would you like to use? (See: https://git.io/v6hJD)
 >`,
     type: 'list',
     choices: [{
-      name: 'Date',
-      message: `/:categories/:year/:month/:day/:title.html
->`,
+      name: 'Date (/:categories/:year/:month/:day/:title.html)',
       value: 'date'
     }, {
-      name: 'Pretty',
-      message: `/:categories/:year/:month/:day/:title/
->`,
+      name: 'Pretty (/:categories/:year/:month/:day/:title/)',
       value: 'pretty'
     }, {
-      name: 'Ordinal',
-      message: `/:categories/:year/:y_day/:title.html
->`,
+      name: 'Ordinal (/:categories/:year/:y_day/:title.html)',
       value: 'ordinal'
     }, {
-      name: 'None',
-      message: `/:categories/:title.html
->`,
+      name: 'None (/:categories/:title.html)',
       value: 'none'
     }]
   }, {
     name: 'github',
-    message: `GitHub repo name? (e.g. foo/bar, https://github.com/foo/bar.git) This is required!
->`,
+    default: defaults.config && defaults.config.repository,
     validate(str) {
       if (str === null) {
         return false;
@@ -129,15 +125,13 @@ gulp.task('default', done => {
     },
     filter(str) {
       return parseGithubRepo(str);
-    }
+    },
+    message: `GitHub repo name? (e.g. foo/bar, https://github.com/foo/bar.git) This is required!
+>`
   }, {
     name: 'githubToken',
+    default: defaults.githubToken,
     message: `GitHub token? (Required for some plugins. Suggested permissions are 'public_repo' and 'gist'. See: https://git.io/v61m7)
->`,
-    default: defaults.githubToken
-  }, {
-    name: 'twitter',
-    message: `Twitter username?
 >`
   }, {
     name: 'framework',
@@ -160,6 +154,9 @@ gulp.task('default', done => {
     name: 'bootswatch',
     message: 'Which Bootswatch template would you like?',
     type: 'list',
+    when(answers) {
+      return answers.framework === 'bootstrap3';
+    },
     choices() {
       const choices = [{
         name: '- None -',

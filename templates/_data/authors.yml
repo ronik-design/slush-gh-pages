@@ -1,3 +1,3 @@
 {SLUSH{=authorName}}:
-  email: {SLUSH{=authorEmail}}
+  {SLUSH{ if (authorEmail) { }}email: {SLUSH{=authorEmail}}{SLUSH{ } }}
   {SLUSH{ if (twitter) { }}twitter: {SLUSH{=twitter}}{SLUSH{ } }}
