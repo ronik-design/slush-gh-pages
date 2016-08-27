@@ -17,9 +17,11 @@ npm install
 npm start
 ```
 
-> GitHub provides several options for the location of your GitHub Pages source. `gh-pages` has been around the longest. See: [User, Organization, and Project Pages](https://git.io/v6hek)
+> NOTE: If you don't know about GitHub tokens see: [Creating an access token for command-line use](https://git.io/v61m7). You will need the `public_repos` and `gist` permissions for all plugins to work properly.
 
-> If you attempt to run Jekyll with the configured modules, and no git repo in your current directory you will encounter some anomalies or errors after running `npm start`.
+> NOTE: GitHub provides several options for the location of your GitHub Pages source. `gh-pages` has been around the longest. See: [User, Organization, and Project Pages](https://git.io/v6hek)
+
+> NOTE: If you attempt to run Jekyll with the configured modules, and no git repo in your current directory you will encounter some anomalies or errors after running `npm start`.
 
 ### To release
 
