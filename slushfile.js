@@ -133,7 +133,8 @@ gulp.task('default', done => {
   }, {
     name: 'githubToken',
     message: `GitHub token? (Required for some plugins. Suggested permissions are 'public_repo' and 'gist'. See: https://git.io/v61m7)
->`
+>`,
+    default: defaults.githubToken
   }, {
     name: 'twitter',
     message: `Twitter username?

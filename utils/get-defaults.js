@@ -33,13 +33,20 @@ function getDefaults() {
     pkg = require(dest('package.json'));
   }
 
+  let githubToken;
+
+  if (fs.existsSync(dest('.githubtoken'))) {
+    githubToken = fs.readFileSync(dest('.githubtoken'));
+  }
+
   return {
     name: workingDirName,
     slug: slugify(workingDirNoExt),
     userName: format(user.name) || osUserName,
     authorEmail: user.email || '',
     timezone: moment.tz.guess(),
-    pkg
+    pkg,
+    githubToken
   };
 }
 
