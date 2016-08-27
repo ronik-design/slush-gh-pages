@@ -6,10 +6,13 @@
 
 ### To develop
 
+If you're starting fresh with this project, here's what you need to do.
+
 ```
 git clone {SLUSH{=githubRepoUrl}}
 cd {SLUSH{=githubRepoName}}
 git checkout -b gh-pages
+echo [YOUR_GITHUB_TOKEN] > .githubtoken
 npm install
 npm start
 ```
