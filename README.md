@@ -55,3 +55,9 @@ In lieu of real documentation, just be prepared to answer the following question
   - [Bootstrap v3](https://getbootstrap.com)
   - Blank — just some stub files and directories.
 * If you chose Bootstrap v3 you will also have the option to select a [Bootswatch](https://bootswatch.com)
+
+### Nice to know
+
+Feel free to run this generator multiple times, or over a GitHub Pages project you've already started working on, but where you think some of the tools here might come in handy. During the Q&A phase you'll have many defaults provided based on reading your system env and any existing `package.json` `_config.yml` and `_data/authors.yml` files in your current directory. 
+
+After the Q&A you will be prompted for a conflict resolution for any file that would be modified by the generator. You need to be very careful here, since you could overwrite work you want to keep.
