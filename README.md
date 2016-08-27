@@ -25,6 +25,10 @@ git checkout -b gh-pages
 slush gh-pages
 ```
 
+> GitHub provides several options for the location of your GitHub Pages source. `gh-pages` has been around the longest. See: [User, Organization, and Project Pages](https://git.io/v6hek)
+
+> If you attempt to run Jekyll with the configured modules, and no git repo in your current directory you will encounter some anomalies or errors after running `npm start`.
+
 ### Q&A
 
 In lieu of real documentation, just be prepared to answer the following questions. Sensible defaults are offered where available.
@@ -49,4 +53,3 @@ In lieu of real documentation, just be prepared to answer the following question
   - [Concise.css](http://concisecss.com)
   - [Bootstrap v4](https://getbootstrap.com)
   - Blank — just some stub files and directories.
-
