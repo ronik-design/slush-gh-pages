@@ -25,6 +25,7 @@
     "scss:dev": "node-sass --importer node_modules/node-sass-import --source-map true _assets/stylesheets/main.scss assets/stylesheets/styles.css",
     "lint:js": "eslint _assets/javascripts",
     "lint:css": "stylelint _assets/stylesheets/**/*.scss --syntax scss",
+    "lint": "npm-run-all -p lint:*",
     "imagemin": "imagemin _assets/images/* -o assets/images",
     "icons": "svgo -f _assets/images/icons && mkdir -p assets/images && svg-sprite-generate -d _assets/images/icons -o assets/images/icons.svg",
     "serve": "node -e 'setTimeout(function() {}, 1500)' && browser-sync start --server _site --port 8888 --files _site --reload-debounce",
@@ -42,11 +43,11 @@
     "watch:images": "chokidar '_assets/images/**/*' -d -c 'npm run build:images'",
     "watch:fonts": "chokidar '_assets/fonts/**/*' -d -c 'npm run build:fonts'",
     "watch": "npm run clean && npm run build:images && npm run build:fonts && npm run build:js:dev && npm run build:css:dev && npm-run-all --continue-on-error --parallel watch:* serve",
-    "postinstall": "bundle install {SLUSH{ if (framework === 'bootstrap3') { }}&& npm run install-bootstrap-glypicons{SLUSH{ } }} && npm run build && chmod +x __tests__/test.sh",
+    "postinstall": "bundle install && chmod +x __tests__/test.sh{SLUSH{ if (framework === 'bootstrap3') { }} && npm run install-bootstrap-glypicons{SLUSH{ } }}",
     "preversion": "npm test",
-    "version": "NODE_ENV=production npm run build && git add -A assets",
+    "version": "npm-run-all --parallel build:fonts build:css build:js build:images && git add -A assets",
     "postversion": "git push && git push --tags",
-    "test": "npm run lint:js && npm run lint:css && JEKYLL_GITHUB_TOKEN=$([ -f .githubtoken ] && cat .githubtoken) JEKYLL_ENV=production __tests__/test.sh",
+    "test": "npm run lint && JEKYLL_GITHUB_TOKEN=$([ -f .githubtoken ] && cat .githubtoken) JEKYLL_ENV=production __tests__/test.sh",
     "start": "npm run watch"
   },
   "devDependencies": {
