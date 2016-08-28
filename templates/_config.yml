@@ -19,6 +19,7 @@ markdown_ext: "markdown,mkdown,mkdn,mkd,md"
 keep_files:   []
 include:      []
 exclude:
+  - vendor
   - node_modules
   - package.json
   - rollup.config.js

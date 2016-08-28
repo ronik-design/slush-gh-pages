@@ -46,7 +46,7 @@
     "preversion": "npm test",
     "version": "NODE_ENV=production npm run build && git add -A assets",
     "postversion": "git push && git push --tags",
-    "test": "npm run lint:js && npm run lint:css && npm run build:jekyll",
+    "test": "npm run lint:js && npm run lint:css && JEKYLL_GITHUB_TOKEN=$([ -f .githubtoken ] && cat .githubtoken) JEKYLL_ENV=production __tests__/test.sh",
     "start": "npm run watch"
   },
   "devDependencies": {

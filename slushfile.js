@@ -129,6 +129,11 @@ gulp.task('default', done => {
     message: `GitHub repo name? (e.g. foo/bar, https://github.com/foo/bar.git) This is required!
 >`
   }, {
+    name: 'branch',
+    default: defaults.branch,
+    message: `Branch for GitHub Pages? (required for Travis testing set-up)
+>`
+  }, {
     name: 'githubToken',
     default: defaults.githubToken,
     message: `GitHub token? (Required for some plugins. Suggested permissions are 'public_repo' and 'gist'. See: https://git.io/v61m7)

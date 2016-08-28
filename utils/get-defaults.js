@@ -60,6 +60,14 @@ function getDefaults() {
     } catch (e) {}
   }
 
+  let branch = 'gh-pages';
+  if (fs.existsSync(dest('.travis.yml'))) {
+    try {
+      const travis = yaml.safeLoad(fs.readFileSync(dest('.travis.yml'), 'utf8'));
+      branch = travis.branches.only[0];
+    } catch (e) {}
+  }
+
   let name = workingDirName;
   if (config && config.title) {
     name = config.title;
@@ -108,7 +116,8 @@ function getDefaults() {
     pkg,
     githubToken,
     hostname,
-    config
+    config,
+    branch
   };
 }
 
