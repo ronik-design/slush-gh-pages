@@ -32,6 +32,10 @@ npm version [patch|minor|major]
 
 > `npm` required that you have a clean repo (no modified files) before running `npm version`
 
+### Travis CI and testing
+
+Some very basic tests are included in the `__tests__` directory along with a `.travis.yml` file. If you choose to set up Travis CI remember to set the `JEKYLL_GITHUB_TOKEN` environment variable in the settings for your repository.
+
 ### Files and directories
 
 * `_assets/javascripts/main.js` - write your JS app using ES6, Babel (with [transform-runtime](https://babeljs.io/docs/plugins/transform-runtime/) handling polyfills), Uglify, Rollup.js and any selected framework libraries. Configure your build in the generated `rollup.config.js`.

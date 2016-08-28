@@ -18,3 +18,4 @@ node_modules
 _site
 .githubtoken
 .jekyll-metadata
+vendor

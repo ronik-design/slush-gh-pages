@@ -59,7 +59,7 @@
     "autoprefixer": "^6.3.6",
     "babel-cli": "^6.11.4",
     "babel-plugin-transform-runtime": "^6.12.0",
-    "babel-preset-es2015-rollup": "github:rollup/babel-preset-es2015-rollup",
+    "babel-preset-es2015": "^6.14.0",
     "babel-preset-stage-0": "^6.5.0",
     "browser-sync": "^2.14.0",
     "chokidar-cli": "^1.2.0",
@@ -84,8 +84,8 @@
   },
   "dependencies": {
     {SLUSH{ if (framework === 'concise') { }}
-    "concise-utils": "github:concisecss/concise-utils",
-    "concise.css": "github:concisecss/concise.css",
+    "concise-utils": "git://github.com/concisecss/concise-utils.git#master",
+    "concise.css": "git://github.com/concisecss/concise.css.git#master",
     {SLUSH{ } }}
     {SLUSH{ if (framework === 'bootstrap4') { }}
     "jquery": "^2.2.4",
