@@ -72,6 +72,8 @@ In lieu of real documentation, just be prepared to answer the following question
 * Which permalink pattern would you like to use? See: [jekyll permalink style](https://jekyllrb.com/docs/permalinks/#built-in-permalink-styles)
 * GitHub repo name? (e.g. foo/bar, https://github.com/foo/bar.git) This is required!
   - Because some of the GitHub Pages modules will fail without this, and I think they are important for the whole process, please have this ready, even if you haven't added any files to your repo just yet.
+* Branch for GitHub Pages?
+  - This is often `gh-pages` but GitHub has a number of [other options](https://git.io/v6hek)
 * GitHub token? (Required for some plugins. Suggested permissions are 'public_repo' and 'gist'. See: [Creating an access token for command-line use](https://git.io/v61m7))
 * Which CSS & JS framework would you like to use?  
   - [Concise.css](http://concisecss.com)
