@@ -9,9 +9,9 @@
 If you're starting fresh with this project, here's what you need to do.
 
 ```
-git clone {SLUSH{=githubRepoUrl}}
+git clone {SLUSH{=githubRepoUrl}}.git
 cd {SLUSH{=githubRepoName}}
-git checkout -b gh-pages
+git checkout -b {SLUSH{ if (branch) { }}{SLUSH{=branch}}{SLUSH{ } else { }}gh-pages{SLUSH{ } }}
 echo [YOUR_GITHUB_TOKEN] > .githubtoken
 npm install
 npm start

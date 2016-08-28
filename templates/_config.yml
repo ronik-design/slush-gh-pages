@@ -63,9 +63,7 @@ gems:
   - jekyll-seo-tag
   - jekyll-paginate
   - jekyll-gist
-  {SLUSH{ if (githubToken) { }}
-  - jekyll-github-metadata
-  {SLUSH{ } }}
+  {SLUSH{ if (githubToken) { }}- jekyll-github-metadata{SLUSH{ } }}
 
 # Markdown Processors
 kramdown:

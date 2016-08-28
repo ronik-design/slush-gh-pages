@@ -5,15 +5,14 @@ const nodeResolve = require('rollup-plugin-node-resolve');
 const commonjs = require('rollup-plugin-commonjs');
 const uglify = require('rollup-plugin-uglify');
 
-const NODE_ENV = process.env.NODE_ENV;
-
+// Necessary for certain global includes, like Bootstrap/Tether
 const requireFix = function () {
   return {
     intro: () => 'var require;'
   };
 };
 
-module.exports = {
+const config = {
   plugins: [
     nodeResolve(),
     commonjs(),
@@ -21,8 +20,13 @@ module.exports = {
     babel({
       runtimeHelpers: true,
       exclude: 'node_modules/**'
-    }),
-    NODE_ENV === 'production' ? uglify() : {}
+    })
   ],
   format: 'cjs'
 };
+
+if (process.env.NODE_ENV === 'production') {
+  config.plugins.push(uglify());
+}
+
+module.exports = config;

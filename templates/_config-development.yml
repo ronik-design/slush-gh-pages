@@ -1,8 +1,6 @@
-# Serving
-detach: false
-port:   4000
-host:   127.0.0.1
+# Assist in debugging
+verbose:  true
 
-# Outputting
+# Output error messages
 liquid:
-  error_mode: lax
+  error_mode: warn
