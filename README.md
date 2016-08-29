@@ -34,7 +34,7 @@ slush gh-pages
 ### What you get
 
 * `npm start` - launch watchers, start serving your site locally, auto-reload with Browser Sync
-* `npm version [patch|minor|major]` - create production builds of your assets and push to GitHub, aka, deploy.
+* `npm run deploy` - create production builds of your assets, increment the version tag, and push to GitHub. Alias for `npm version minor` which you can also use.
 * `_assets/javascripts` - build your JS app using ES6, Babel (with [transform-runtime](https://babeljs.io/docs/plugins/transform-runtime/) handling polyfills) , Uglify, Rollup.js and any selected framework libraries. Configure your build in the generated `rollup.config.js`.
 * `_assets/stylesheets` - build your stylesheets using SCSS, PostCSS and any selected frameworks. Configure your PostCSS build in the generated `postcss.config.js`.
 * `_assets/images` - any images here will be automatically optimized via imagemin.
