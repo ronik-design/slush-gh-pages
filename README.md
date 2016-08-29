@@ -4,7 +4,7 @@ A [Slush](http://slushjs.github.io) generator for GitHub Pages that provides rob
 
 ### Goals
 
-The goal of this project is to make it incredibly easy to get up-and-running with a GitHub Pages site that goes beyond the simple templates they offer. This generator has incorporated many of the best practices for building Jekyll-based sites, and adds in a number of helpful, Node.js-based development tools. 
+The goal of this project is to make it incredibly easy to get up-and-running with a GitHub Pages site that goes beyond the simple templates they offer. This generator has incorporated many of the best practices for building Jekyll-based sites, and adds in a number of helpful, Node.js-based development tools, as well as an easy selection of a CSS framework (Concise.css, Bootstrap v4, Bootstrap v3) and if using Bootstrap v3, Bootswatch themes. All is set up in a way that treats the framework and theme as a starting point that is easy to expand upon.
 
 A key focus is on simplicity, so in general the only commands you'll need to use in your project are `npm start` and `npm version`. `npm start` will launch your local development environment, and watch your JS, SCSS, image and icon assets for changes to automatically recompile them, and `npm version [patch|minor|major]` will increment your version identifier and commit your project to your GitHub repository, effectively deploying the latest version of your site.
 
@@ -55,7 +55,7 @@ slush gh-pages
   
 ### Q&A
 
-In lieu of real documentation, just be prepared to answer the following questions. Sensible defaults are offered where available.
+In lieu of real documentation, just be prepared to answer the following questions. Sensible defaults are offered where available, read either from your system and directory, or a pre-existing `package.json` or  `_config.yml`.
 
 * What is the PRETTY name of your site?
 * What is the name SLUG for your site?
