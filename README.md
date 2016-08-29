@@ -43,15 +43,15 @@ slush gh-pages
 * `package.json` - build and watch scripts.
 * Gems - all the github supported plugins are enabled, giving you some great features
   * the [github-pages](https://github.com/github/pages-gem) Ruby gem, replicating the deployed environment locally
-  * jekyll-mentions
-  * jemoji
-  * jekyll-redirect-from
-  * jekyll-sitemap
-  * jekyll-feed
-  * jekyll-seo-tag
-  * jekyll-paginate
-  * jekyll-gist
-  * jekyll-github-metadata
+  * [jekyll-mentions](https://github.com/jekyll/jekyll-mentions)
+  * [jemoji](https://github.com/jekyll/jemoji)
+  * [jekyll-redirect-from](https://github.com/jekyll/jekyll-redirect-from)
+  * [jekyll-sitemap](https://github.com/jekyll/jekyll-sitemap)
+  * [jekyll-feed](https://github.com/jekyll/jekyll-feed)
+  * [jekyll-seo-tag](https://github.com/jekyll/jekyll-seo-tag)
+  * [jekyll-paginate](https://jekyllrb.com/docs/pagination/)
+  * [jekyll-gist](https://github.com/jekyll/jekyll-gist)
+  * [jekyll-github-metadata](https://help.github.com/articles/repository-metadata-on-github-pages/)
 
 ### Q&A
 
