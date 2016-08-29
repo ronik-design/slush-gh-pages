@@ -23,6 +23,20 @@ If you prefer to not use the automatic generator, push a branch named `{SLUSH{ i
 
 You can [@mention](https://help.github.com/articles/basic-writing-and-formatting-syntax/#mentioning-users-and-teams) a GitHub username to generate a link to their profile. The resulting `<a>` element will link to the contributor's GitHub Profile. For example: In 2007, Chris Wanstrath ([@defunkt](https://github.com/defunkt)), PJ Hyett ([@pjhyett](https://github.com/pjhyett)), and Tom Preston-Werner ([@mojombo](https://github.com/mojombo)) founded GitHub.
 
+### Plugins and additional functionality
+
+GitHub Pages supports a number of Jekyll plugins which are one by default in the GitHub Pages Generator version of the site. They add some great functionality. Read more about them.
+
+  * [jekyll-mentions](https://github.com/jekyll/jekyll-mentions) - the previous mentioned `@mention` support
+  * [jemoji](https://github.com/jekyll/jemoji) - use GitHub flavored emoji shorthand, like `:+1:` :+1:
+  * [jekyll-redirect-from](https://github.com/jekyll/jekyll-redirect-from) - use `redirect_from` and `redirect_to` in your frontmatter for easy page redirects
+  * [jekyll-sitemap](https://github.com/jekyll/jekyll-sitemap) - automatically generate a `sitemap.xml`
+  * [jekyll-feed](https://github.com/jekyll/jekyll-feed) - automatically generate a `feed.xml`
+  * [jekyll-seo-tag](https://github.com/jekyll/jekyll-seo-tag) - provides a bunch of SEO metadata and opengraph tags
+  * [jekyll-paginate](https://jekyllrb.com/docs/pagination/) - paginate your results!
+  * [jekyll-gist](https://github.com/jekyll/jekyll-gist) - specify a [gist](https://gist.github.com) in your page or post with `{% gist parkr/c08ee0f2726fd0e3909d %}`
+  * [jekyll-github-metadata](https://help.github.com/articles/repository-metadata-on-github-pages/) - provides all the `site.github` contextual information that you get on GitHub in your local dev.
+
 ### Support or Contact
 
 Having trouble with Pages? Check out our [documentation](https://help.github.com/pages) or [contact support](https://github.com/contact) and we'll help you sort it out.
