@@ -57,30 +57,38 @@ slush gh-pages
 
 In lieu of real documentation, just be prepared to answer the following questions. Sensible defaults are offered where available, read either from your system and directory, or a pre-existing `package.json` or  `_config.yml`.
 
-* What is the PRETTY name of your site?
-* What is the name SLUG for your site?
-* What is the url for your site?
-* What is the hostname for your site? [Leave blank if not using a custom domain]  
-  - This will create or modify your `CNAME` file for a custom domain.
-* Who is authoring the site?
-* Twitter username?
-  - [jekyll-seo-tag](https://github.com/jekyll/jekyll-seo-tag) is installed by default, and can make use of this.
-* Please describe your site.
-* What is the timezone for your site?
-  - This will detect your system TZ as the default.
-* What is the version of your site?
-* Which permalink pattern would you like to use? See: [jekyll permalink style](https://jekyllrb.com/docs/permalinks/#built-in-permalink-styles)
-* GitHub repo name? (e.g. foo/bar, https://github.com/foo/bar.git) This is required!
-  - Because some of the GitHub Pages modules will fail without this, and I think they are important for the whole process, please have this ready, even if you haven't added any files to your repo just yet.
-* Branch for GitHub Pages?
-  - This is often `gh-pages` but GitHub has a number of [other options](https://git.io/v6hek)
-* GitHub token? (Required for some plugins. Suggested permissions are 'public_repo' and 'gist'. See: [Creating an access token for command-line use](https://git.io/v61m7))
-* Which CSS & JS framework would you like to use?  
-  - [Concise.css](http://concisecss.com)
-  - [Bootstrap v4](https://getbootstrap.com)
-  - [Bootstrap v3](https://getbootstrap.com)
-  - Blank — just some stub files and directories.
-* If you chose Bootstrap v3 you will also have the option to select a [Bootswatch](https://bootswatch.com)
+  * GitHub repo name?  This is required. [e.g. foo/bar, https://github.com/foo/bar.git]
+    - Because some of the GitHub Pages modules will fail without this, and I think they are important for the whole process,   please have this ready, even if you haven't added any files to your repo just yet.
+  * Branch for GitHub Pages? [For Travis CI config]
+    - This is often `gh-pages` but GitHub has a number of [other options](https://git.io/v6hek)
+  * GitHub token?
+    - This is strongly suggested for several of the default plugins to function correctly
+    - Suggested permissions are 'public_repo' and 'gist'. 
+    - See: [Creating an access token for command-line use](https://git.io/v61m7)
+  * What is the PRETTY name of your site?
+  * What is the name SLUG for your site?
+  * What is the url for your site?
+  * What is the hostname for your site? [Leave blank if not using a custom domain]  
+    - This will create or modify your `CNAME` file for a custom domain.
+  * Who is authoring the site?
+    - Just the author's name.
+  * What is the author's email address?
+  * Twitter username?
+    - [jekyll-seo-tag](https://github.com/jekyll/jekyll-seo-tag) is installed by default, and can make use of this.
+  * Please describe your site.
+  * What is the timezone for your site?
+    - This will detect your system TZ as the default.
+  * What is the version of your site?
+    - Detected from an existing `package.json`
+  * Which permalink pattern would you like to use? 
+    - See: [jekyll permalink style](https://jekyllrb.com/docs/permalinks/#built-in-permalink-styles)
+  * Which CSS & JS framework would you like to use?  
+    - Blank — just some stub files and directories.
+    - [Concise.css](http://concisecss.com)
+    - [Bootstrap v4](https://getbootstrap.com)
+    - [Bootstrap v3](https://getbootstrap.com)
+  * If you chose Bootstrap v3 you will also have the option to select a [Bootswatch](https://bootswatch.com)
+  * Deploy after intstall?
 
 ### Nice to know
 
