@@ -40,9 +40,25 @@ Some very basic tests are included in the `__tests__` directory along with a `.t
 
 ### Files and directories
 
-* `_assets/javascripts/main.js` - write your JS app using ES6, Babel (with [transform-runtime](https://babeljs.io/docs/plugins/transform-runtime/) handling polyfills), Uglify, Rollup.js and any selected framework libraries. Configure your build in the generated `rollup.config.js`.
-* `_assets/stylesheets/main.scss` - write your stylesheets using SCSS, PostCSS and any selected frameworks. Configure your PostCSS build in the generated `postcss.config.js`.
-* `_assets/images` - any images here will be automatically optimized via imagemin.
-* `_assets/images/icons` - any `svg` files placed here will automatically be compiled into a svg-sprite.
-* `_assets/fonts` - if you chose Bootstrap v3 Glyphicons will be copied here during install, otherwise use as you see fit.
-* `.githubtoken` - this is your API token. It is ignored by default. Don't commit it, unless you really know what you're doing!
+  * `_assets/javascripts/main.js` - write your JS app using ES6, Babel (with [transform-runtime](https://babeljs.io/docs/plugins/transform-runtime/) handling polyfills), Uglify, Rollup.js and any selected framework libraries. Configure your build in the generated `rollup.config.js`.
+  * `_assets/stylesheets/main.scss` - write your stylesheets using SCSS, PostCSS and any selected frameworks. Configure your   PostCSS build in the generated `postcss.config.js`.
+  * `_assets/images` - any images here will be automatically optimized via imagemin.
+  * `_assets/images/icons` - any `svg` files placed here will automatically be compiled into a svg-sprite.
+  * `_assets/fonts` - if you chose Bootstrap v3 Glyphicons will be copied here during install, otherwise use as you see fit.
+  * `.githubtoken` - this is your API token. It is ignored by default. Don't commit it, unless you really know what you're doing!
+  * `_site/sitemap.xml` - this is generated for you via the [jekyll-sitemap](https://github.com/jekyll/jekyll-sitemap) plugin
+  * `_site/feed.xml` - this is generated for you via the [jekyll-feed](https://github.com/jekyll/jekyll-feed)
+
+### Plugins
+
+Several plugins are available (and active by default in this config) on GitHub Pages.
+
+  * [jekyll-mentions](https://github.com/jekyll/jekyll-mentions)
+  * [jemoji](https://github.com/jekyll/jemoji)
+  * [jekyll-redirect-from](https://github.com/jekyll/jekyll-redirect-from)
+  * [jekyll-sitemap](https://github.com/jekyll/jekyll-sitemap)
+  * [jekyll-feed](https://github.com/jekyll/jekyll-feed)
+  * [jekyll-seo-tag](https://github.com/jekyll/jekyll-seo-tag)
+  * [jekyll-paginate](https://jekyllrb.com/docs/pagination/)
+  * [jekyll-gist](https://github.com/jekyll/jekyll-gist)
+  * [jekyll-github-metadata](https://help.github.com/articles/repository-metadata-on-github-pages/)
