@@ -2,7 +2,7 @@
 title: {SLUSH{=name}}
 description: {SLUSH{=description}}
 url: {SLUSH{=url}}
-author: {SLUSH{=authorName}}
+author: {SLUSH{=author}}
 
 # Where things are
 destination:  ./_site
@@ -62,7 +62,17 @@ gems:
   - jekyll-seo-tag
   - jekyll-paginate
   - jekyll-gist
-  {SLUSH{ if (githubToken) { }}- jekyll-github-metadata{SLUSH{ } }}
+  - jekyll-github-metadata
+whitelist:
+  - jekyll-mentions
+  - jemoji
+  - jekyll-redirect-from
+  - jekyll-sitemap
+  - jekyll-feed
+  - jekyll-seo-tag
+  - jekyll-paginate
+  - jekyll-gist
+  - jekyll-github-metadata
 
 # Markdown Processors
 kramdown:

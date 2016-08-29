@@ -3,7 +3,10 @@
   "name": "{SLUSH{=slug}}",
   "version": "{SLUSH{=version}}",
   "description": "{SLUSH{=description}}",
-  "author": "{SLUSH{=author}}",
+  "author": {
+    "name": "{SLUSH{=author}}",
+    "email": "{SLUSH{=email}}"
+  },
   "generator": "slush-gh-pages v{SLUSH{=generatorVersion}}",
   "license": "UNLICENSED",
   "homepage": "https://github.com/{SLUSH{=github}}",

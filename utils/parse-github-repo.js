@@ -1,14 +1,14 @@
 'use strict';
 
-function parseGithubRepo(str) {
-  const re = /(?:https?:\/\/github.com)?\/?([^\/.]+\/[^\/]+)(?:\.git)?$/i;
-  const match = str.match(re);
-
-  if (match && match[1]) {
-    return match[1].replace(/\.git$/, '');
-  }
-
-  return null;
+function parseGithubRepo(repoStr) {
+  const repoParts = repoStr.match(/([^\/].+)\/(.+)/);
+  const githubAuthorName = repoParts ? repoParts[1].trim() : '';
+  return {
+    githubAuthorName,
+    githubAuthorUrl: `https://github.com/${githubAuthorName}`,
+    githubRepoName: repoParts ? repoParts[2].trim() : '',
+    githubRepoUrl: `https://github.com/${repoStr}`
+  };
 }
 
 module.exports = parseGithubRepo;

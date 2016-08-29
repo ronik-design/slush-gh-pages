@@ -2,9 +2,11 @@
 
 const gulp = require('gulp');
 const path = require('path');
+const exec = require('child_process').exec;
 const async = require('async');
 const install = require('gulp-install');
 const conflict = require('gulp-conflict');
+const ignore = require('gulp-ignore');
 const template = require('gulp-template');
 const rename = require('gulp-rename');
 const jeditor = require('gulp-json-editor');
@@ -12,18 +14,17 @@ const clone = require('lodash/clone');
 const merge = require('lodash/merge');
 const inquirer = require('inquirer');
 const moment = require('moment-timezone');
+const istextorbinary = require('istextorbinary');
+const chalk = require('chalk');
+const validateGithubRepo = require('./utils/validate-github-repo');
 const parseGithubRepo = require('./utils/parse-github-repo');
+const parseAuthor = require('./utils/parse-author');
 const getDefaults = require('./utils/get-defaults');
 const dest = require('./utils/dest');
 const slugify = require('./utils/slugify');
 const getBootswatchThemes = require('./utils/get-bootswatch-themes');
 
 const pkg = require('./package.json');
-
-// TODO: Replace is isTextOrBinary module for better safety
-const BINARY_EXTENSIONS = [
-  '.png', '.ico', '.gif', '.jpg', '.jpeg', '.svg', '.psd', '.bmp', '.webp', '.webm'
-];
 
 const TEMPLATE_SETTINGS = {
   evaluate: /\{SLUSH\{(.+?)\}\}/g,
@@ -33,18 +34,68 @@ const TEMPLATE_SETTINGS = {
 
 const defaults = getDefaults();
 
+if (!defaults.repoPresent) {
+  console.log(`
+---
+${chalk.bgRed.bold('No git repo is present. You should clone or init one first!')}
+${chalk.bold('(ctrl-c to terminate this set up)')}
+---
+`);
+}
+
 gulp.task('default', done => {
   const prompts = [{
+    name: 'github',
+    default: defaults.config && defaults.config.repository,
+    validate(str) {
+      if (str === null) {
+        return false;
+      }
+      return true;
+    },
+    filter(str) {
+      return validateGithubRepo(str);
+    },
+    message: `GitHub repo name? This is required. [e.g., foo/bar, https://github.com/foo/bar.git]
+>`
+  }, {
+    name: 'branch',
+    default(answers) {
+      if (defaults.branch) {
+        return defaults.branch;
+      }
+      const repo = parseGithubRepo(answers.github);
+      if (repo.githubRepoName === `${repo.githubAuthorName}.github.io`) {
+        return 'master';
+      }
+      return 'gh-pages';
+    },
+    message: `Branch for GitHub Pages? [required for Travis testing set-up]
+>`
+  }, {
+    name: 'githubToken',
+    default: defaults.githubToken,
+    message: `GitHub token? [Permissions required are 'public_repo' and 'gist'. See: https://git.io/v61m7]
+--It is strongly advised that you provide this. Some plugins may fail without it.--
+>`
+  }, {
     name: 'name',
-    default: defaults.name,
+    default(answers) {
+      if (defaults.name) {
+        return defaults.name;
+      }
+      return parseGithubRepo(answers.github).githubRepoName;
+    },
     validate(str) {
       if (!str) {
         return false;
       }
       return true;
     },
-    message: `What is the PRETTY name of your site?
->`
+    message() {
+      return `What is the PRETTY name of your site?
+>`;
+    }
   }, {
     name: 'slug',
     default(answers) {
@@ -61,7 +112,12 @@ gulp.task('default', done => {
       if (defaults.url) {
         return defaults.url;
       }
-      return `http://www.${answers.slug}.com`;
+      const repo = parseGithubRepo(answers.github);
+      let hostname = `${repo.githubAuthorName}.github.io`;
+      if (hostname !== repo.githubRepoName) {
+        hostname += `/${repo.githubRepoName}`;
+      }
+      return `https://${hostname}`;
     },
     message: `What is the url for your site?
 >`
@@ -72,13 +128,18 @@ gulp.task('default', done => {
 >`
   }, {
     name: 'author',
-    default: defaults.author,
-    message: `Who is authoring the site?,
+    default: defaults.authorName,
+    message: `Who is authoring the site? [name only]
+>`
+  }, {
+    name: 'email',
+    default: defaults.authorEmail,
+    message: `Author's email address?
 >`
   }, {
     name: 'twitter',
-    default: defaults.twitter,
-    message: `Twitter username?
+    default: defaults.authorTwitter,
+    message: `Author's Twitter username? [for jekyll-seo plugin]
 >`
   }, {
     name: 'description',
@@ -98,7 +159,7 @@ gulp.task('default', done => {
   }, {
     name: 'permalink',
     default: defaults.config && defaults.config.permalink,
-    message: `Which permalink pattern would you like to use? (See: https://git.io/v6hJD)
+    message: `Which permalink pattern would you like to use? [see: https://git.io/v6hJD]
 >`,
     type: 'list',
     choices: [{
@@ -115,34 +176,14 @@ gulp.task('default', done => {
       value: 'none'
     }]
   }, {
-    name: 'github',
-    default: defaults.config && defaults.config.repository,
-    validate(str) {
-      if (str === null) {
-        return false;
-      }
-      return true;
-    },
-    filter(str) {
-      return parseGithubRepo(str);
-    },
-    message: `GitHub repo name? (e.g. foo/bar, https://github.com/foo/bar.git) This is required!
->`
-  }, {
-    name: 'branch',
-    default: defaults.branch,
-    message: `Branch for GitHub Pages? (required for Travis testing set-up)
->`
-  }, {
-    name: 'githubToken',
-    default: defaults.githubToken,
-    message: `GitHub token? (Required for some plugins. Suggested permissions are 'public_repo' and 'gist'. See: https://git.io/v61m7)
->`
-  }, {
     name: 'framework',
     message: 'Which CSS & JS framework would you like to use?',
     type: 'list',
     choices: [{
+      name: 'Blank (nothing at all, just a css stub dir, and some script polyfills)',
+      value: 'blank'
+    },
+    new inquirer.Separator(), {
       name: 'Bootstrap v3 + Bootswatch (jQuery and support scripts)',
       value: 'bootstrap3'
     }, {
@@ -151,9 +192,6 @@ gulp.task('default', done => {
     }, {
       name: 'Concise CSS (a pure CSS framework, no scripts necessary)',
       value: 'concise'
-    }, {
-      name: 'Blank (nothing at all, just a css stub dir, and some script polyfills)',
-      value: 'blank'
     }]
   }, {
     name: 'bootswatch',
@@ -166,9 +204,18 @@ gulp.task('default', done => {
       const choices = [{
         name: '- None -',
         value: 'none'
-      }];
+      }, new inquirer.Separator()];
+
       return getBootswatchThemes().then(themes => choices.concat(themes));
     }
+  }, {
+    type: 'confirm',
+    name: 'deploy',
+    default: false,
+    when() {
+      return defaults.repoPresent;
+    },
+    message: 'Deploy after install?'
   }, {
     type: 'confirm',
     name: 'moveon',
@@ -181,45 +228,41 @@ gulp.task('default', done => {
       return done();
     }
 
-    const config = clone(answers);
+    let config = clone(answers);
 
+    // Add GitHub repo info
+    config = Object.assign(config, parseGithubRepo(answers.github));
+
+    // Add version of this generator
     config.generatorVersion = pkg.version;
+
+    // Basic time info in selected timezone
     config.now = moment.tz(new Date(), answers.timezone).format('YYYY-MM-DD HH:mm:ss Z');
     config.year = moment.tz(new Date(), answers.timezone).format('YYYY');
-
-    const authorEmail = answers.author.match(/(<(.+)>)/);
-    config.authorName = authorEmail ? answers.author.replace(authorEmail[1], '').trim() : answers.author.trim();
-    config.authorEmail = authorEmail ? authorEmail[2].trim() : '';
-
-    const githubParts = answers.github.match(/([^\/].+)\/(.+)/);
-    config.githubAuthorName = githubParts ? githubParts[1].trim() : '';
-    config.githubAuthorUrl = `https://github.com/${config.githubAuthorName}`;
-    config.githubRepoName = githubParts ? githubParts[2].trim() : '';
-    config.githubRepoUrl = `https://github.com/${answers.github}`;
-
-    const binaryFileExtensions = BINARY_EXTENSIONS.join('|');
 
     const srcDir = path.join(__dirname, 'templates');
     const destDir = dest();
 
-    const installTextFiles = function (cb) {
-      const src = [
-        `**/*!(${binaryFileExtensions})`,
-        '!_assets/stylesheets',
-        '!_assets/stylesheets/**',
-        '!_assets/javascripts',
-        '!_assets/javascripts/**',
-        '!CNAME',
-        '!_githubtoken',
-        '!_gitignore',
-        '!_eslintrc',
-        '!_stylelintrc',
-        '!.DS_Store',
-        '!**/.DS_Store',
-        '!package.json'
-      ];
+    const handleLater = [
+      '**/*',
+      '!_assets/stylesheets',
+      '!_assets/stylesheets/**',
+      '!_assets/javascripts',
+      '!_assets/javascripts/**',
+      '!CNAME',
+      '!_githubtoken',
+      '!_gitignore',
+      '!_eslintrc',
+      '!_stylelintrc',
+      '!.DS_Store',
+      '!**/.DS_Store',
+      '!package.json'
+    ];
 
+    const installTextFiles = function (cb) {
+      const src = handleLater;
       gulp.src(src, {dot: true, cwd: srcDir, base: srcDir})
+        .pipe(ignore.include(file => istextorbinary.isTextSync(file.basename, file.contents)))
         .pipe(template(config, TEMPLATE_SETTINGS))
         .pipe(conflict(destDir, {logger: console.log}))
         .pipe(gulp.dest(destDir))
@@ -227,23 +270,9 @@ gulp.task('default', done => {
     };
 
     const installBinaryFiles = function (cb) {
-      const src = [
-        `**/*.+(${binaryFileExtensions})`,
-        '!_assets/stylesheets',
-        '!_assets/stylesheets/**',
-        '!_assets/javascripts',
-        '!_assets/javascripts/**',
-        '!CNAME',
-        '!_githubtoken',
-        '!_gitignore',
-        '!_eslintrc',
-        '!_stylelintrc',
-        '!.DS_Store',
-        '!**/.DS_Store',
-        '!package.json'
-      ];
-
+      const src = handleLater;
       gulp.src(src, {dot: true, cwd: srcDir, base: srcDir})
+        .pipe(ignore.include(file => istextorbinary.isBinarySync(file.basename, file.contents)))
         .pipe(conflict(destDir, {logger: console.log}))
         .pipe(gulp.dest(destDir))
         .on('end', cb);
@@ -343,6 +372,12 @@ gulp.task('default', done => {
         .pipe(install())
         .on('end', cb);
     };
+
+    const deploySite = function (cb) {
+      console.log('Deploying...');
+      exec('npm run deploy', () => cb());
+    };
+
     const tasks = [
       installTextFiles,
       installBinaryFiles,
@@ -353,6 +388,11 @@ gulp.task('default', done => {
       installJavascriptFiles,
       mergePackageAndInstall
     ];
+
+    if (answers.deploy) {
+      tasks.push(deploySite);
+    }
+
     async.series(tasks, done);
   });
 });
