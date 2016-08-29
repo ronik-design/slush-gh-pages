@@ -26,7 +26,6 @@ exclude:
   - postcss.config.js
   - Gemfile
   - Gemfile.lock
-  - README.md
 
 # Filtering Content
 show_drafts: null

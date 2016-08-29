@@ -27,10 +27,12 @@ npm start
 
 ```
 git commit -am "message here"
-npm version [patch|minor|major]
+npm run deploy
 ```
 
-> `npm` required that you have a clean repo (no modified files) before running `npm version`
+`npm run deploy` is simply a convenience alias for `npm version minor`. You can invoke `npm version [patch|minor|major]` yourself to add notes or increment a version other than minor.
+
+> `npm` requires that you have a clean repo (no modified local files) before running `npm run deploy` or `npm version`
 
 ### Travis CI and testing
 

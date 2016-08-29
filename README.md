@@ -6,7 +6,7 @@ A [Slush](http://slushjs.github.io) generator for GitHub Pages that provides rob
 
 The goal of this project is to make it incredibly easy to get up-and-running with a GitHub Pages site that goes beyond the simple templates they offer. This generator has incorporated many of the best practices for building Jekyll-based sites, and adds in a number of helpful, Node.js-based development tools, as well as an easy selection of a CSS framework (Concise.css, Bootstrap v4, Bootstrap v3) and if using Bootstrap v3, Bootswatch themes. All is set up in a way that treats the framework and theme as a starting point that is easy to expand upon.
 
-A key focus is on simplicity, so in general the only commands you'll need to use in your project are `npm start` and `npm version`. `npm start` will launch your local development environment, and watch your JS, SCSS, image and icon assets for changes to automatically recompile them, and `npm version [patch|minor|major]` will increment your version identifier and commit your project to your GitHub repository, effectively deploying the latest version of your site.
+A key focus is on simplicity, so in general the only commands you'll need to use in your project are `npm start` and `npm run deploy`. `npm start` will launch your local development environment, and watch your JS, SCSS, image and icon assets for changes to automatically recompile them, and `npm run deploy` aliases `npm version minor` and will increment your version identifier and commit your project to your GitHub repository, effectively deploying the latest version of your site.
 
 ### To use
 
@@ -52,7 +52,7 @@ slush gh-pages
   * jekyll-paginate
   * jekyll-gist
   * jekyll-github-metadata
-  
+
 ### Q&A
 
 In lieu of real documentation, just be prepared to answer the following questions. Sensible defaults are offered where available, read either from your system and directory, or a pre-existing `package.json` or  `_config.yml`.
@@ -64,7 +64,7 @@ In lieu of real documentation, just be prepared to answer the following question
   - This will create or modify your `CNAME` file for a custom domain.
 * Who is authoring the site?
 * Twitter username?
-  - [jekyll-seo-tag](https://github.com/jekyll/jekyll-seo-tag) is installed by default, and can make use of this. 
+  - [jekyll-seo-tag](https://github.com/jekyll/jekyll-seo-tag) is installed by default, and can make use of this.
 * Please describe your site.
 * What is the timezone for your site?
   - This will detect your system TZ as the default.
@@ -84,6 +84,6 @@ In lieu of real documentation, just be prepared to answer the following question
 
 ### Nice to know
 
-Feel free to run this generator multiple times, or over a GitHub Pages project you've already started working on, but where you think some of the tools here might come in handy. During the Q&A phase you'll have many defaults provided based on reading your system env and any existing `package.json` `_config.yml` and `_data/authors.yml` files in your current directory. 
+Feel free to run this generator multiple times, or over a GitHub Pages project you've already started working on, but where you think some of the tools here might come in handy. During the Q&A phase you'll have many defaults provided based on reading your system env and any existing `package.json` `_config.yml` and `_data/authors.yml` files in your current directory.
 
 After the Q&A you will be prompted for a conflict resolution for any file that would be modified by the generator. You need to be very careful here, since you could overwrite work you want to keep.

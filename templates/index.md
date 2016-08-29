@@ -7,15 +7,17 @@ body_class: body--homepage
 
 ### Welcome to GitHub Pages.
 
-This automatic page generator is the easiest way to create beautiful pages for all of your projects. Author your page content here [using GitHub Flavored Markdown](https://guides.github.com/features/mastering-markdown/), select a template crafted by a designer, and publish. After your page is generated, you can check out the new `gh-pages` branch locally. If you're using GitHub Desktop, simply sync your repository and you'll see the new branch.
+This automatic page generator is the easiest way to create beautiful pages for all of your projects. Author your page content here [using GitHub Flavored Markdown](https://guides.github.com/features/mastering-markdown/), select a template crafted by a designer, and publish. After your page is generated, you can check out the new `{SLUSH{ if (branch) { }}{SLUSH{=branch}}{SLUSH{ } else { }}gh-pages{SLUSH{ } }}` branch locally. If you're using GitHub Desktop, simply sync your repository and you'll see the new branch.
 
-### Designer Templates
+### GitHub Pages Generator
 
-We've crafted some handsome templates for you to use. Go ahead and click 'Continue to layouts' to browse through them. You can easily go back to edit your page before publishing. After publishing your page, you can revisit the page generator and switch to another theme. Your Page content will be preserved.
+If you're seeing this you probably used the [GitHub Pages Generator](https://github.com/ronik-design/slush-gh-pages). This means you have a bunch of useful dev tools built in, and your local. You can start developing your site, with compilation of stylesheets, javascript and image minification handled automatically. Just type `npm start` (which you probably did just to see this page). When you're ready to push your work up to GitHub Pages simply commit your work then run `npm run deploy` which will test your build, increment the version, and push the new work up to GitHub.
+
+For more information see the [README](/README.md).
 
 ### Creating pages manually
 
-If you prefer to not use the automatic generator, push a branch named `gh-pages` to your repository to create a page manually. In addition to supporting regular HTML content, GitHub Pages support Jekyll, a simple, blog aware static site generator. Jekyll makes it easy to create site-wide headers and footers without having to copy them across every page. It also offers intelligent blog support and other advanced templating features.
+If you prefer to not use the automatic generator, push a branch named `{SLUSH{ if (branch) { }}{SLUSH{=branch}}{SLUSH{ } else { }}gh-pages{SLUSH{ } }}` to your repository to create a page manually. In addition to supporting regular HTML content, GitHub Pages support Jekyll, a simple, blog aware static site generator. Jekyll makes it easy to create site-wide headers and footers without having to copy them across every page. It also offers intelligent blog support and other advanced templating features.
 
 ### Authors and Contributors
 

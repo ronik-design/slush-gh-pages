@@ -50,6 +50,7 @@
     "postversion": "git push && git push --tags",
     "pretest": "npm run lint",
     "test": "npm-run-all --parallel build:fonts build:css build:js build:images && JEKYLL_GITHUB_TOKEN=$([ -f .githubtoken ] && cat .githubtoken) JEKYLL_ENV=production __tests__/test.sh",
+    "deploy": "npm version minor",
     "start": "npm run watch"
   },
   "devDependencies": {
