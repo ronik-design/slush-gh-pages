@@ -143,14 +143,14 @@ gulp.task('default', done => {
     message: 'Which CSS & JS framework would you like to use?',
     type: 'list',
     choices: [{
-      name: 'Concise CSS (a pure CSS framework, no scripts necessary)',
-      value: 'concise'
+      name: 'Bootstrap v3 + Bootswatch (jQuery and support scripts)',
+      value: 'bootstrap3'
     }, {
       name: 'Bootstrap v4 (jQuery and support scripts)',
       value: 'bootstrap4'
     }, {
-      name: 'Bootstrap v3 + Bootswatch (jQuery and support scripts)',
-      value: 'bootstrap3'
+      name: 'Concise CSS (a pure CSS framework, no scripts necessary)',
+      value: 'concise'
     }, {
       name: 'Blank (nothing at all, just a css stub dir, and some script polyfills)',
       value: 'blank'
