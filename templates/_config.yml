@@ -9,9 +9,6 @@ destination:  ./_site
 layouts_dir:  _layouts
 data_dir:     _data
 includes_dir: _includes
-collections:
-  posts:
-    output:   true
 
 # Handling Reading
 encoding:     "utf-8"
@@ -44,7 +41,6 @@ timezone:      {SLUSH{=timezone}}
 
 quiet:    false
 verbose:  false
-defaults: []
 
 liquid:
   error_mode: lax
@@ -52,7 +48,7 @@ liquid:
 # Required for github-metadata
 repository: {SLUSH{=github}}
 
-# Plugins
+# Plugins - these are all the plugins currently supported in the GitHub Pages environment
 gems:
   - jekyll-mentions
   - jemoji
@@ -90,7 +86,21 @@ compress_html:
   comments: []
   endings: []
   ignore:
-    envs: ['development']
+    envs: 
+      - development
   blanklines: false
   profile: false
   startings: []
+
+# Collections
+collections:
+  posts:
+    output:   true
+
+# Front Matter defaults
+defaults:
+  -
+    scope:
+      path: "" # an empty string here means all files in the project
+    values:
+      layout: default
