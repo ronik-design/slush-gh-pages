@@ -250,18 +250,15 @@ gulp.task('default', done => {
       '!_assets/javascripts',
       '!_assets/javascripts/**',
       '!CNAME',
-      '!_githubtoken',
-      '!_gitignore',
-      '!_eslintrc',
-      '!_stylelintrc',
-      '!.DS_Store',
-      '!**/.DS_Store',
+      '!__*',
+      '!**/__*',
       '!package.json'
     ];
 
     const installTextFiles = function (cb) {
+      console.log(chalk.blue('--Installing text files--'));
       const src = handleLater;
-      gulp.src(src, {dot: true, cwd: srcDir, base: srcDir})
+      gulp.src(src, {cwd: srcDir, base: srcDir})
         .pipe(ignore.include(file => istextorbinary.isTextSync(file.basename, file.contents)))
         .pipe(template(config, TEMPLATE_SETTINGS))
         .pipe(conflict(destDir, {logger: console.log}))
@@ -270,8 +267,9 @@ gulp.task('default', done => {
     };
 
     const installBinaryFiles = function (cb) {
+      console.log(chalk.blue('--Installing binary files--'));
       const src = handleLater;
-      gulp.src(src, {dot: true, cwd: srcDir, base: srcDir})
+      gulp.src(src, {cwd: srcDir, base: srcDir})
         .pipe(ignore.include(file => istextorbinary.isBinarySync(file.basename, file.contents)))
         .pipe(conflict(destDir, {logger: console.log}))
         .pipe(gulp.dest(destDir))
@@ -279,22 +277,20 @@ gulp.task('default', done => {
     };
 
     const installDotfiles = function (cb) {
-      gulp.src(['_gitignore', '_eslintrc', '_stylelintrc'], {cwd: srcDir, base: srcDir})
-        .pipe(rename(path => {
-          path.basename = path.basename.replace('_', '.');
-        }))
-        .pipe(conflict(destDir, {logger: console.log}))
-        .pipe(gulp.dest(destDir))
-        .on('end', cb);
-    };
+      console.log(chalk.blue('--Installing dotfiles--'));
+      const dotfiles = [
+        '__*',
+        '**/__*',
+        '!__tests__'
+      ];
 
-    const installGithubtoken = function (cb) {
       if (!config.githubtoken) {
-        return cb();
+        dotfiles.push('!__githubtoken');
       }
-      gulp.src(['_githubtoken'], {cwd: srcDir, base: srcDir})
+
+      gulp.src(dotfiles, {cwd: srcDir, base: srcDir})
         .pipe(rename(path => {
-          path.basename = path.basename.replace('_', '.');
+          path.basename = path.basename.replace('__', '.');
         }))
         .pipe(template(config, TEMPLATE_SETTINGS))
         .pipe(conflict(destDir, {logger: console.log}))
@@ -303,13 +299,9 @@ gulp.task('default', done => {
     };
 
     const installStylesheetFiles = function (cb) {
-      const src = [
-        `_assets/stylesheets/${config.framework}/**/*`,
-        '!.DS_Store',
-        '!**/.DS_Store'
-      ];
-
-      gulp.src(src, {dot: true, cwd: srcDir, base: srcDir})
+      console.log(chalk.blue('--Installing stylesheets--'));
+      const src = `_assets/stylesheets/${config.framework}/**/*`;
+      gulp.src(src, {cwd: srcDir, base: srcDir})
         .pipe(template(config, TEMPLATE_SETTINGS))
         .pipe(rename(filepath => {
           filepath.dirname = filepath.dirname.replace(`/${config.framework}`, '');
@@ -321,17 +313,13 @@ gulp.task('default', done => {
     };
 
     const installJavascriptFiles = function (cb) {
+      console.log(chalk.blue('--Installing javasripts--'));
       let jsFramework = config.framework;
       if (jsFramework === 'concise') {
         jsFramework = 'blank';
       }
-      const src = [
-        `_assets/javascripts/${jsFramework}/**/*`,
-        '!.DS_Store',
-        '!**/.DS_Store'
-      ];
-
-      gulp.src(src, {dot: true, cwd: srcDir, base: srcDir})
+      const src = `_assets/javascripts/${jsFramework}/**/*`;
+      gulp.src(src, {cwd: srcDir, base: srcDir})
         .pipe(template(config, TEMPLATE_SETTINGS))
         .pipe(rename(filepath => {
           filepath.dirname = filepath.dirname.replace(`/${jsFramework}`, '');
@@ -343,10 +331,10 @@ gulp.task('default', done => {
     };
 
     const installCNAME = function (cb) {
-      if (!answers.hostname) {
+      if (!config.hostname) {
         return cb();
       }
-
+      console.log(chalk.blue('--Installing CNAME--'));
       gulp.src('CNAME', {cwd: srcDir, base: srcDir})
         .pipe(template(config, TEMPLATE_SETTINGS))
         .pipe(conflict(destDir, {logger: console.log}))
@@ -355,6 +343,7 @@ gulp.task('default', done => {
     };
 
     const mergePackageAndInstall = function (cb) {
+      console.log(chalk.blue('--Installing package.json--'));
       const pkgMerge = pkg => {
         if (defaults.pkg) {
           return merge(defaults.pkg, pkg);
@@ -383,7 +372,6 @@ gulp.task('default', done => {
       installBinaryFiles,
       installCNAME,
       installDotfiles,
-      installGithubtoken,
       installStylesheetFiles,
       installJavascriptFiles,
       mergePackageAndInstall
