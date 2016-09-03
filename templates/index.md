@@ -34,7 +34,7 @@ GitHub Pages supports a number of Jekyll plugins which are one by default in the
   * [jekyll-feed](https://github.com/jekyll/jekyll-feed) - automatically generate a `feed.xml`
   * [jekyll-seo-tag](https://github.com/jekyll/jekyll-seo-tag) - provides a bunch of SEO metadata and opengraph tags
   * [jekyll-paginate](https://jekyllrb.com/docs/pagination/) - paginate your results!
-  * [jekyll-gist](https://github.com/jekyll/jekyll-gist) - specify a [gist](https://gist.github.com) in your page or post with `{% gist parkr/c08ee0f2726fd0e3909d %}`
+  * [jekyll-gist](https://github.com/jekyll/jekyll-gist) - specify a [gist](https://gist.github.com) in your page or post with `{% raw %}{% gist parkr/c08ee0f2726fd0e3909d %}{% endraw %}`
   * [jekyll-github-metadata](https://help.github.com/articles/repository-metadata-on-github-pages/) - provides all the `site.github` contextual information that you get on GitHub in your local dev.
 
 ### Support or Contact
