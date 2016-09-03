@@ -200,8 +200,12 @@ gulp.task('default', done => {
       return done();
     }
 
-    const srcDir = path.join(__dirname, 'templates');
-    handleAnswers({answers, defaults, gulp, srcDir, skipInstall: argv['skip-install']})
-      .then(() => done());
+    handleAnswers({
+      answers,
+      defaults,
+      gulp,
+      srcDir: path.join(__dirname, 'templates'),
+      skipInstall: argv['skip-install']
+    }).then(() => done());
   });
 });

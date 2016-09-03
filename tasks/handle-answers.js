@@ -23,8 +23,13 @@ const TEMPLATE_SETTINGS = {
   escape: /\{SLUSH\{-(.+?)\}\}/g
 };
 
-function handleAnswers({answers, defaults, gulp, srcDir, cwd, skipInstall}) {
-  cwd = cwd || process.cwd();
+function handleAnswers(options) {
+  const answers = options.answers;
+  const defaults = options.defaults;
+  const gulp = options.gulp;
+  const srcDir = options.srcDir;
+  const cwd = options.cwd || process.cwd();
+  const skipInstall = options.skipInstall;
 
   let config = clone(answers);
 
