@@ -44,7 +44,8 @@
     "eslint-config-xo-space": "^0.14.0",
     "eslint-plugin-babel": "^3.3.0",
     "eslint-plugin-filenames": "^1.1.0",
-    "eslint-plugin-import": "^1.14.0"
+    "eslint-plugin-import": "^1.14.0",
+    "which": "^1.2.10"
   },
   "dependencies": {
     "async": "^2.0.0-rc.4",

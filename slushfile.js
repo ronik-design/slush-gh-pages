@@ -203,7 +203,6 @@ gulp.task('default', done => {
     handleAnswers({
       answers,
       defaults,
-      gulp,
       srcDir: path.join(__dirname, 'templates'),
       skipInstall: argv['skip-install']
     }).then(() => done());

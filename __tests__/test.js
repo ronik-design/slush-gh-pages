@@ -1,9 +1,8 @@
 import test from 'ava';
-import gulp from 'gulp';
 import path from 'path';
 import del from 'del';
-import answers from './fixtures/answers.json';
-import handleAnswers from '../tasks/handle-answers';
+import answers from './fixtures/answers.json'; // eslint-disable-line
+import handleAnswers from '../tasks/handle-answers'; // eslint-disable-line
 
 const TMP_DIR = path.resolve(__dirname, '.tmp');
 const SRC_DIR = path.join(__dirname, '../templates');
@@ -14,7 +13,6 @@ test('templates install and installed files pass tests', async t => {
     await handleAnswers({
       answers,
       defaults: DEFAULTS,
-      gulp,
       srcDir: SRC_DIR,
       cwd: TMP_DIR
     });

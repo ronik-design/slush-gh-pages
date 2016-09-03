@@ -1,5 +1,6 @@
 'use strict';
 
+const gulp = require('gulp');
 const async = require('async');
 const conflict = require('gulp-conflict');
 const ignore = require('gulp-ignore');
@@ -26,7 +27,6 @@ const TEMPLATE_SETTINGS = {
 function handleAnswers(options) {
   const answers = options.answers;
   const defaults = options.defaults;
-  const gulp = options.gulp;
   const srcDir = options.srcDir;
   const cwd = options.cwd || process.cwd();
   const skipInstall = options.skipInstall;
@@ -194,3 +194,4 @@ function handleAnswers(options) {
 }
 
 module.exports = handleAnswers;
+module.exports.default = handleAnswers;
