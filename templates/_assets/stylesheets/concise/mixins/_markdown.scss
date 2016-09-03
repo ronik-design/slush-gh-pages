@@ -24,7 +24,6 @@
 
   h1 {
     position: relative;
-    display: inline-block;
     display: table-cell;
     padding: $spacing-m 0 $spacing-m * 2.2;
     overflow: hidden;
@@ -105,7 +104,6 @@
     margin-top: $spacing-m;
     margin-bottom: $spacing-m;
     position: relative;
-    padding-left: 17px;
     padding-left: 2ch;
     overflow: hidden;
 
@@ -144,7 +142,6 @@
   li {
     position: relative;
     display: block;
-    padding-left: 34px;
     padding-left: 4ch;
 
     p {

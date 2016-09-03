@@ -1,0 +1,18 @@
+{
+  "github": "foo/bar",
+  "branch": "gh-pages",
+  "githubToken": "",
+  "name": "bar",
+  "slug": "bar",
+  "url": "https://foo.github.io/bar",
+  "hostname": "bar.io",
+  "author": "michaelshick",
+  "email": "m@shick.us",
+  "twitter": "",
+  "description": "Test.",
+  "timezone": "America/Los_Angeles",
+  "version": "0.1.0",
+  "permalink": "date",
+  "framework": "blank",
+  "moveon": true 
+}

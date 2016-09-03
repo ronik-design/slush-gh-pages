@@ -7,7 +7,7 @@
     "node": ">= 4.0.0"
   },
   "scripts": {
-    "test": "eslint"
+    "test": "eslint slushfile.js utils tasks && ava __tests__"
   },
   "repository": {
     "type": "git",
@@ -36,6 +36,7 @@
   },
   "homepage": "https://github.com/ronik-design/slush-gh-pages#readme",
   "devDependencies": {
+    "ava": "^0.16.0",
     "babel-eslint": "^6.0.4",
     "eslint": "^3.2.2",
     "eslint-config-ronik": "^1.3.2",
