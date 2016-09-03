@@ -18,7 +18,6 @@ const istextorbinary = require('istextorbinary');
 const chalk = require('chalk');
 const validateGithubRepo = require('./utils/validate-github-repo');
 const parseGithubRepo = require('./utils/parse-github-repo');
-const parseAuthor = require('./utils/parse-author');
 const getDefaults = require('./utils/get-defaults');
 const dest = require('./utils/dest');
 const slugify = require('./utils/slugify');
@@ -313,7 +312,7 @@ gulp.task('default', done => {
     };
 
     const installJavascriptFiles = function (cb) {
-      console.log(chalk.blue('--Installing javasripts--'));
+      console.log(chalk.blue('--Installing javascripts--'));
       let jsFramework = config.framework;
       if (jsFramework === 'concise') {
         jsFramework = 'blank';
@@ -357,6 +356,7 @@ gulp.task('default', done => {
           'indent_char': ' ',
           'indent_size': 2
         }))
+        .pipe(conflict(destDir, {logger: console.log}))
         .pipe(gulp.dest(destDir))
         .pipe(install())
         .on('end', cb);

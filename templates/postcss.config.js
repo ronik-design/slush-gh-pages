@@ -2,7 +2,7 @@
 
 const config = {
   use: [
-    {SLUSH{ if (framework === 'concise') { }}'postcss-custom-media', 'postcss-media-minmax', 'postcss-lh', 'postcss-pr',{SLUSH{ } }}
+    {SLUSH{ if (framework === 'concise') { }}'postcss-custom-media', 'postcss-media-minmax', 'postcss-lh',{SLUSH{ } }}
     'autoprefixer'
   ],
   autoprefixer: {

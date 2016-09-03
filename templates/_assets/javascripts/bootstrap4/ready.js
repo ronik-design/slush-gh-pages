@@ -1,4 +1,4 @@
-function ready (cb) {
+function ready(cb) {
   const raf = window.requestAnimationFrame || window.mozRequestAnimationFrame ||
       window.webkitRequestAnimationFrame || window.msRequestAnimationFrame;
 
@@ -7,6 +7,6 @@ function ready (cb) {
   } else {
     window.addEventListener('load', cb);
   }
-};
+}
 
 export default ready;
