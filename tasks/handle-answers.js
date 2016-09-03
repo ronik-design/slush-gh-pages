@@ -151,8 +151,8 @@ function handleAnswers({answers, defaults, gulp, srcDir, cwd, skipInstall}) {
     gulp.src('package.json', {cwd: srcDir, base: srcDir})
       .pipe(template(config, TEMPLATE_SETTINGS))
       .pipe(jeditor(pkgMerge, {
-        'indent_char': ' ',
-        'indent_size': 2
+        indent_char: ' ', // eslint-disable-line
+        indent_size: 2 // eslint-disable-line
       }))
       .pipe(conflict(destDir, {logger: console.log}))
       .pipe(gulp.dest(destDir))
@@ -176,10 +176,6 @@ function handleAnswers({answers, defaults, gulp, srcDir, cwd, skipInstall}) {
 
   if (!skipInstall) {
     tasks.push(install);
-  }
-
-  if (answers.deploy) {
-    tasks.push(deploySite);
   }
 
   return new Promise((resolve, reject) => {

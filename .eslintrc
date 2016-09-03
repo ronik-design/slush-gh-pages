@@ -1,3 +1,7 @@
 {
-  "extends": "ronik"
+  "extends": ["xo-space/esnext", "plugin:import/errors"],
+  "plugins": ["filenames"],
+  "rules": {
+    "filenames/match-regex": [2, "^[a-z0-9\\-\\.]+$"]
+  }
 }
