@@ -1,4 +1,6 @@
-# GitHub Pages Generator (w/Slush) [![npm version](https://badge.fury.io/js/slush-gh-pages.svg)](https://badge.fury.io/js/slush-gh-pages)
+# GitHub Pages Generator (w/Slush)
+
+[![npm version](https://badge.fury.io/js/slush-gh-pages.svg)](https://badge.fury.io/js/slush-gh-pages)
 
 A [Slush](http://slushjs.github.io) generator for GitHub Pages that provides robust tooling for creating sophisticated Jekyll-based static websites.
 
@@ -8,18 +10,28 @@ The goal of this project is to make it incredibly easy to get up-and-running wit
 
 A key focus is on simplicity, so in general the only commands you'll need to use in your project are `npm start` and `npm run deploy`. `npm start` will launch your local development environment, and watch your JS, SCSS, image and icon assets for changes to automatically recompile them, and `npm run deploy` aliases `npm version minor` and will increment your version identifier and commit your project to your GitHub repository, effectively deploying the latest version of your site.
 
-### To use
+### Requirements
 
-First prepare your environments. You'll need a working [Ruby](https://github.com/github/pages-gem#1-ruby) environment, and a working [Node.js](https://gist.github.com/mshick/306171bf69cf6d901d1332f49b5c4e2d) environment. Installing those is outside the scope of this humble README, but those links should set you straight!
+First prepare your environments. You will need:
 
-There are a few global dependencies as well. Some details might vary, but generally this is all you'll need.
+  * [Ruby](https://github.com/github/pages-gem#1-ruby) environment, and a working  
+  * [Node.js](https://gist.github.com/mshick/306171bf69cf6d901d1332f49b5c4e2d) environment.
+
+Plus, some global package for those environments.
+
+  * [Bundler](https://bundler.io) Ruby Gem
+  * [Slush](https://slushjs.github.io/) npm module
+
+Details might vary, but that should be as easy as running these commands:
 
 ```
 [sudo] gem install bundler
 npm install slush slush-gh-pages --global
 ```
 
-Now, clone your GitHub repo and run:
+### Install
+
+Now, clone the GitHub repo you want to set up with Pages and run:
 
 ```
 cd [REPO_DIR]
@@ -27,9 +39,9 @@ git checkout -b gh-pages
 slush gh-pages
 ```
 
-> GitHub provides several options for the location of your GitHub Pages source. `gh-pages` has been around the longest. See: [User, Organization, and Project Pages](https://git.io/v6hek)  
+> GitHub provides several options for the location of your GitHub Pages source. the `gh-pages` branch has been around the longest. See: [User, Organization, and Project Pages](https://git.io/v6hek)  
 
-> If you attempt to run Jekyll with the configured modules, and no git repo in your current directory you will encounter some anomalies or errors after running `npm start`.
+> Running `npm start` after you've generated without a git repo in the working directory can result in some warnings. You've been warned.
 
 ### What you get
 
@@ -63,7 +75,7 @@ In lieu of real documentation, just be prepared to answer the following question
     - This is often `gh-pages` but GitHub has a number of [other options](https://git.io/v6hek)
   * GitHub token?
     - This is strongly suggested for several of the default plugins to function correctly
-    - Suggested permissions are 'public_repo' and 'gist'. 
+    - Suggested permissions are 'public_repo' and 'gist'.
     - See: [Creating an access token for command-line use](https://git.io/v61m7)
   * What is the PRETTY name of your site?
   * What is the name SLUG for your site?
@@ -80,7 +92,7 @@ In lieu of real documentation, just be prepared to answer the following question
     - This will detect your system TZ as the default.
   * What is the version of your site?
     - Detected from an existing `package.json`
-  * Which permalink pattern would you like to use? 
+  * Which permalink pattern would you like to use?
     - See: [jekyll permalink style](https://jekyllrb.com/docs/permalinks/#built-in-permalink-styles)
   * Which CSS & JS framework would you like to use?  
     - Blank — just some stub files and directories.
