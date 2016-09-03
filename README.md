@@ -1,6 +1,7 @@
 # GitHub Pages Generator (w/Slush)
 
 [![npm version](https://badge.fury.io/js/slush-gh-pages.svg)](https://badge.fury.io/js/slush-gh-pages)
+[![Build Status](https://travis-ci.org/ronik-design/slush-gh-pages.svg?branch=master)](https://travis-ci.org/ronik-design/slush-gh-pages)
 
 A [Slush](http://slushjs.github.io) generator for GitHub Pages that provides robust tooling for creating sophisticated Jekyll-based static websites.
 
@@ -17,7 +18,7 @@ First prepare your environments. You will need:
   * [Ruby](https://github.com/github/pages-gem#1-ruby) environment, and a working  
   * [Node.js](https://gist.github.com/mshick/306171bf69cf6d901d1332f49b5c4e2d) environment.
 
-Plus, some global package for those environments.
+Plus, some global packages for those environments.
 
   * [Bundler](https://bundler.io) Ruby Gem
   * [Slush](https://slushjs.github.io/) npm module
