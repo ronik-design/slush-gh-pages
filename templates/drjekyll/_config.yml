@@ -1,0 +1,64 @@
+# Common _config.yml contains values collected during prompts,
+# and anything crucial for the function of the package.
+
+# Basics
+title: {SLUSH{=name}}
+description: {SLUSH{=description}}
+url: {SLUSH{=url}}
+author:
+  name: {SLUSH{=author}}
+  {SLUSH{ if (email) { }}email: {SLUSH{=email}}{SLUSH{ } }}
+  {SLUSH{ if (twitter) { }}twitter: {SLUSH{=twitter}}{SLUSH{ } }}
+
+# Where things are
+destination:  ./_site
+
+# Handling Reading
+exclude:
+  - vendor
+  - node_modules
+  - package.json
+  - Gemfile
+  - Gemfile.lock
+  - rollup.config.js
+  - postcss.config.js  
+
+# Serving
+baseurl: "" # does not include hostname
+show_dir_listing: false
+
+# Outputting
+permalink:     {SLUSH{=permalink}}
+timezone:      {SLUSH{=timezone}}
+
+quiet:    false
+verbose:  false
+
+liquid:
+  error_mode: lax
+
+# Required for github-metadata
+repository: {SLUSH{=github}}
+
+# Plugins - these are all the plugins currently supported
+# in the GitHub Pages environment
+gems:
+  - jekyll-mentions
+  - jemoji
+  - jekyll-redirect-from
+  - jekyll-sitemap
+  - jekyll-feed
+  - jekyll-seo-tag
+  - jekyll-paginate
+  - jekyll-gist
+  - jekyll-github-metadata
+whitelist:
+  - jekyll-mentions
+  - jemoji
+  - jekyll-redirect-from
+  - jekyll-sitemap
+  - jekyll-feed
+  - jekyll-seo-tag
+  - jekyll-paginate
+  - jekyll-gist
+  - jekyll-github-metadata

@@ -138,6 +138,12 @@ function getDefaults() {
 
   const gitDirStats = fileStat(dest('.git'));
   const repoPresent = gitDirStats && gitDirStats.isDirectory();
+  let gitConfig;
+  if (repoPresent) {
+    try {
+      gitConfig = iniparser.parseSync(dest('.git/config'));
+    } catch (e) {}
+  }
 
   return {
     name,
@@ -152,6 +158,7 @@ function getDefaults() {
     githubToken,
     hostname,
     config,
+    gitConfig,
     branch,
     repoPresent
   };

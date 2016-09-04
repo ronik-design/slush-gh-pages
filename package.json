@@ -58,12 +58,18 @@
     "gulp-json-editor": "^2.2.1",
     "gulp-rename": "^1.2.2",
     "gulp-template": "^4.0.0",
+    "gulp-yaml": "^1.0.1",
     "iniparser": "^1.0.5",
     "inquirer": "^1.0.2",
     "istextorbinary": "^2.1.0",
     "js-yaml": "^3.6.1",
     "lodash": "^4.15.0",
-    "moment-timezone": "^0.5.4"
+    "mkdirp": "^0.5.1",
+    "moment-timezone": "^0.5.4",
+    "mv": "^2.1.1",
+    "nodegit": "^0.14.1",
+    "through2": "^2.0.1",
+    "unzip": "^0.1.11"
   },
   "eslintConfig": {
     "extends": "ronik"

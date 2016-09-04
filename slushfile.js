@@ -2,15 +2,20 @@
 
 const path = require('path');
 const gulp = require('gulp');
+const moment = require('moment-timezone');
 const inquirer = require('inquirer');
 const chalk = require('chalk');
 const argv = require('minimist')(process.argv.slice(2));
+const clone = require('lodash/clone');
 const validateGithubRepo = require('./utils/validate-github-repo');
 const parseGithubRepo = require('./utils/parse-github-repo');
 const getDefaults = require('./utils/get-defaults');
 const slugify = require('./utils/slugify');
+const getDrJekyllThemes = require('./utils/get-dr-jekyll-themes');
 const getBootswatchThemes = require('./utils/get-bootswatch-themes');
-const handleAnswers = require('./tasks/handle-answers');
+const installThemeStarter = require('./tasks/install-theme-starter');
+const installThemeDrJekyll = require('./tasks/install-theme-dr-jekyll');
+const pkg = require('./package.json');
 
 const defaults = getDefaults();
 
@@ -26,7 +31,14 @@ ${chalk.bold('(ctrl-c to terminate this set up)')}
 gulp.task('default', done => {
   const prompts = [{
     name: 'github',
-    default: defaults.config && defaults.config.repository,
+    default() {
+      if (defaults.config && defaults.config.repository) {
+        return defaults.config.respository;
+      }
+      if (defaults.gitConfig && defaults.gitConfig['remote "origin"']) {
+        return defaults.gitConfig['remote "origin"'].url;
+      }
+    },
     validate(str) {
       if (str === null) {
         return false;
@@ -128,7 +140,7 @@ gulp.task('default', done => {
 >`
   }, {
     name: 'timezone',
-    default: defaults.config ? defaults.config.timezone : defaults.timezone,
+    default: defaults.config && defaults.config.timezone ? defaults.config.timezone : defaults.timezone,
     message: `What is the timezone for your site?
 >`
   }, {
@@ -156,9 +168,67 @@ gulp.task('default', done => {
       value: 'none'
     }]
   }, {
+    name: 'theme',
+    message: `Which Jekyll theme would you like to use?
+${chalk.bgBlue(`Note: Only the Starter theme is fully tested and guaranteed to work with GitHub Pages.`)}
+`,
+    type: 'list',
+    default: 'starter',
+    choices() {
+      const choices = [];
+      choices.push(new inquirer.Separator());
+      choices.push({
+        name: 'Starter [Core theme, offers framework selection]',
+        value: 'starter'
+      });
+      choices.push(new inquirer.Separator());
+      return getDrJekyllThemes().then(themes => choices.concat(themes));
+    }
+  }, {
+    type: 'confirm',
+    name: 'drjekyllMerge',
+    when: answers => answers.theme !== 'starter',
+    message: `
+${chalk.blue.bold(`Merge the theme?`)}
+---
+Should I attempt to merge the provided tools with the external theme you've
+chosen? This can have unpredictable results.
+
+Otherwise you'll just be installing the Dr Jekyll theme alone, which is still
+nice.
+---
+`
+  }, {
+    type: 'confirm',
+    name: 'drjekyllConfirm',
+    when: answers => answers.drjekyllMerge,
+    message: `
+${chalk.yellow.bold(`Since you chose to merge a Dr. Jekyll theme, a few notes:`)}
+${chalk.yellow.bold(`---
+  1. You may encounter file conflicts during the install. Some config files are
+     required for the development environment to work. It is suggested you choose
+     to overwrite the existing file when prompted, unless you know it contains
+     information you want to keep.
+
+  2. The source files in '_assets' are just stubs and are in place to ensure
+     the build tools work. You can ignore them entirely, or migrate your theme's
+     source to use those tools instead.
+
+  3. To avoid removing valid themes files placed in the 'assets' folder, the
+     clean process will not remove any files in that folder by default. You could
+     end up with garbage in there you don't want.
+
+  4. It's pretty unlikely these themes will pass the htmlproofer tests.
+
+  5. I don't make these themes! Many are great, but I've seen a few that are
+     quite off and out-of-date. No promises!
+---`)}
+`
+  }, {
     name: 'framework',
     message: 'Which CSS & JS framework would you like to use?',
     type: 'list',
+    when: answers => answers.theme === 'starter',
     choices: [{
       name: 'Blank (nothing at all, just a css stub dir, and some script polyfills)',
       value: 'blank'
@@ -177,9 +247,7 @@ gulp.task('default', done => {
     name: 'bootswatch',
     message: 'Which Bootswatch template would you like?',
     type: 'list',
-    when(answers) {
-      return answers.framework === 'bootstrap3';
-    },
+    when: answers => answers.framework === 'bootstrap3',
     choices() {
       const choices = [{
         name: '- None -',
@@ -190,21 +258,44 @@ gulp.task('default', done => {
     }
   }, {
     type: 'confirm',
+    when: answers => answers.theme === 'starter',
     name: 'moveon',
     message: 'Continue?'
   }];
 
   // Ask
-  inquirer.prompt(prompts).then(answers => {
-    if (!answers.moveon) {
+  inquirer.prompt(prompts).then(answersRaw => {
+    let answers = clone(answersRaw);
+    if (!answers.moveon && (answers.drjekyllMerge && !answers.drjekyllConfirm)) {
       return done();
     }
 
-    handleAnswers({
+    // Add GitHub repo info
+    answers = Object.assign(answers, parseGithubRepo(answers.github));
+
+    // Add version of this generator
+    answers.generatorVersion = pkg.version;
+
+    // Basic time info in selected timezone
+    answers.now = moment.tz(new Date(), answers.timezone).format('YYYY-MM-DD HH:mm:ss Z');
+    answers.year = moment.tz(new Date(), answers.timezone).format('YYYY');
+
+    const isStarterTheme = answers.theme === 'starter';
+    const install = isStarterTheme ? installThemeStarter : installThemeDrJekyll;
+
+    install({
       answers,
       defaults,
-      srcDir: path.join(__dirname, 'templates'),
+      templatesDir: path.join(__dirname, 'templates'),
       skipInstall: argv['skip-install']
-    }).then(() => done());
+    })
+    .then(() => {
+      done();
+      process.exit();
+    })
+    .catch(err => {
+      done(err);
+      process.exit();
+    });
   });
 });
