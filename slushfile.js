@@ -116,7 +116,8 @@ gulp.task('default', done => {
   }, {
     name: 'hostname',
     default: defaults.hostname,
-    message: `What is the hostname for your site? [Leave blank if not using a custom domain]
+    message: `What is the CNAME / hostname for your site? [Leave blank if not using a custom domain]
+[e.g., If you own the domain 'foo.com' and you intend to point it at this site, enter 'foo.com' here]
 >`
   }, {
     name: 'author',
@@ -149,7 +150,51 @@ gulp.task('default', done => {
     message: `What is the version of your site?
 >`
   }, {
+    name: 'theme',
+    message: `Which Jekyll theme would you like to use?
+${chalk.bgBlue(`Note: Only the Starter theme is fully tested and guaranteed to work with GitHub Pages.`)}
+`,
+    type: 'list',
+    default: 'starter',
+    choices() {
+      const choices = [];
+      choices.push(new inquirer.Separator());
+      choices.push({
+        name: 'Starter [Core theme, offers framework selection and build tools]',
+        value: 'starter'
+      });
+      choices.push(new inquirer.Separator());
+      return getDrJekyllThemes().then(themes => choices.concat(themes));
+    }
+  }, {
+    type: 'confirm',
+    name: 'drjekyllMoveon',
+    when: answers => answers.theme !== 'starter',
+    message: `
+${chalk.yellow.bold(`Since you chose to install a Dr. Jekyll theme, a few notes:`)}
+${chalk.yellow.bold(`---
+  1. Dr. Jekyll themes are not specifically designed to work with GitHub Pages
+     and may depend upon plugins that cannot run in the GitHub Pages
+     environment.
+
+  2. Dr. Jekyll themes do not provide the Node.js build tools that the core
+     theme offers, though a few GitHub Pages-specific files will be added.
+
+  3. You may encounter a few file conflicts during the install. Some config files
+     are required for the development environment to work. It is suggested you
+     choose to overwrite the existing file when prompted, unless you know it
+     contains information you want to keep.
+
+  4. It's unlikely these themes will pass the simple htmlproofer tests that are
+     configured by default.
+
+  5. I don't make these themes! Many are great, but I've seen a few that are
+     very out-of-date. No promises!
+---`)}
+`
+  }, {
     name: 'permalink',
+    when: answers => answers.theme === 'starter',
     default: defaults.config && defaults.config.permalink,
     message: `Which permalink pattern would you like to use? [see: https://git.io/v6hJD]
 >`,
@@ -167,63 +212,6 @@ gulp.task('default', done => {
       name: 'None (/:categories/:title.html)',
       value: 'none'
     }]
-  }, {
-    name: 'theme',
-    message: `Which Jekyll theme would you like to use?
-${chalk.bgBlue(`Note: Only the Starter theme is fully tested and guaranteed to work with GitHub Pages.`)}
-`,
-    type: 'list',
-    default: 'starter',
-    choices() {
-      const choices = [];
-      choices.push(new inquirer.Separator());
-      choices.push({
-        name: 'Starter [Core theme, offers framework selection]',
-        value: 'starter'
-      });
-      choices.push(new inquirer.Separator());
-      return getDrJekyllThemes().then(themes => choices.concat(themes));
-    }
-  }, {
-    type: 'confirm',
-    name: 'drjekyllMerge',
-    when: answers => answers.theme !== 'starter',
-    message: `
-${chalk.blue.bold(`Merge the theme?`)}
----
-Should I attempt to merge the provided tools with the external theme you've
-chosen? This can have unpredictable results.
-
-Otherwise you'll just be installing the Dr Jekyll theme alone, which is still
-nice.
----
-`
-  }, {
-    type: 'confirm',
-    name: 'drjekyllConfirm',
-    when: answers => answers.drjekyllMerge,
-    message: `
-${chalk.yellow.bold(`Since you chose to merge a Dr. Jekyll theme, a few notes:`)}
-${chalk.yellow.bold(`---
-  1. You may encounter file conflicts during the install. Some config files are
-     required for the development environment to work. It is suggested you choose
-     to overwrite the existing file when prompted, unless you know it contains
-     information you want to keep.
-
-  2. The source files in '_assets' are just stubs and are in place to ensure
-     the build tools work. You can ignore them entirely, or migrate your theme's
-     source to use those tools instead.
-
-  3. To avoid removing valid themes files placed in the 'assets' folder, the
-     clean process will not remove any files in that folder by default. You could
-     end up with garbage in there you don't want.
-
-  4. It's pretty unlikely these themes will pass the htmlproofer tests.
-
-  5. I don't make these themes! Many are great, but I've seen a few that are
-     quite off and out-of-date. No promises!
----`)}
-`
   }, {
     name: 'framework',
     message: 'Which CSS & JS framework would you like to use?',
@@ -266,7 +254,7 @@ ${chalk.yellow.bold(`---
   // Ask
   inquirer.prompt(prompts).then(answersRaw => {
     let answers = clone(answersRaw);
-    if (!answers.moveon && (answers.drjekyllMerge && !answers.drjekyllConfirm)) {
+    if (!answers.moveon && !answers.drjekyllMoveon) {
       return done();
     }
 

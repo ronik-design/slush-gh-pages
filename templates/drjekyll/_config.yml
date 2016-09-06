@@ -20,15 +20,12 @@ exclude:
   - package.json
   - Gemfile
   - Gemfile.lock
-  - rollup.config.js
-  - postcss.config.js  
 
 # Serving
 baseurl: "" # does not include hostname
 show_dir_listing: false
 
 # Outputting
-permalink:     {SLUSH{=permalink}}
 timezone:      {SLUSH{=timezone}}
 
 quiet:    false

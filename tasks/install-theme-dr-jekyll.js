@@ -3,6 +3,7 @@
 const path = require('path');
 const async = require('async');
 const urlParse = require('url').parse;
+const inquirer = require('inquirer');
 const dest = require('../utils/dest');
 const cloneRepo = require('./clone-repo');
 const downloadAndUnzip = require('./download-and-unzip');
@@ -14,6 +15,8 @@ const installCNAME = require('./install-cname');
 const mergeAndInstallPackageJSON = require('./merge-and-install-package-json');
 const mergeAndInstallConfigYML = require('./merge-and-install-config-yml');
 const installNpm = require('./install-npm');
+
+const TMP_DIR = '.slush-gh-pages-tmp';
 
 const TEMPLATE_SETTINGS = {
   evaluate: /\{SLUSH\{(.+?)\}\}/g,
@@ -53,67 +56,66 @@ function installThemeDrJekyll(options) {
 
   if (path.extname(parsed.path) === '.git') {
     const branch = parsed.hash.substr(1);
-    tasks = [
+    tasks = tasks.concat([
       cloneRepo(Object.assign(opts, {
         repo: `https://github.com${parsed.path}`,
         branch,
-        destDir: `${destDir}/.slush-gh-pages-tmp`
+        destDir: `${destDir}/${TMP_DIR}`
       })),
       copyFiles(Object.assign(opts, {
-        src: ['**/*', '!.git', '!.git/**'],
-        srcDir: `${destDir}/.slush-gh-pages-tmp`,
-        destDir
+        src: ['**/*', '!.git', '!.git/**', '!Gemfile.lock'],
+        srcDir: `${destDir}/${TMP_DIR}`,
+        destDir,
+        rename: {Gemfile: 'Gemfile.drjekyll'}
       }))
-    ].concat(tasks);
+    ]);
   } else {
-    const tmpDir = '.slush-gh-pages-tmp';
     const downloadedDir = 'downloaded';
-    tasks = [
+    tasks = tasks.concat([
       downloadAndUnzip(Object.assign(opts, {
         downloadUrl: answers.theme,
-        destDir: `${destDir}/${tmpDir}`,
+        destDir: `${destDir}/${TMP_DIR}`,
         downloadedDir
       })),
       copyFiles(Object.assign(opts, {
         src: ['**/*', '!.git', '!.git/**', '!*.zip', '!Gemfile.lock'],
-        srcDir: `${destDir}/${tmpDir}/${downloadedDir}`,
-        destDir
+        srcDir: `${destDir}/${TMP_DIR}/${downloadedDir}`,
+        destDir,
+        rename: {Gemfile: 'Gemfile.drjekyll'}
       }))
-    ].concat(tasks);
+    ]);
   }
 
   tasks.push(deleteFiles(Object.assign(opts, {
-    src: '.slush-gh-pages-tmp',
+    src: TMP_DIR,
     srcDir: destDir
   })));
 
-  if (answers.drjekyllMerge) {
-    tasks = [
-      installTextFiles(Object.assign(opts, {
-        src: coreFiles,
-        srcDir: path.join(templatesDir, 'drjekyll')
-      })),
-      installDotfiles(Object.assign(opts, {
-        srcDir: path.join(templatesDir, 'drjekyll')
-      })),
-      mergeAndInstallConfigYML(Object.assign(opts, {
-        src: '_config.yml',
-        target: '_config.yml',
-        destDir
-      })),
-      mergeAndInstallPackageJSON(Object.assign(opts, {
-        src: 'package.json',
-        srcDir: path.join(templatesDir, 'drjekyll'),
-        target: defaults.pkg
-      }))
-    ].concat(tasks);
-  }
+  tasks = tasks = tasks.concat([
+    installTextFiles(Object.assign(opts, {
+      src: coreFiles,
+      srcDir: path.join(templatesDir, 'drjekyll')
+    })),
+    installDotfiles(Object.assign(opts, {
+      srcDir: path.join(templatesDir, 'drjekyll')
+    })),
+    mergeAndInstallConfigYML(Object.assign(opts, {
+      src: '_config.yml',
+      target: '_config.yml',
+      destDir
+    })),
+    mergeAndInstallPackageJSON(Object.assign(opts, {
+      src: 'package.json',
+      srcDir: path.join(templatesDir, 'drjekyll'),
+      target: defaults.pkg
+    }))
+  ]);
 
   if (answers.hostname) {
     tasks.push(installCNAME(Object.assign(opts, {})));
   }
 
-  if (!answers.drjekyllMerge || skipInstall) {
+  if (!skipInstall) {
     tasks.push(installNpm(Object.assign(opts, {})));
   }
 
