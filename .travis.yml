@@ -3,6 +3,9 @@ node_js:
   - 6
   - 4
 
+before_install:
+  - rm npm-shrinkwrap.json
+
 branches:
   only:
   - master
