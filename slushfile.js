@@ -11,10 +11,8 @@ const validateGithubRepo = require('./utils/validate-github-repo');
 const parseGithubRepo = require('./utils/parse-github-repo');
 const getDefaults = require('./utils/get-defaults');
 const slugify = require('./utils/slugify');
-const getDrJekyllThemes = require('./utils/get-dr-jekyll-themes');
 const getBootswatchThemes = require('./utils/get-bootswatch-themes');
-const installThemeStarter = require('./tasks/install-theme-starter');
-const installThemeDrJekyll = require('./tasks/install-theme-dr-jekyll');
+const installTheme = require('./tasks/install-theme');
 const pkg = require('./package.json');
 
 const defaults = getDefaults();
@@ -150,51 +148,7 @@ gulp.task('default', done => {
     message: `What is the version of your site?
 >`
   }, {
-    name: 'theme',
-    message: `Which Jekyll theme would you like to use?
-${chalk.bgBlue(`Note: Only the Starter theme is fully tested and guaranteed to work with GitHub Pages.`)}
-`,
-    type: 'list',
-    default: 'starter',
-    choices() {
-      const choices = [];
-      choices.push(new inquirer.Separator());
-      choices.push({
-        name: 'Starter [Core theme, offers framework selection and build tools]',
-        value: 'starter'
-      });
-      choices.push(new inquirer.Separator());
-      return getDrJekyllThemes().then(themes => choices.concat(themes));
-    }
-  }, {
-    type: 'confirm',
-    name: 'drjekyllMoveon',
-    when: answers => answers.theme !== 'starter',
-    message: `
-${chalk.yellow.bold(`Since you chose to install a Dr. Jekyll theme, a few notes:`)}
-${chalk.yellow.bold(`---
-  1. Dr. Jekyll themes are not specifically designed to work with GitHub Pages
-     and may depend upon plugins that cannot run in the GitHub Pages
-     environment.
-
-  2. Dr. Jekyll themes do not provide the Node.js build tools that the core
-     theme offers, though a few GitHub Pages-specific files will be added.
-
-  3. You may encounter a few file conflicts during the install. Some config files
-     are required for the development environment to work. It is suggested you
-     choose to overwrite the existing file when prompted, unless you know it
-     contains information you want to keep.
-
-  4. It's unlikely these themes will pass the simple htmlproofer tests that are
-     configured by default.
-
-  5. I don't make these themes! Many are great, but I've seen a few that are
-     very out-of-date. No promises!
----`)}
-`
-  }, {
     name: 'permalink',
-    when: answers => answers.theme === 'starter',
     default: defaults.config && defaults.config.permalink,
     message: `Which permalink pattern would you like to use? [see: https://git.io/v6hJD]
 >`,
@@ -216,7 +170,6 @@ ${chalk.yellow.bold(`---
     name: 'framework',
     message: 'Which CSS & JS framework would you like to use?',
     type: 'list',
-    when: answers => answers.theme === 'starter',
     choices: [{
       name: 'Blank (nothing at all, just a css stub dir, and some script polyfills)',
       value: 'blank'
@@ -246,7 +199,6 @@ ${chalk.yellow.bold(`---
     }
   }, {
     type: 'confirm',
-    when: answers => answers.theme === 'starter',
     name: 'moveon',
     message: 'Continue?'
   }];
@@ -254,7 +206,7 @@ ${chalk.yellow.bold(`---
   // Ask
   inquirer.prompt(prompts).then(answersRaw => {
     let answers = clone(answersRaw);
-    if (!answers.moveon && !answers.drjekyllMoveon) {
+    if (!answers.moveon) {
       return done();
     }
 
@@ -268,10 +220,13 @@ ${chalk.yellow.bold(`---
     answers.now = moment.tz(new Date(), answers.timezone).format('YYYY-MM-DD HH:mm:ss Z');
     answers.year = moment.tz(new Date(), answers.timezone).format('YYYY');
 
-    const isStarterTheme = answers.theme === 'starter';
-    const install = isStarterTheme ? installThemeStarter : installThemeDrJekyll;
+    // Add theme name
+    answers.theme = 'gh-pages';
 
-    install({
+    console.log(answers);
+    process.exit();
+
+    installTheme({
       answers,
       defaults,
       templatesDir: path.join(__dirname, 'templates'),

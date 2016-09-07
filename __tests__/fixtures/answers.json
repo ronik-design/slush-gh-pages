@@ -9,10 +9,18 @@
   "author": "michaelshick",
   "email": "m@shick.us",
   "twitter": "",
-  "description": "Test.",
+  "description": "Awesome.",
   "timezone": "America/Los_Angeles",
   "version": "0.1.0",
-  "permalink": "date",
+  "permalink": "pretty",
   "framework": "blank",
-  "moveon": true
+  "moveon": true,
+  "githubAuthorName": "foo",
+  "githubAuthorUrl": "https://github.com/foo",
+  "githubRepoName": "bar",
+  "githubRepoUrl": "https://github.com/foo/bar",
+  "generatorVersion": "1.10.0",
+  "now": "2016-09-06 18:15:31 -07:00",
+  "year": "2016",
+  "theme": "gh-pages"
 }

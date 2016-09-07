@@ -2,18 +2,17 @@ import test from 'ava';
 import path from 'path';
 import del from 'del';
 import answers from './fixtures/answers.json'; // eslint-disable-line
-import handleAnswers from '../tasks/handle-answers'; // eslint-disable-line
+import installTheme from '../tasks/install-theme'; // eslint-disable-line
 
 const TMP_DIR = path.resolve(__dirname, '.tmp');
-const SRC_DIR = path.join(__dirname, '../templates');
 const DEFAULTS = {};
 
 test('templates install and installed files pass tests', async t => {
   try {
-    await handleAnswers({
+    await installTheme({
       answers,
       defaults: DEFAULTS,
-      srcDir: SRC_DIR,
+      templatesDir: path.resolve(__dirname, '..', 'templates'),
       cwd: TMP_DIR
     });
     t.pass();
