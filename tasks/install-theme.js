@@ -21,10 +21,10 @@ const TEMPLATE_SETTINGS = {
 function installTheme(options) {
   const answers = options.answers;
   const defaults = options.defaults;
-  const templatesDir = options.templatesDir;
+  const themesDir = options.themesDir;
   const cwd = options.cwd || process.cwd();
   const skipInstall = options.skipInstall;
-  const srcDir = path.join(templatesDir, answers.theme);
+  const srcDir = path.join(themesDir, answers.theme);
   const destDir = dest(null, cwd);
 
   const opts = {

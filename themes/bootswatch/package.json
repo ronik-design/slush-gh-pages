@@ -1,0 +1,18 @@
+{
+  "scripts": {
+    "install-bootstrap-glypicons": "cp -R node_modules/bootstrap-sass/assets/fonts/ _assets/fonts",
+    "clean": "rm -rf {assets/stylesheets/*,assets/javascripts/*,assets/images/*,assets/fonts/*}",
+    "build:fonts": "mkdir -p assets/fonts && cp -R _assets/fonts/ assets/fonts",
+    "watch:fonts": "chokidar '_assets/fonts/**/*' -d -c 'npm run build:fonts'",
+    "build": "npm-run-all --serial clean build:images build:fonts build:css build:js jekyll:build",
+    "watch": "npm-run-all --serial clean build:images build:fonts build:css:dev build:js:dev && npm-run-all --continue-on-error --parallel watch:* jekyll:watch serve",
+    "postinstall": "bundle install && chmod +x __tests__/test.sh && npm run install-bootstrap-glypicons && npm test",
+    "test": "npm-run-all --serial clean build:images build:fonts build:css build:js && JEKYLL_GITHUB_TOKEN=$([ -f .githubtoken ] && cat .githubtoken) JEKYLL_ENV=production __tests__/test.sh"
+  },
+  "dependencies": {
+    "jquery": "^3.1.0",
+    "bootstrap-sass": "^3.3.7",
+    "bootswatch": "^3.3.7",
+    "svg4everybody": "^2.1.0"
+  }
+}

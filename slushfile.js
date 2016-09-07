@@ -15,6 +15,8 @@ const getBootswatchThemes = require('./utils/get-bootswatch-themes');
 const installTheme = require('./tasks/install-theme');
 const pkg = require('./package.json');
 
+const THEMES_DIR = path.join(__dirname, 'themes');
+
 const defaults = getDefaults();
 
 if (!defaults.repoPresent) {
@@ -221,15 +223,12 @@ gulp.task('default', done => {
     answers.year = moment.tz(new Date(), answers.timezone).format('YYYY');
 
     // Add theme name
-    answers.theme = 'gh-pages';
-
-    console.log(answers);
-    process.exit();
+    answers.theme = 'default';
 
     installTheme({
       answers,
       defaults,
-      templatesDir: path.join(__dirname, 'templates'),
+      themesDir: THEMES_DIR,
       skipInstall: argv['skip-install']
     })
     .then(() => {

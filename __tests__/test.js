@@ -5,6 +5,7 @@ import answers from './fixtures/answers.json'; // eslint-disable-line
 import installTheme from '../tasks/install-theme'; // eslint-disable-line
 
 const TMP_DIR = path.resolve(__dirname, '.tmp');
+const THEMES_DIR = path.resolve(__dirname, '..', 'themes');
 const DEFAULTS = {};
 
 test('templates install and installed files pass tests', async t => {
@@ -12,7 +13,7 @@ test('templates install and installed files pass tests', async t => {
     await installTheme({
       answers,
       defaults: DEFAULTS,
-      templatesDir: path.resolve(__dirname, '..', 'templates'),
+      templatesDir: THEMES_DIR,
       cwd: TMP_DIR
     });
     t.pass();
