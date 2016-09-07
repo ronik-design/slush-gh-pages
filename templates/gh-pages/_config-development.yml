@@ -1,0 +1,6 @@
+# Assist in debugging
+verbose:  true
+
+# Output error messages
+liquid:
+  error_mode: warn
