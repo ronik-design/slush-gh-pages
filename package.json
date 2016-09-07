@@ -69,7 +69,8 @@
     "mv": "^2.1.1",
     "nodegit": "^0.14.1",
     "through2": "^2.0.1",
-    "unzip": "^0.1.11"
+    "unzip": "^0.1.11",
+    "which": "^1.2.11"
   },
   "eslintConfig": {
     "extends": "ronik"
