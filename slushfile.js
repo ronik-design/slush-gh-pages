@@ -223,9 +223,6 @@ gulp.task('default', done => {
     // Add theme name
     answers.theme = 'gh-pages';
 
-    console.log(answers);
-    process.exit();
-
     installTheme({
       answers,
       defaults,
