@@ -1,0 +1,24 @@
+---
+layout: compress
+---
+
+<!doctype html>
+<html>
+  <head>
+    {% include head.html %}
+    {% seo %}
+  </head>
+  <body {% if page.body_class %}class="{{ page.body_class }}"{% endif %}>
+    <div container class="container wrapper">
+
+      <section>
+        {{ content }}
+      </section>
+
+      {% include footer.html %}
+
+    </div>
+
+    <script src="{{ base_path }}/assets/javascripts/scripts.js"></script>
+  </body>
+</html>

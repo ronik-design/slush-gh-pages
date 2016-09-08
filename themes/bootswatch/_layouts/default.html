@@ -1,0 +1,26 @@
+---
+layout: compress
+---
+
+<!doctype html>
+<html>
+  <head>
+    {% include head.html %}
+    {% seo %}
+  </head>
+  <body {% if page.body_class %}class="{{ page.body_class }}"{% endif %}>
+    <div class="wrapper">
+
+      {% include nav.html %}
+
+      <section>
+        {{ content }}
+      </section>
+
+      {% include footer.html %}
+
+    </div>
+
+    {% include scripts.html %}
+  </body>
+</html>

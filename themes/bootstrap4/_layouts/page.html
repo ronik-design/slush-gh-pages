@@ -1,0 +1,22 @@
+---
+layout: default
+---
+
+<div class="container">
+  <div class="row">
+
+    {% include sidebar.html %}
+
+    <article class="page col-sm-8">
+
+      <header class="page-header">
+        <h2 class="page-title" itemprop="name headline">{{ page.title }}</h2>
+      </header>
+
+      <div class="page-content">
+        {{ content }}
+      </div>
+
+    </article>
+  </div>
+</div>

@@ -2,10 +2,10 @@
   "github": "foo/bar",
   "branch": "gh-pages",
   "githubToken": "",
-  "name": "bar",
-  "slug": "bar",
-  "url": "https://foo.github.io/bar",
-  "hostname": "bar.io",
+  "name": "foobar",
+  "slug": "foobar",
+  "url": "https://foo.io",
+  "hostname": "foo.io",
   "author": "michaelshick",
   "email": "m@shick.us",
   "twitter": "",
@@ -13,7 +13,6 @@
   "timezone": "America/Los_Angeles",
   "version": "0.1.0",
   "permalink": "pretty",
-  "framework": "blank",
   "moveon": true,
   "githubAuthorName": "foo",
   "githubAuthorUrl": "https://github.com/foo",
@@ -22,5 +21,6 @@
   "generatorVersion": "1.10.0",
   "now": "2016-09-06 18:15:31 -07:00",
   "year": "2016",
-  "theme": "gh-pages"
+  "theme": "default",
+  "baseurl": "/bar"
 }

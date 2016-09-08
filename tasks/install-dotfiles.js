@@ -1,7 +1,6 @@
 'use strict';
 
 const gulp = require('gulp');
-const chalk = require('chalk');
 const rename = require('gulp-rename');
 const template = require('gulp-template');
 const conflict = require('gulp-conflict');
@@ -13,11 +12,13 @@ const installTextFiles = function (options) {
   const templateSettings = options.templateSettings;
 
   return function (cb) {
-    console.log(chalk.blue('--Installing dotfiles--'));
     const dotfiles = [
+      '.*',
+      '**/.*',
       '__*',
       '**/__*',
-      '!__tests__'
+      '!__tests__',
+      '!.DS_Store'
     ];
 
     if (!answers.githubtoken) {
