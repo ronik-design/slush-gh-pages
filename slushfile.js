@@ -13,6 +13,7 @@ const validateGithubRepo = require('./utils/validate-github-repo');
 const parseGithubRepo = require('./utils/parse-github-repo');
 const getDefaults = require('./utils/get-defaults');
 const slugify = require('./utils/slugify');
+const getThemes = require('./utils/get-themes');
 const getBootswatchThemes = require('./utils/get-bootswatch-themes');
 const getOlsonTZNames = require('./utils/get-olson-tz-names');
 const installTheme = require('./tasks/install-theme');
@@ -209,20 +210,23 @@ gulp.task('default', done => {
     message: 'Which theme would you like to use?',
     type: 'list',
     default: 'default',
-    choices: [{
-      name: 'Default (nothing at all, just stub dirs and build tools)',
-      value: 'default'
-    },
-    new inquirer.Separator(), {
-      name: 'Bootstrap v3 framework + Bootswatch Option (jQuery and support scripts)',
-      value: 'bootswatch'
-    }, {
-      name: 'Bootstrap v4 framework (jQuery and support scripts)',
-      value: 'bootstrap4'
-    }, {
-      name: 'Concise CSS framework (Pure CSS, no scripts necessary)',
-      value: 'concise'
-    }]
+    choices() {
+      return getThemes();
+    }
+    //  [{
+    //   name: 'Default (nothing at all, just stub dirs and build tools)',
+    //   value: 'default'
+    // },
+    // new inquirer.Separator(), {
+    //   name: 'Bootstrap v3 framework + Bootswatch Option (jQuery and support scripts)',
+    //   value: 'bootswatch'
+    // }, {
+    //   name: 'Bootstrap v4 framework (jQuery and support scripts)',
+    //   value: 'bootstrap4'
+    // }, {
+    //   name: 'Concise CSS framework (Pure CSS, no scripts necessary)',
+    //   value: 'concise'
+    // }]
   }, {
     name: 'bootswatch',
     message: 'Which Bootswatch theme would you like?',

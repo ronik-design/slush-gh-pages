@@ -1,6 +1,7 @@
 'use strict';
 
 const path = require('path');
+const urlParse = require('url').parse;
 const async = require('async');
 const chalk = require('chalk');
 const merge = require('lodash/fp/merge');
@@ -12,6 +13,8 @@ const installDotfiles = require('./install-dotfiles');
 const mergePackageJSON = require('./merge-package-json');
 const installNpm = require('./install-npm');
 const copyFiles = require('./copy-files');
+const cloneRepo = require('./clone-repo');
+const cleanup = require('./cleanup');
 
 const TEMPLATE_SETTINGS = {
   evaluate: /\{SLUSH\{(.+?)\}\}/g,
@@ -28,8 +31,8 @@ function installTheme(options) {
   const destDir = dest(null, cwd);
 
   const commonDir = path.join(themesDir, 'common');
-  const themeDir = path.join(themesDir, answers.theme);
-  const tmpDir = themesTmpDir;
+  const themeDir = path.join(themesTmpDir, 'theme');
+  const combineDir = path.join(themesTmpDir, 'build');
   const currentDir = destDir;
 
   const opts = {
@@ -46,7 +49,19 @@ function installTheme(options) {
     '!package.json'
   ];
 
+  const parsed = urlParse(answers.theme);
+  const branch = parsed.hash.substr(1);
+
   let tasks = [
+    cb => {
+      console.log(chalk.blue('--Cloning theme repo--'));
+      cb();
+    },
+    cloneRepo(merge(opts, {
+      repo: `https://github.com${parsed.path}`,
+      branch,
+      destDir: themeDir
+    })),
     cb => {
       console.log(chalk.blue('--Copying theme files--'));
       cb();
@@ -54,16 +69,16 @@ function installTheme(options) {
     copyFiles(merge(opts, {
       src: ['**/*'],
       srcDir: commonDir,
-      destDir: tmpDir
+      destDir: combineDir
     })),
     copyFiles(merge(opts, {
       src: ['**/*', '!package.json'],
       srcDir: themeDir,
-      destDir: tmpDir
+      destDir: combineDir
     })),
     mergePackageJSON(merge(opts, {
-      srcDir: tmpDir,
-      destDir: tmpDir,
+      srcDir: combineDir,
+      destDir: combineDir,
       source: path.join(themeDir, 'package.json')
     })),
     cb => {
@@ -72,7 +87,7 @@ function installTheme(options) {
     },
     installTextFiles(merge(opts, {
       src: coreFiles,
-      srcDir: tmpDir,
+      srcDir: combineDir,
       destDir: currentDir
     })),
     cb => {
@@ -81,7 +96,7 @@ function installTheme(options) {
     },
     installBinaryFiles(merge(opts, {
       src: coreFiles,
-      srcDir: tmpDir,
+      srcDir: combineDir,
       destDir: currentDir
     })),
     cb => {
@@ -89,7 +104,7 @@ function installTheme(options) {
       cb();
     },
     installDotfiles(merge(opts, {
-      srcDir: tmpDir,
+      srcDir: combineDir,
       destDir: currentDir
     })),
     cb => {
@@ -97,7 +112,7 @@ function installTheme(options) {
       cb();
     },
     mergePackageJSON(merge(opts, {
-      srcDir: tmpDir,
+      srcDir: combineDir,
       destDir: currentDir,
       target: path.join(currentDir, 'package.json'),
       checkExisting: true
@@ -111,11 +126,19 @@ function installTheme(options) {
         cb();
       },
       installCNAME(merge(opts, {
-        srcDir: tmpDir,
+        srcDir: combineDir,
         destDir: currentDir
       }))
     ]);
   }
+
+  tasks = tasks.concat([
+    cb => {
+      console.log(chalk.blue('--Cleaning up--'));
+      cb();
+    },
+    cleanup(merge(opts, {srcDir: themesTmpDir}))
+  ]);
 
   if (!skipInstall) {
     tasks = tasks.concat([

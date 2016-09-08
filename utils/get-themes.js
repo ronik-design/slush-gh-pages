@@ -6,7 +6,7 @@ const yaml = require('js-yaml');
 const BASE_URL = 'https://raw.githubusercontent.com';
 const TIMEOUT = 2000;
 
-function getBootswatchThemes() {
+function getThemes() {
   const request = axios.create({
     baseURL: BASE_URL,
     timeout: TIMEOUT,
@@ -20,19 +20,19 @@ function getBootswatchThemes() {
           value = theme.download_url;
         }
         return {
-          name: `${theme.title} by ${theme.author} (${theme.demo_url}) [Dr. Jekyll theme]`,
+          name: `${theme.title} -- by ${theme.author} (${theme.demo_url})`,
           value
         };
       }))
     ]
   });
 
-  return request.get('/drjekyllthemes/themes/master/themes.yml')
+  return request.get('/ghpagesthemes/_registry/master/themes.yml')
     .then(response => response.data)
     .catch(err => {
       console.error(err.message);
-      console.log('Could not fetch Dr. Jekyll list, moving on...');
+      console.log('Could not fetch theme list...');
     });
 }
 
-module.exports = getBootswatchThemes;
+module.exports = getThemes;
