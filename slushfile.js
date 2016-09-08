@@ -90,19 +90,9 @@ gulp.task('default', done => {
       return true;
     },
     message() {
-      return `What is the PRETTY name of your site?
+      return `What is the name of your site?
 >`;
     }
-  }, {
-    name: 'slug',
-    default(answers) {
-      return slugify(answers.name);
-    },
-    validate(slug) {
-      return slug === slugify(slug);
-    },
-    message: `What is the name SLUG for your site?
->`
   }, {
     name: 'url',
     default(answers) {
@@ -248,6 +238,9 @@ gulp.task('default', done => {
     // Basic time info in selected timezone
     answers.now = moment.tz(new Date(), answers.timezone).format('YYYY-MM-DD HH:mm:ss Z');
     answers.year = moment.tz(new Date(), answers.timezone).format('YYYY');
+
+    // Slugify the name
+    answers.slug = slugify(answers.name);
 
     // Using a CNAME
     const parsed = url.parse(answers.url);
