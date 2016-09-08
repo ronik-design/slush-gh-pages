@@ -84,6 +84,7 @@ compress_html:
 # Collections
 collections:
   posts:
+    title:    Posts
     output:   true
 
 # Front Matter defaults
