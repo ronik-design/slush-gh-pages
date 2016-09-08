@@ -9,7 +9,9 @@ layout: compress
     {% seo %}
   </head>
   <body {% if page.body_class %}class="{{ page.body_class }}"{% endif %}>
-    <div container class="container wrapper">
+    <div class="wrapper">
+
+      {% include nav.html %}
 
       <section>
         {{ content }}
@@ -19,6 +21,6 @@ layout: compress
 
     </div>
 
-    <script src="{{ base_path }}/assets/javascripts/scripts.js"></script>
+    {% include scripts.html %}
   </body>
 </html>

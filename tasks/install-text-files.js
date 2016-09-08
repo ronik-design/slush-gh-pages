@@ -1,7 +1,6 @@
 'use strict';
 
 const gulp = require('gulp');
-const chalk = require('chalk');
 const ignore = require('gulp-ignore');
 const istextorbinary = require('istextorbinary');
 const template = require('gulp-template');
@@ -15,7 +14,6 @@ const installTextFiles = function (options) {
   const templateSettings = options.templateSettings;
 
   return function (cb) {
-    console.log(chalk.blue('--Installing text files--'));
     gulp.src(src, {cwd: srcDir, base: srcDir})
       .pipe(ignore.include(file => istextorbinary.isTextSync(file.basename, file.contents)))
       .pipe(template(answers, templateSettings))

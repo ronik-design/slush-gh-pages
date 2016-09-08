@@ -1,8 +1,8 @@
 # Basics
-title: {SLUSH{=name}}
-description: {SLUSH{=description}}
-url: {SLUSH{=url}}
-author: {SLUSH{=author}}
+title: "{SLUSH{=name}}"
+description: "{SLUSH{=description}}"
+url: "{SLUSH{=url}}"
+author: "{SLUSH{=author}}"
 
 # Where things are
 destination:  ./_site
@@ -31,7 +31,7 @@ future:      false
 unpublished: false
 
 # Serving
-baseurl: "" # does not include hostname
+baseurl: "{SLUSH{=baseurl}}" # does not include hostname
 show_dir_listing: false
 
 # Outputting
@@ -58,17 +58,6 @@ gems:
   - jekyll-seo-tag
   - jekyll-paginate
   - jekyll-gist
-  - jekyll-github-metadata
-whitelist:
-  - jekyll-mentions
-  - jemoji
-  - jekyll-redirect-from
-  - jekyll-sitemap
-  - jekyll-feed
-  - jekyll-seo-tag
-  - jekyll-paginate
-  - jekyll-gist
-  - jekyll-github-metadata
 
 # Markdown Processors
 kramdown:
@@ -86,7 +75,7 @@ compress_html:
   comments: []
   endings: []
   ignore:
-    envs: 
+    envs:
       - development
   blanklines: false
   profile: false

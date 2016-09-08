@@ -1,21 +1,25 @@
 'use strict';
 
 const path = require('path');
+const url = require('url');
 const gulp = require('gulp');
 const moment = require('moment-timezone');
 const inquirer = require('inquirer');
 const chalk = require('chalk');
 const argv = require('minimist')(process.argv.slice(2));
 const clone = require('lodash/clone');
+const trimEnd = require('lodash/trimEnd');
 const validateGithubRepo = require('./utils/validate-github-repo');
 const parseGithubRepo = require('./utils/parse-github-repo');
 const getDefaults = require('./utils/get-defaults');
 const slugify = require('./utils/slugify');
 const getBootswatchThemes = require('./utils/get-bootswatch-themes');
+const getOlsonTZNames = require('./utils/get-olson-tz-names');
 const installTheme = require('./tasks/install-theme');
 const pkg = require('./package.json');
 
 const THEMES_DIR = path.join(__dirname, 'themes');
+const THEMES_TMP_DIR = path.join(process.cwd(), '.theme-tmp');
 
 const defaults = getDefaults();
 
@@ -104,20 +108,50 @@ gulp.task('default', done => {
       if (defaults.url) {
         return defaults.url;
       }
-      const repo = parseGithubRepo(answers.github);
-      let hostname = `${repo.githubAuthorName}.github.io`;
-      if (hostname !== repo.githubRepoName) {
-        hostname += `/${repo.githubRepoName}`;
+
+      if (defaults.hostname) {
+        return `http://${defaults.hostname}`;
       }
-      return `https://${hostname}`;
+
+      const repo = parseGithubRepo(answers.github);
+      return `https://${repo.githubAuthorName}.github.io`;
+    },
+    validate(str) {
+      if (str === null) {
+        return false;
+      }
+      return true;
+    },
+    filter(str) {
+      const parsed = url.parse(str);
+      if (!parsed.hostname) {
+        return null;
+      }
+      return `${parsed.protocol}//${parsed.hostname}`;
     },
     message: `What is the url for your site?
 >`
   }, {
-    name: 'hostname',
-    default: defaults.hostname,
-    message: `What is the CNAME / hostname for your site? [Leave blank if not using a custom domain]
-[e.g., If you own the domain 'foo.com' and you intend to point it at this site, enter 'foo.com' here]
+    name: 'baseurl',
+    default(answers) {
+      if (defaults.config && defaults.config.baseurl) {
+        return defaults.config.baseurl;
+      }
+
+      const repo = parseGithubRepo(answers.github);
+      const parsed = url.parse(answers.url);
+      if (parsed.hostname === `${repo.githubAuthorName}.github.io` &&
+          parsed.hostname !== repo.githubRepoName) {
+        return `/${repo.githubRepoName}`;
+      }
+
+      return '';
+    },
+    filter(str) {
+      return trimEnd(str, '/');
+    },
+    message: `What is the site's baseurl?
+[e.g., '/blog', '/docs' or nothing at all]
 >`
   }, {
     name: 'author',
@@ -142,6 +176,8 @@ gulp.task('default', done => {
   }, {
     name: 'timezone',
     default: defaults.config && defaults.config.timezone ? defaults.config.timezone : defaults.timezone,
+    type: 'list',
+    choices: getOlsonTZNames(),
     message: `What is the timezone for your site?
 >`
   }, {
@@ -169,28 +205,29 @@ gulp.task('default', done => {
       value: 'none'
     }]
   }, {
-    name: 'framework',
-    message: 'Which CSS & JS framework would you like to use?',
+    name: 'theme',
+    message: 'Which theme would you like to use?',
     type: 'list',
+    default: 'default',
     choices: [{
-      name: 'Blank (nothing at all, just a css stub dir, and some script polyfills)',
-      value: 'blank'
+      name: 'Default (nothing at all, just stub dirs and build tools)',
+      value: 'default'
     },
     new inquirer.Separator(), {
-      name: 'Bootstrap v3 + Bootswatch (jQuery and support scripts)',
-      value: 'bootstrap3'
+      name: 'Bootstrap v3 framework + Bootswatch Option (jQuery and support scripts)',
+      value: 'bootswatch'
     }, {
-      name: 'Bootstrap v4 (jQuery and support scripts)',
+      name: 'Bootstrap v4 framework (jQuery and support scripts)',
       value: 'bootstrap4'
     }, {
-      name: 'Concise CSS (a pure CSS framework, no scripts necessary)',
+      name: 'Concise CSS framework (Pure CSS, no scripts necessary)',
       value: 'concise'
     }]
   }, {
     name: 'bootswatch',
-    message: 'Which Bootswatch template would you like?',
+    message: 'Which Bootswatch theme would you like?',
     type: 'list',
-    when: answers => answers.framework === 'bootstrap3',
+    when: answers => answers.theme === 'bootswatch',
     choices() {
       const choices = [{
         name: '- None -',
@@ -222,13 +259,17 @@ gulp.task('default', done => {
     answers.now = moment.tz(new Date(), answers.timezone).format('YYYY-MM-DD HH:mm:ss Z');
     answers.year = moment.tz(new Date(), answers.timezone).format('YYYY');
 
-    // Add theme name
-    answers.theme = 'default';
+    // Using a CNAME
+    const parsed = url.parse(answers.url);
+    if (parsed.hostname.search(/\.github\.(io|com)$/) === -1) {
+      answers.hostname = parsed.hostname;
+    }
 
     installTheme({
       answers,
       defaults,
       themesDir: THEMES_DIR,
+      themesTmpDir: THEMES_TMP_DIR,
       skipInstall: argv['skip-install']
     })
     .then(() => {

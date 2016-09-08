@@ -2,15 +2,16 @@
 
 const path = require('path');
 const async = require('async');
+const chalk = require('chalk');
+const merge = require('lodash/fp/merge');
 const dest = require('../utils/dest');
 const installTextFiles = require('./install-text-files');
 const installBinaryFiles = require('./install-binary-files');
 const installCNAME = require('./install-cname');
 const installDotfiles = require('./install-dotfiles');
-const installStylesheetFiles = require('./install-stylesheet-files');
-const installJavascriptFiles = require('./install-javascript-files');
-const mergeAndInstallPackageJSON = require('./merge-and-install-package-json');
+const mergePackageJSON = require('./merge-and-install-package-json');
 const installNpm = require('./install-npm');
+const copyFiles = require('./copy-files');
 
 const TEMPLATE_SETTINGS = {
   evaluate: /\{SLUSH\{(.+?)\}\}/g,
@@ -20,64 +21,110 @@ const TEMPLATE_SETTINGS = {
 
 function installTheme(options) {
   const answers = options.answers;
-  const defaults = options.defaults;
   const themesDir = options.themesDir;
+  const themesTmpDir = options.themesTmpDir;
   const cwd = options.cwd || process.cwd();
   const skipInstall = options.skipInstall;
-  const srcDir = path.join(themesDir, answers.theme);
   const destDir = dest(null, cwd);
+
+  const commonDir = path.join(themesDir, 'common');
+  const themeDir = path.join(themesDir, answers.theme);
+  const tmpDir = themesTmpDir;
+  const currentDir = destDir;
 
   const opts = {
     answers,
     cwd,
-    srcDir,
-    destDir,
     templateSettings: TEMPLATE_SETTINGS
   };
 
   const coreFiles = [
     '**/*',
-    '!_assets/stylesheets',
-    '!_assets/stylesheets/**',
-    '!_assets/javascripts',
-    '!_assets/javascripts/**',
     '!CNAME',
     '!__*',
     '!**/__*',
     '!package.json'
   ];
 
-  let jsFramework = answers.framework;
-  if (jsFramework === 'concise') {
-    jsFramework = 'blank';
-  }
-
-  const tasks = [
-    installTextFiles(Object.assign(opts, {
-      src: coreFiles
+  let tasks = [
+    cb => {
+      console.log(chalk.blue('--Copying theme files--'));
+      cb();
+    },
+    copyFiles(merge(opts, {
+      src: ['**/*'],
+      srcDir: commonDir,
+      destDir: tmpDir
     })),
-    installBinaryFiles(Object.assign(opts, {
-      src: coreFiles
+    copyFiles(merge(opts, {
+      src: ['**/*', '!package.json'],
+      srcDir: themeDir,
+      destDir: tmpDir
     })),
-    installDotfiles(Object.assign(opts, {})),
-    installStylesheetFiles(Object.assign(opts, {
-      src: `_assets/stylesheets/${answers.framework}/**/*`
+    mergePackageJSON(merge(opts, {
+      srcDir: tmpDir,
+      destDir: tmpDir,
+      source: path.join(themeDir, 'package.json')
     })),
-    installJavascriptFiles(Object.assign(opts, {
-      src: `_assets/javascripts/${jsFramework}/**/*`
+    cb => {
+      console.log(chalk.blue('--Installing text files--'));
+      cb();
+    },
+    installTextFiles(merge(opts, {
+      src: coreFiles,
+      srcDir: tmpDir,
+      destDir: currentDir
     })),
-    mergeAndInstallPackageJSON(Object.assign(opts, {
-      src: 'package.json',
-      target: defaults.pkg
+    cb => {
+      console.log(chalk.blue('--Installing binary files--'));
+      cb();
+    },
+    installBinaryFiles(merge(opts, {
+      src: coreFiles,
+      srcDir: tmpDir,
+      destDir: currentDir
+    })),
+    cb => {
+      console.log(chalk.blue('--Installing dotfiles--'));
+      cb();
+    },
+    installDotfiles(merge(opts, {
+      srcDir: tmpDir,
+      destDir: currentDir
+    })),
+    cb => {
+      console.log(chalk.blue('--Installing package.json--'));
+      cb();
+    },
+    mergePackageJSON(merge(opts, {
+      srcDir: tmpDir,
+      destDir: currentDir,
+      target: path.join(currentDir, 'package.json'),
+      checkExisting: true
     }))
   ];
 
   if (answers.hostname) {
-    tasks.push(installCNAME(Object.assign(opts, {})));
+    tasks = tasks.concat([
+      cb => {
+        console.log(chalk.blue('--Installing CNAME--'));
+        cb();
+      },
+      installCNAME(merge(opts, {
+        srcDir: tmpDir,
+        destDir: currentDir
+      }))
+    ]);
   }
 
   if (!skipInstall) {
-    tasks.push(installNpm(Object.assign(opts, {})));
+    tasks = tasks.concat([
+      cb => {
+        console.log(chalk.blue('--Installing npm modules--'));
+        cb();
+      },
+      installNpm(opts)
+    ]);
   }
 
   return new Promise((resolve, reject) => {

@@ -31,7 +31,7 @@
     "lint": "npm-run-all -p lint:*",
     "imagemin": "imagemin _assets/images/* -o assets/images",
     "icons": "svgo -f _assets/images/icons && mkdir -p assets/images && svg-sprite-generate -d _assets/images/icons -o assets/images/icons.svg",
-    "serve": "node -e 'setTimeout(function() {}, 2000)' && browser-sync start --server _site --port 8888 --files _site --reload-debounce",
+    "serve": "node -e 'setTimeout(function() {}, 2000)' && browser-sync start --server _site --port 5000 --files _site --reload-debounce",
     "jekyll:build": "JEKYLL_GITHUB_TOKEN=$([ -f .githubtoken ] && cat .githubtoken) JEKYLL_ENV=production bundle exec jekyll build --safe --config _config.yml",
     "jekyll:watch": "JEKYLL_GITHUB_TOKEN=$([ -f .githubtoken ] && cat .githubtoken) JEKYLL_ENV=development bundle exec jekyll build --safe --watch --incremental --config _config.yml,_config-development.yml || true",
     "build:css": "npm run scss && npm run postcss",
