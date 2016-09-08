@@ -38,7 +38,7 @@ gulp.task('default', done => {
     name: 'github',
     default() {
       if (defaults.config && defaults.config.repository) {
-        return defaults.config.respository;
+        return defaults.config.repository;
       }
       if (defaults.gitConfig && defaults.gitConfig['remote "origin"']) {
         return defaults.gitConfig['remote "origin"'].url;
@@ -213,20 +213,6 @@ gulp.task('default', done => {
     choices() {
       return getThemes();
     }
-    //  [{
-    //   name: 'Default (nothing at all, just stub dirs and build tools)',
-    //   value: 'default'
-    // },
-    // new inquirer.Separator(), {
-    //   name: 'Bootstrap v3 framework + Bootswatch Option (jQuery and support scripts)',
-    //   value: 'bootswatch'
-    // }, {
-    //   name: 'Bootstrap v4 framework (jQuery and support scripts)',
-    //   value: 'bootstrap4'
-    // }, {
-    //   name: 'Concise CSS framework (Pure CSS, no scripts necessary)',
-    //   value: 'concise'
-    // }]
   }, {
     name: 'bootswatch',
     message: 'Which Bootswatch theme would you like?',
