@@ -1,8 +1,6 @@
 'use strict';
 
-const fs = require('fs');
 const gulp = require('gulp');
-const path = require('path');
 const template = require('gulp-template');
 const conflict = require('gulp-conflict');
 const jeditor = require('gulp-json-editor');

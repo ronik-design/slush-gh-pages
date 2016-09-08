@@ -9,7 +9,7 @@ const installTextFiles = require('./install-text-files');
 const installBinaryFiles = require('./install-binary-files');
 const installCNAME = require('./install-cname');
 const installDotfiles = require('./install-dotfiles');
-const mergePackageJSON = require('./merge-and-install-package-json');
+const mergePackageJSON = require('./merge-package-json');
 const installNpm = require('./install-npm');
 const copyFiles = require('./copy-files');
 
