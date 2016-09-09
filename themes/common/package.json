@@ -84,5 +84,9 @@
     "stylelint-config-standard": "^13.0.0",
     "svg-sprite-generator": "0.0.7",
     "svgo": "^0.7.0"
+  },
+  "dependencies": {
+    "core-js": "^2.4.1",
+    "svg4everybody": "^2.1.0"
   }
 }
