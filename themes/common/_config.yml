@@ -1,8 +1,8 @@
 # Basics
-title: "{SLUSH{=name}}"
-description: "{SLUSH{=description}}"
-url: "{SLUSH{=url}}"
-author: "{SLUSH{=author}}"
+title: {SLUSH{=name}}
+description: {SLUSH{=description}}
+url: {SLUSH{=url}}
+author: {SLUSH{=author}}
 
 # Where things are
 destination:  ./_site
@@ -94,3 +94,44 @@ defaults:
       path: "" # an empty string here means all files in the project
     values:
       layout: default
+- scope:
+    path: ''
+    type: posts
+  values:
+    layout: default
+    description:
+    image:
+    seo:
+      name:
+      type:
+      links:
+        -
+- scope:
+    path: ''
+    type: pages
+  values:
+    layout: default
+    description:
+    image:
+    seo:
+      name:
+      type:
+      links:
+        -
+
+# Jekyll SEO Tag
+# https://github.com/jekyll/jekyll-seo-tag
+facebook:
+  app_id:
+  publisher:
+  admins:
+
+twitter:
+  username: {SLUSH{=twitter}}
+
+logo:
+
+social:
+  name: {SLUSH{=name}}
+  links:
+    -
