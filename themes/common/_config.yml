@@ -94,30 +94,32 @@ defaults:
       path: "" # an empty string here means all files in the project
     values:
       layout: default
-- scope:
-    path: ''
-    type: posts
-  values:
-    layout: default
-    description:
-    image:
-    seo:
-      name:
-      type:
-      links:
-        -
-- scope:
-    path: ''
-    type: pages
-  values:
-    layout: default
-    description:
-    image:
-    seo:
-      name:
-      type:
-      links:
-        -
+  -
+    scope:
+      path: ''
+      type: posts
+    values:
+      layout: post
+      description:
+      image:
+      seo:
+        name:
+        type:
+        links:
+          -
+  -
+    scope:
+      path: ''
+      type: pages
+    values:
+      layout: page
+      description:
+      image:
+      seo:
+        name:
+        type:
+        links:
+          -
 
 # Jekyll SEO Tag
 # https://github.com/jekyll/jekyll-seo-tag
