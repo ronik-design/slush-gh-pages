@@ -19,7 +19,7 @@ exclude:
   - vendor
   - node_modules
   - package.json
-  - rollup.config.js
+  - webpack.config.js
   - postcss.config.js
   - Gemfile
   - Gemfile.lock
