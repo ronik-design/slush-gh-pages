@@ -48,7 +48,7 @@ slush gh-pages
 
 * `npm start` - launch watchers, start serving your site locally, auto-reload with Browser Sync
 * `npm run deploy` - create production builds of your assets, increment the version tag, and push to GitHub. Alias for `npm version minor` which you can also use.
-* `_assets/javascripts` - build your JS app using ES2015 (at Stage 0, so some ES7 as well), Babel (with [transform-runtime](https://babeljs.io/docs/plugins/transform-runtime/) handling polyfills), Uglify, Rollup.js and any selected framework libraries. Configure your build in the generated `rollup.config.js`.
+* `_assets/javascripts` - build your JS app using ES2015 (at Stage 0, so some ES7 as well), Babel (with [transform-runtime](https://babeljs.io/docs/plugins/transform-runtime/) handling polyfills), Uglify, Webpack and any selected framework libraries. Configure your build in the generated `webpack.config.js`.
 * `_assets/stylesheets` - build your stylesheets using SCSS, PostCSS and any selected frameworks. Configure your PostCSS build in the generated `postcss.config.js`.
 * `_assets/images` - any images here will be automatically optimized via imagemin.
 * `_assets/images/icons` - any `svg` files placed here will automatically be compiled into a svg-sprite.
