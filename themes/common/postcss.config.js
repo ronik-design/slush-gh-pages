@@ -1,5 +1,9 @@
 'use strict';
 
+const fs = require('fs');
+const yaml = require('js-yaml');
+const site = yaml.safeLoad(fs.readFileSync('./_config.yml', 'utf8'));
+
 const config = {
   use: [
     'autoprefixer'
@@ -9,7 +13,8 @@ const config = {
   },
   'postcss-urlrev': {
     relativePath: 'assets/stylesheets',
-    absolutePath: __dirname
+    absolutePath: __dirname,
+    replacer: (url, hash) => `${site.baseurl}/${url}/?${hash}`
   }
 };
 
