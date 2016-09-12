@@ -14,7 +14,10 @@ const config = {
   'postcss-urlrev': {
     relativePath: 'assets/stylesheets',
     absolutePath: __dirname,
-    replacer: (url, hash) => `${site.baseurl}/${url}/?${hash}`
+    replacer: (url, hash) => {
+      const baseurl = site.baseurl ? site.baseurl : '';
+      return `${baseurl}${url}?${hash}`;
+    }
   }
 };
 
