@@ -15,7 +15,8 @@ results
 npm-debug.log
 node_modules
 
-_site
 .githubtoken
 .jekyll-metadata
-vendor
+
+/vendor
+/_site

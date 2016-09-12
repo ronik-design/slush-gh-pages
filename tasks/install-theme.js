@@ -72,7 +72,7 @@ function installTheme(options) {
       destDir: combineDir
     })),
     copyFiles(merge(opts, {
-      src: ['**/*', '!package.json'],
+      src: ['**/*', '!package.json', 'LICENSE'],
       srcDir: themeDir,
       destDir: combineDir
     })),

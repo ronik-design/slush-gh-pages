@@ -105,7 +105,7 @@ defaults:
       seo:
         name:
         type:
-        links: []
+        links:
   -
     scope:
       path: ''
@@ -117,7 +117,7 @@ defaults:
       seo:
         name:
         type:
-        links: []
+        links:
 
 # Jekyll SEO Tag
 # https://github.com/jekyll/jekyll-seo-tag
@@ -133,4 +133,4 @@ logo:
 
 social:
   name: {SLUSH{=name}}
-  links: []
+  links: [{SLUSH{ if (twitter) { }}https://www.twitter.com/{SLUSH{=twitter}}{SLUSH{ } }}]

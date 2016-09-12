@@ -6,6 +6,8 @@ const site = yaml.safeLoad(fs.readFileSync('./_config.yml', 'utf8'));
 
 const config = {
   use: [
+    'postcss-custom-media',
+    'postcss-media-minmax',
     'autoprefixer'
   ],
   autoprefixer: {
