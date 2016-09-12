@@ -1,3 +1,3 @@
-favicon: /assets/images/default-favicon.ico
-favicon_192: /assets/images/default-favicon-192x192.png
-apple_touch_icon: /assets/images/default-apple-touch-icon-180x180.png
+favicon: assets/images/default-favicon.ico
+favicon_192: assets/images/default-favicon-192x192.png
+apple_touch_icon: assets/images/default-apple-touch-icon-180x180.png
