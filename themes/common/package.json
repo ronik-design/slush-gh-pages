@@ -1,6 +1,6 @@
 {
   "private": true,
-  "name": "{SLUSH{=slug}}",
+  "name": "{SLUSH{=githubRepoName}}",
   "version": "{SLUSH{=version}}",
   "description": "{SLUSH{=description}}",
   "author": {
@@ -31,7 +31,8 @@
     "lint": "npm-run-all -p lint:*",
     "imagemin": "imagemin _assets/images/* -o assets/images",
     "icons": "svgo -f _assets/images/icons && mkdir -p assets/images && svg-sprite-generate -d _assets/images/icons -o assets/images/icons.svg",
-    "serve": "node -e 'setTimeout(function() {}, 2000)' && browser-sync start --https --server _site --port 5000 --files '_site/**/*, !_site/sitemap.xml, !_site/feed.xml' --reload-debounce",
+    "serve": "npm run delay && browser-sync start --server _site --port $npm_package_config_port --host $npm_package_config_host --$npm_package_config_protocol --files '_site/**/*, !_site/sitemap.xml, !_site/feed.xml' --reload-debounce",
+    "delay": "node -e 'setTimeout(function() {}, 2000)'",
     "jekyll:build": "JEKYLL_GITHUB_TOKEN=$([ -f .githubtoken ] && cat .githubtoken) JEKYLL_ENV=production bundle exec jekyll build --safe --config _config.yml",
     "jekyll:watch": "JEKYLL_GITHUB_TOKEN=$([ -f .githubtoken ] && cat .githubtoken) JEKYLL_ENV=development bundle exec jekyll build --safe --watch --incremental --config _config.yml,_config-development.yml || true",
     "build:stylesheets": "npm run scss && npm run postcss",
@@ -93,5 +94,10 @@
     "core-js": "^2.4.1",
     "svg4everybody": "^2.1.0",
     "raf-ready": "^1.0.0"
+  },
+  "config": {
+    "port": 4000,
+    "host": "localhost",
+    "protocol": "https"
   }
 }
