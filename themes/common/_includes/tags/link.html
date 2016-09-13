@@ -1,0 +1,3 @@
+{% include utils/base_url %}
+{% include utils/rev_path path=include.path %}
+<link rel="{{ include.rel }}" href="{{ base_url }}/{{ rev_path | strip_newlines }}"{% if include.type %} type="{{ include.type }}"{% endif %}{% if include.sizes %} sizes="{{ include.sizes }}"{% endif %}{% if include.title %} title="{{ include.title }}"{% endif %}>

@@ -2,8 +2,8 @@
 layout: compress
 ---
 
-{% include base_path %}
-{% include base_url %}
+{% include utils/base_path %}
+{% include utils/base_url %}
 
 <!doctype html>
 <html>
@@ -12,7 +12,7 @@ layout: compress
     {% seo %}
   </head>
   <body {% if page.body_class %}class="{{ page.body_class }}"{% endif %}>
-    <div container class="container wrapper">
+    <div class="wrapper">
 
       <section>
         {{ content }}
