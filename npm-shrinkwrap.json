@@ -1,6 +1,6 @@
 {
   "name": "slush-gh-pages",
-  "version": "2.2.3",
+  "version": "2.2.4",
   "dependencies": {
     "abbrev": {
       "version": "1.0.9",
