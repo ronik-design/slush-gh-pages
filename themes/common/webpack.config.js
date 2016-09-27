@@ -1,10 +1,10 @@
 module.exports = {
-  devtool: process.env.NODE_ENV === 'production' ? null : 'source-map',
+  devtool: process.env.NODE_ENV === 'production' ? false : 'source-map',
   module: {
-    loaders: [
+    rules: [
       {
         test: /\.js$/,
-        exclude: /node_modules/,
+        exclude: /node_modules|vendor/,
         loader: 'babel'
       }, {
         test: /\.json$/,
@@ -17,6 +17,6 @@ module.exports = {
   },
   resolve: {
     modules: ['node_modules'],
-    extensions: ['', '.js', '.json']
+    extensions: ['.js', '.json']
   }
 };

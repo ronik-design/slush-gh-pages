@@ -76,6 +76,7 @@
     "html-loader": "^0.4.3",
     "imagemin-cli": "^3.0.0",
     "json-loader": "^0.5.4",
+    "loader-utils": "^0.2.16",
     "mkdirp": "^0.5.1",
     "node-sass": "^3.9.3",
     "node-sass-import": "^1.0.5",
@@ -88,7 +89,7 @@
     "stylelint-config-standard": "^13.0.0",
     "svg-sprite-generator": "0.0.7",
     "svgo": "^0.7.0",
-    "webpack": "^2.1.0-beta.22"
+    "webpack": "^2.1.0-beta.25"
   },
   "dependencies": {
     "core-js": "^2.4.1",
