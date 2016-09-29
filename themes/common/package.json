@@ -50,7 +50,7 @@
     "watch": "npm-run-all --serial clean build:images build:fonts build:javascripts:dev build:stylesheets:dev && npm-run-all --continue-on-error --parallel watch:* jekyll:watch serve",
     "postinstall": "bundle install && chmod +x __tests__/test.sh && npm test",
     "preversion": "npm test",
-    "version": "git add -A assets",
+    "version": "git add -A assets _data",
     "postversion": "git push && git push --tags",
     "pretest": "npm run lint",
     "test": "npm-run-all --serial clean build:images build:fonts build:stylesheets build:javascripts build:manifest && JEKYLL_GITHUB_TOKEN=$([ -f .githubtoken ] && cat .githubtoken) JEKYLL_ENV=production __tests__/test.sh",
