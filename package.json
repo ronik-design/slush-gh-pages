@@ -12,7 +12,7 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/ronik-design/slush-gh-pages.git"
+    "url": "git+https://github.com/static-stuff/slush-gh-pages.git"
   },
   "keywords": [
     "slushgenerator",
@@ -33,9 +33,9 @@
   ],
   "author": "Michael Shick <m@shick.us>",
   "bugs": {
-    "url": "https://github.com/ronik-design/slush-gh-pages/issues"
+    "url": "https://github.com/static-stuff/slush-gh-pages/issues"
   },
-  "homepage": "https://github.com/ronik-design/slush-gh-pages#readme",
+  "homepage": "https://github.com/static-stuff/slush-gh-pages#readme",
   "devDependencies": {
     "ava": "^0.16.0",
     "babel-eslint": "^6.1.2",

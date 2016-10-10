@@ -2,7 +2,7 @@
 
 {SLUSH{=description}}
 
-> This boilerplate was generated with [slush-gh-pages](https://github.com/ronik-design/slush-gh-pages).
+> This boilerplate was generated with [slush-gh-pages](https://github.com/static-stuff/slush-gh-pages).
 
 ### To develop
 
