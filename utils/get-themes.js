@@ -27,7 +27,7 @@ function getThemes() {
     ]
   });
 
-  return request.get('/ghpagesthemes/_registry/master/themes.yml')
+  return request.get('/static-stuff/_registry/master/themes.yml')
     .then(response => response.data)
     .catch(err => {
       console.error(err.message);

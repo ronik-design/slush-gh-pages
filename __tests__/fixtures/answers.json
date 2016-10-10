@@ -21,6 +21,6 @@
   "generatorVersion": "1.10.0",
   "now": "2016-09-06 18:15:31 -07:00",
   "year": "2016",
-  "theme": "https://github.com/ghpagesthemes/default.git#master",
+  "theme": "https://github.com/static-stuff/default.git#master",
   "baseurl": "/bar"
 }
