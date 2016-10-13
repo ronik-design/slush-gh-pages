@@ -2,7 +2,7 @@
   "name": "slush-gh-pages",
   "version": "2.2.9",
   "description": "A Slush generator for GitHub Pages that provides robust tooling for creating sophisticated Jekyll-based static websites.",
-  "license": "ISC",
+  "license": "MIT",
   "engines": {
     "node": ">= 4.0.0"
   },
