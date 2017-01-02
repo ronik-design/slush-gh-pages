@@ -17,7 +17,7 @@ A key focus is on simplicity, so in general the only commands you'll need to use
 
 First prepare your environments. You will need:
 
-  * [Ruby](https://github.com/github/pages-gem#1-ruby) environment, and a working  
+  * [Ruby](https://github.com/github/pages-gem#1-ruby) environment, and a working. [Note: Ruby v2.4.0 is not yet working]  
   * [Node.js](https://gist.github.com/mshick/306171bf69cf6d901d1332f49b5c4e2d) environment.
 
 Plus, some global packages for those environments.
@@ -110,6 +110,10 @@ In lieu of real documentation, just be prepared to answer the following question
 Feel free to run this generator multiple times, or over a GitHub Pages project you've already started working on, but where you think some of the tools here might come in handy. During the Q&A phase you'll have many defaults provided based on reading your system env and any existing `package.json` `_config.yml` and `_data/authors.yml` files in your current directory.
 
 After the Q&A you will be prompted for a conflict resolution for any file that would be modified by the generator. You need to be very careful here, since you could overwrite work you want to keep.
+
+### Installation problems
+
+  * Sometimes the nokogiri dependency will fail to build if you don't have your Xcode tools properly installed. Be sure to try `xcode-select --install`. If that doesn't work check [this thread](https://github.com/sparklemotion/nokogiri/issues/1483) for more possible fixes.
 
 ### Credit
 

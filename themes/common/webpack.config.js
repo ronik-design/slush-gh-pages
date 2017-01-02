@@ -5,13 +5,13 @@ module.exports = {
       {
         test: /\.js$/,
         exclude: /node_modules|vendor/,
-        loader: 'babel'
+        loader: 'babel-loader'
       }, {
         test: /\.json$/,
-        loader: 'json'
+        loader: 'json-loader'
       }, {
         test: /\.html$/,
-        loader: 'html'
+        loader: 'html-loader'
       }
     ]
   },
