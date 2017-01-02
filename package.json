@@ -39,7 +39,6 @@
   "devDependencies": {
     "ava": "^0.16.0",
     "babel-eslint": "^6.1.2",
-    "del": "^2.2.2",
     "eslint": "^3.4.0",
     "eslint-config-xo-space": "^0.14.0",
     "eslint-plugin-babel": "^3.3.0",
@@ -50,6 +49,7 @@
     "async": "^2.0.0-rc.4",
     "axios": "^0.14.0",
     "chalk": "^1.1.3",
+    "del": "^2.2.2",
     "gulp": "^3.9.1",
     "gulp-conflict": "^0.4.0",
     "gulp-if": "^2.0.1",
